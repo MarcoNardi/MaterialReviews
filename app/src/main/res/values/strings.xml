@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MaterialReviews</string>
+    <string name="title_activity_m3test">M3test</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string-array name="navigationDestinations">
+        <item>Destination 1</item>
+        <item>Destination 2</item>
+        <item>Destination 3</item>
+    </string-array>
 </resources>
