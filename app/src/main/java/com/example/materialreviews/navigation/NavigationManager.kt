@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.materialreviews.ProfileScreen
 import com.example.materialreviews.ReviewCard
 import com.example.materialreviews.ReviewCardPreview
 import com.example.materialreviews.TestComposable
@@ -56,7 +57,7 @@ fun NavigationManager() {
                         TestComposable(7)
                     }
                     composable(destinationsList[2]) {
-                        TestComposable(5)
+                        ProfileScreen()
                     }
                 }
             }
