@@ -18,6 +18,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.materialreviews.ReviewCard
+import com.example.materialreviews.ReviewCardPreview
 import com.example.materialreviews.TestComposable
 
 // Lista che contiene le schermate a cui e` possibile navigare
@@ -48,13 +50,13 @@ fun NavigationManager() {
                     startDestination = destinationsList[1],
                 ) {
                     composable(destinationsList[0]) {
-                        TestComposable(5)
+                        ReviewCardPreview()
                     }
                     composable(destinationsList[1]) {
                         TestComposable(7)
                     }
                     composable(destinationsList[2]) {
-                        TestComposable(20)
+                        TestComposable(5)
                     }
                 }
             }
