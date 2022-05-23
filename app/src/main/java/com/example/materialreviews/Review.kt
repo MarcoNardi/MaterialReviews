@@ -91,7 +91,7 @@ fun ListOfReviews(reviews: List<Review>) {
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun ReviewCardPreview() {
+fun ListOfReviewsPreview() {
     val reviews = listOf(Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"), Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"))
     ListOfReviews(reviews)
 }

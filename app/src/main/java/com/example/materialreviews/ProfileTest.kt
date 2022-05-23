@@ -1,9 +1,8 @@
 package com.example.materialreviews
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
@@ -13,33 +12,49 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 // Variabili che in teoria dovrebbero andare nel db
-val name = "Eli"
-val surname = "Ferin"
+val name = "Marco"
+val surname = "Trincanato"
 val profilePicture = null
 
+@ExperimentalMaterial3Api
 @Preview
 @Composable
 fun ProfileScreen() {
-    //Scaffold con content=Column e FAB per editare
+    //Scaffold che permette di inserire un FAB
     Scaffold(
         floatingActionButton = {
-            androidx.compose.material3.FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = { /*TODO*/ }) {
                 Icon(imageVector = Icons.Filled.Edit, contentDescription = "FAB Edit")
             }
         },
         floatingActionButtonPosition = FabPosition.End
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
+                .padding(paddingValues)
+                .padding(horizontal = 15.dp)
                 .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
-            ProfilePicture(size = 150.dp)
-            Text(text = name)
-            Text(text = surname)
-            Text("Le mie recensioni")
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                ProfilePicture(size = 150.dp)
+                Text(
+                    text = "$name $surname",
+                    style = MaterialTheme.typography.displaySmall,
+                    modifier = Modifier
+                        .padding(start = 30.dp)
+                )
+            }
             Text(text = "Impostazioni")
+
+            // Le mie recensioni
+            Text("Le mie recensioni",
+                style = MaterialTheme.typography.titleLarge
+            )
+            ListOfReviewsPreview()
         }
     }
 }
