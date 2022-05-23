@@ -1,11 +1,21 @@
 package com.example.materialreviews
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,10 +25,14 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.MaterialReviewsTheme
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
 
 class MainActivity : ComponentActivity() {
 
@@ -33,6 +47,11 @@ class MainActivity : ComponentActivity() {
             database.restaurantDao()
         )
     }
+    public val imageViewModel: ImageViewModel by viewModels{
+        ImageViewModelFactory(
+            database.imageDao()
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -43,11 +62,67 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MaterialReviewsTheme {
-                RestaurantTest()
+                ShowRestaurantWithImage()
+                //ImagePicker()
+                //RestaurantTest()
                 //UserTest()
             }
         }
     }
+
+    @Composable
+    fun ShowRestaurantWithImage(){
+        Column (modifier = Modifier.padding(16.dp)){
+            Text("BLALABLAb")
+           // RestaurantWithImagesList(restaurantData = restaurantModel.getRestaurantsWithImage())
+            RestaurantList(restaurantData =restaurantModel.getAllRestaurants().observeAsState(
+                emptyList()))
+
+        }
+
+    }
+
+    @Composable
+    fun ImagePicker(){
+        val imageUri = remember { mutableStateOf<Uri?>(null)}
+        val imageData= remember {mutableStateOf<Bitmap?>(null)}
+        val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
+            imageUri.value = it
+        }
+        var rid by remember{ mutableStateOf("")}
+        Column{
+            Button(onClick = {
+                launcher.launch(
+                    "image/*"
+                )
+            }){Text("pick an image")}
+            numberField(rid, {rid=it})
+            if(imageUri.value!=null){
+
+                if (Build.VERSION.SDK_INT < 28) {
+                    imageData.value = MediaStore.Images
+                        .Media.getBitmap(LocalContext.current.contentResolver, imageUri.value)
+
+                } else {
+                    val dataSource =
+                        ImageDecoder
+                            .createSource(LocalContext.current.contentResolver, imageUri.value!!)
+
+                    imageData.value = ImageDecoder.decodeBitmap(dataSource!!)
+                }
+
+            }
+            if(imageData.value!=null){
+                Image(bitmap = imageData.value!!.asImageBitmap() , contentDescription = null)
+            }
+            if(imageUri.value!=null && rid!="" && rid.toInt()>=1){
+                Button(onClick = {imageViewModel.addImage(imageUri.value.toString(),rid.toInt())}) {
+                    Text("add to database")
+                }
+            }
+        }
+    }
+
 
     @Preview(showBackground = true)
     @Composable
@@ -90,6 +165,18 @@ class MainActivity : ComponentActivity() {
 
         }
 
+    }
+}
+
+@Composable
+fun RestaurantWithImagesList(restaurantData: LiveData<List<RestaurantWithImages>>){
+    val data by restaurantData.observeAsState(emptyList())
+    if(data!=null){
+        LazyColumn {
+            items(data!!) { data ->
+                Text(text=data.toString())
+            }
+        }
     }
 }
 
