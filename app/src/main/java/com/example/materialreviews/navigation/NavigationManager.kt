@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,9 +39,11 @@ fun NavigationManager() {
     Scaffold(
         topBar = { TopBar() },
         bottomBar = { BottomBar(navController) },
-        content = { it ->
+        content = { paddingValues ->
             Box(
-                modifier = Modifier.padding(it)
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .padding(horizontal = 10.dp)
             ) {
                 // Associazioni stringa-composable
                 NavHost(

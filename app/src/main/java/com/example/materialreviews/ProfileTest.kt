@@ -29,32 +29,34 @@ fun ProfileScreen() {
         },
         floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(horizontal = 15.dp)
-                .fillMaxWidth(),
+        Box(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
 
-            ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                ProfilePicture(size = 150.dp)
-                Text(
-                    text = "$name $surname",
-                    style = MaterialTheme.typography.displaySmall,
-                    modifier = Modifier
-                        .padding(start = 30.dp)
+                ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    ProfilePicture(size = 150.dp)
+                    Text(
+                        text = "$name $surname",
+                        style = MaterialTheme.typography.displaySmall,
+                        modifier = Modifier
+                            .padding(start = 30.dp)
+                    )
+                }
+                Text(text = "Impostazioni")
+
+                // Le mie recensioni
+                Text("Le mie recensioni",
+                    style = MaterialTheme.typography.titleLarge
                 )
+                ListOfReviewsPreview()
             }
-            Text(text = "Impostazioni")
-
-            // Le mie recensioni
-            Text("Le mie recensioni",
-                style = MaterialTheme.typography.titleLarge
-            )
-            ListOfReviewsPreview()
         }
     }
 }
