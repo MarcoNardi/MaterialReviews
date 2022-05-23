@@ -1,10 +1,8 @@
 package com.example.materialreviews.navigation
 
-import android.content.res.Resources
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -14,13 +12,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.materialreviews.ProfileScreen
-import com.example.materialreviews.ReviewCard
-import com.example.materialreviews.ReviewCardPreview
+import com.example.materialreviews.ListOfReviewsPreview
 import com.example.materialreviews.TestComposable
 
 // Lista che contiene le schermate a cui e` possibile navigare
@@ -41,9 +39,11 @@ fun NavigationManager() {
     Scaffold(
         topBar = { TopBar() },
         bottomBar = { BottomBar(navController) },
-        content = { it ->
+        content = { paddingValues ->
             Box(
-                modifier = Modifier.padding(it)
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .padding(horizontal = 10.dp)
             ) {
                 // Associazioni stringa-composable
                 NavHost(
@@ -51,7 +51,7 @@ fun NavigationManager() {
                     startDestination = destinationsList[1],
                 ) {
                     composable(destinationsList[0]) {
-                        ReviewCardPreview()
+                        ListOfReviewsPreview()
                     }
                     composable(destinationsList[1]) {
                         TestComposable(7)

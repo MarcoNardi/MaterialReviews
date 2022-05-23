@@ -5,6 +5,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -49,6 +51,16 @@ fun ReviewCard(review: Review) {
                     text = userName,
                     style = MaterialTheme.typography.titleMedium
                 )
+
+                Spacer(Modifier.weight(1f))
+
+                // Menu
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Filled.MoreVert,
+                        contentDescription = "Star",
+                    )
+                }
             }
 
             // Stelline e data
@@ -80,7 +92,7 @@ fun ReviewCard(review: Review) {
 fun ListOfReviews(reviews: List<Review>) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = Modifier.padding(horizontal = 10.dp)
+        //modifier = Modifier.padding(horizontal = 10.dp)
     ) {
         items(reviews) { review ->
             ReviewCard( review )
@@ -91,7 +103,7 @@ fun ListOfReviews(reviews: List<Review>) {
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun ReviewCardPreview() {
+fun ListOfReviewsPreview() {
     val reviews = listOf(Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"), Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"))
     ListOfReviews(reviews)
 }

@@ -28,5 +28,7 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun M3App() {
-    NavigationManager()
+    MaterialReviewsTheme() {
+        NavigationManager()
+    }
 }
