@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 
-class MainActivity : ComponentActivity() {
+class TestActivity : ComponentActivity() {
 
     private val database: AppDatabase by lazy { AppDatabase.getDatabase(this) }
     public val userModel: UserViewModel by viewModels{
