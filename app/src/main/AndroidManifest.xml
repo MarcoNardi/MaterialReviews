@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialReviews">
         <activity
-            android:name=".MainActivity"
+            android:name=".TestActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MaterialReviews">

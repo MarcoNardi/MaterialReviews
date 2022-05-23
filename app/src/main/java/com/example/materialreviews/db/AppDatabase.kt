@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.materialreviews.getInitialrestaurantsData
 
-@Database(entities = [UserEntity::class, ImageEntity::class, RestaurantEntity::class], version = 3, exportSchema = false)
+@Database(entities = [UserEntity::class, ImageEntity::class, RestaurantEntity::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun restaurantDao(): RestaurantDao
