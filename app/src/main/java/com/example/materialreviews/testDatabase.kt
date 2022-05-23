@@ -62,10 +62,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MaterialReviewsTheme {
-                ShowRestaurantWithImage()
+                //ShowRestaurantWithImage()
                 //ImagePicker()
                 //RestaurantTest()
-                //UserTest()
+                UserTest()
             }
         }
     }
@@ -80,10 +80,12 @@ class MainActivity : ComponentActivity() {
 
         }
 
+
     }
 
     @Composable
     fun ImagePicker(){
+        
         val imageUri = remember { mutableStateOf<Uri?>(null)}
         val imageData= remember {mutableStateOf<Bitmap?>(null)}
         val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
