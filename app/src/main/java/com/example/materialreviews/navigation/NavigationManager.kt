@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.materialreviews.ProfileScreen
 import com.example.materialreviews.ListOfReviewsPreview
 import com.example.materialreviews.TestComposable
+import com.example.materialreviews.ThemeGrid
 
 // Lista che contiene le schermate a cui e` possibile navigare
 val destinationsList = listOf(
@@ -54,7 +55,7 @@ fun NavigationManager() {
                         ListOfReviewsPreview()
                     }
                     composable(destinationsList[1]) {
-                        TestComposable(7)
+                        ThemeGrid()
                     }
                     composable(destinationsList[2]) {
                         ProfileScreen()

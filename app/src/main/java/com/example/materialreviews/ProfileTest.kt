@@ -51,6 +51,8 @@ fun ProfileScreen() {
                 }
                 Text(text = "Impostazioni")
 
+                Divider()
+
                 // Le mie recensioni
                 Text("Le mie recensioni",
                     style = MaterialTheme.typography.titleLarge
