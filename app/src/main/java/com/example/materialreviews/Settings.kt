@@ -3,7 +3,10 @@ package com.example.materialreviews
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +40,7 @@ fun getColorSchemeWithName(colorScheme: ColorScheme) : List<ColorWithName> {
         ColorWithName("On Primary", colorScheme.onPrimary, colorScheme.primary),
         ColorWithName("Primary Container", colorScheme.primaryContainer, colorScheme.onPrimaryContainer),
         ColorWithName("On Primary Container", colorScheme.onPrimaryContainer, colorScheme.primaryContainer),
+        ColorWithName("Inverse Primary", colorScheme.inversePrimary, colorScheme.primary),
 
         ColorWithName("Secondary", colorScheme.secondary, colorScheme.onSecondary),
         ColorWithName("On Secondary", colorScheme.onSecondary, colorScheme.secondary),
@@ -50,8 +54,15 @@ fun getColorSchemeWithName(colorScheme: ColorScheme) : List<ColorWithName> {
 
         ColorWithName("Background", colorScheme.background, colorScheme.onBackground),
         ColorWithName("On Background", colorScheme.onBackground, colorScheme.background),
+        ColorWithName("Outline", colorScheme.outline, colorScheme.background),
+
         ColorWithName("Surface", colorScheme.surface, colorScheme.onSurface),
         ColorWithName("On Surface", colorScheme.onSurface, colorScheme.surface),
+        ColorWithName("Surface Variant", colorScheme.surfaceVariant, colorScheme.onSurfaceVariant),
+        ColorWithName("On Surface Variant", colorScheme.onSurfaceVariant, colorScheme.surfaceVariant),
+        ColorWithName("Inverse Surface", colorScheme.inverseSurface, colorScheme.inverseOnSurface),
+        ColorWithName("Inverse On Surface", colorScheme.inverseOnSurface, colorScheme.inverseSurface),
+        ColorWithName("Surface Tint", colorScheme.surfaceTint, colorScheme.surface),
 
         ColorWithName("Error", colorScheme.error, colorScheme.onError),
         ColorWithName("On Error", colorScheme.onError, colorScheme.error),
@@ -68,7 +79,9 @@ fun ThemeGrid() {
     val currentColorScheme: ColorScheme = MaterialTheme.colorScheme
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         SyncWithSystemSwitch()
@@ -77,11 +90,12 @@ fun ThemeGrid() {
 
         val currentColorSchemeWithName = getColorSchemeWithName(currentColorScheme)
 
-        ColorSet(currentColorSchemeWithName.subList(0,4), "Colori primari")
-        ColorSet(currentColorSchemeWithName.subList(4,8), "Colori secondari")
-        ColorSet(currentColorSchemeWithName.subList(8,12), "Colori terziari")
-        ColorSet(currentColorSchemeWithName.subList(12,16), "Colori per sfondi e superfici")
-        ColorSet(currentColorSchemeWithName.subList(16,20), "Colori per messaggi di errore")
+        ColorSet(currentColorSchemeWithName.subList(0, 5), "Colori primari")
+        ColorSet(currentColorSchemeWithName.subList(5, 9), "Colori secondari")
+        ColorSet(currentColorSchemeWithName.subList(9, 13), "Colori terziari")
+        ColorSet(currentColorSchemeWithName.subList(13, 16), "Colori per sfondi e outline")
+        ColorSet(currentColorSchemeWithName.subList(16, 23), "Colori per superfici")
+        ColorSet(currentColorSchemeWithName.subList(23, 27), "Colori per i messaggi d'errore")
     }
 }
 
@@ -103,32 +117,33 @@ fun ColorBox(colorItem: ColorWithName, width: Dp) {
 
 @Composable
 fun ColorSet(listOfColors: List<ColorWithName>, title: String) {
-    // Accetta solo liste di 3 o 4 colori
-    if (listOfColors.size < 3 || listOfColors.size > 4) {
-        throw IllegalArgumentException("La lista di colori non è adatta")
-    }
-
+    // Titolo del gruppo di colori
     val textSize: TextStyle = MaterialTheme.typography.titleMedium
-
     Text(text = title, style = textSize)
 
+    // Forma del wrapper
     val boxShape = RoundedCornerShape(8.dp)
-       
+
+    // Grid che contiene i colori
     BoxWithConstraints(
         modifier = Modifier
-            .border(1.dp, currentColorScheme.onSurface, boxShape)
+            .border(1.dp, currentColorScheme.outline, boxShape)
             .clip(shape = boxShape)
     ) {
+        // Ogni ColorBox occupa metà larghezza
         val boxMaxWidth = maxWidth
+
         Column() {
-            Row() {
-                ColorBox(listOfColors[0], boxMaxWidth/2)
-                ColorBox(listOfColors[2], boxMaxWidth/2)
-            }
-            Row() {
-                ColorBox(listOfColors[1], boxMaxWidth/2)
-                if (listOfColors.size == 4) {
-                    ColorBox(listOfColors[3], boxMaxWidth/2)
+
+            // Prendo i colori a coppie e li metto "in riga per due"
+            for (i in 0..listOfColors.size-1 step 2) {
+                val j = if (i >= listOfColors.size-1) 1 else 2
+                val colorCouple = listOfColors.subList(i, i+j)
+
+                Row() {
+                    for(color in colorCouple) {
+                        ColorBox(colorItem = color, width = boxMaxWidth/j)
+                    }
                 }
             }
         }

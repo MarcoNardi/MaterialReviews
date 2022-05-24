@@ -134,6 +134,7 @@ fun DynamicColorsSwitch() {
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Switch(
+            enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
             checked = isUsingDynamicColor,
             onCheckedChange = { isUsingDynamicColor = !isUsingDynamicColor }
         )
