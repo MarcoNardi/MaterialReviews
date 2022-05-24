@@ -27,4 +27,8 @@ interface RestaurantDao {
     @Transaction
     @Query("SELECT * FROM restaurants")
     fun getRestaurantsAndReviews(): LiveData<List<RestaurantWithReviews>>
+
+    @Transaction
+    @Query("SELECT * FROM restaurants WHERE rid LIKE :restaurantId")
+    fun getReviewsOfRestaurant(restaurantId: Int): LiveData<RestaurantWithReviews>
 }

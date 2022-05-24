@@ -202,7 +202,7 @@ class TestActivity : ComponentActivity() {
 
 @Composable
 private fun reviewsOfUserList(reviewsData: LiveData<UserWithReviews>) {
-    val userWithReviews by reviewsData.observeAsState()
+    val userWithReviews by reviewsData.observeAsState(null)
     if(userWithReviews!=null){
         val reviewList=userWithReviews!!.reviews
         LazyColumn(){

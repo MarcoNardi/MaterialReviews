@@ -36,6 +36,9 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     fun getRestaurantsWithReviews() : LiveData<List<RestaurantWithReviews>>{
         return restaurantDao.getRestaurantsAndReviews()
     }
+    fun getReviewsOfRestaurant(restaurantId: Int): LiveData<RestaurantWithReviews>{
+        return  restaurantDao.getReviewsOfRestaurant(restaurantId)
+    }
 }
 
 class RestaurantViewModelFactory(private val restaurantDao: RestaurantDao): ViewModelProvider.Factory {
