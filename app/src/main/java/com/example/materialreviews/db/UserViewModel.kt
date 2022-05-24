@@ -21,8 +21,21 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
         insertUser(createUserEntry(id,firstName,lastName))
     }
 
+    fun addUser(user:UserEntity){
+        insertUser(user)
+    }
+
+
     fun getAllUsers() :  LiveData<List<UserEntity>>{
         return userDao.getAll()
+    }
+
+    fun getAllUsersWithReviews() :  LiveData<List<UserWithReviews>>{
+        return userDao.getUsersAndReviews()
+    }
+
+    fun getReviewsOfUser(userId: Int) :  LiveData<UserWithReviews>{
+        return userDao.getReviewsOfUser(userId)
     }
 }
 

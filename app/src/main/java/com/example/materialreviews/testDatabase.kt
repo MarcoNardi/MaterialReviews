@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -27,29 +26,35 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.materialreviews.db.*
-import com.example.materialreviews.ui.theme.MaterialReviewsTheme
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import com.example.materialreviews.db.*
+import com.example.materialreviews.ui.theme.MaterialReviewsTheme
 
 class TestActivity : ComponentActivity() {
 
     private val database: AppDatabase by lazy { AppDatabase.getDatabase(this) }
-    public val userModel: UserViewModel by viewModels{
+    val userModel: UserViewModel by viewModels{
         UserViewModelFactory(
             database.userDao()
         )
     }
-    public val restaurantModel: RestaurantViewModel by viewModels{
+    val restaurantModel: RestaurantViewModel by viewModels{
         RestaurantViewModelFactory(
             database.restaurantDao()
         )
     }
-    public val imageViewModel: ImageViewModel by viewModels{
+    val imageModel: ImageViewModel by viewModels{
         ImageViewModelFactory(
             database.imageDao()
+        )
+    }
+
+    val reviewModel: ReviewViewModel by viewModels{
+        ReviewViewModelFactory(
+            database.reviewDao()
         )
     }
 
@@ -62,11 +67,35 @@ class TestActivity : ComponentActivity() {
 
         setContent {
             MaterialReviewsTheme {
+                //reviewModel.addReview(4,1,1)
+                //reviewModel.addReview(3,2,1)
+                //reviewModel.addReview(1,2,2)
+
+                /*
+                val restaurantList= getInitialRestaurantsData()
+                val userslist= getInitialUsersData()
+                for(r in restaurantList){
+                    restaurantModel.addRestaurant(r)
+                }
+                for (u in userslist){
+                    userModel.addUser(u)
+                }*/
+
+
                 //ShowRestaurantWithImage()
                 //ImagePicker()
                 //RestaurantTest()
-                UserTest()
+                //UserTest()
+                reviewsTest()
             }
+        }
+    }
+
+    @Composable
+    fun reviewsTest(){
+        Column{
+            //reviewsList(restaurantModel.getRestaurantsWithReviews())
+            reviewsOfUserList(reviewsData = userModel.getReviewsOfUser(2))
         }
     }
 
@@ -85,7 +114,7 @@ class TestActivity : ComponentActivity() {
 
     @Composable
     fun ImagePicker(){
-        
+
         val imageUri = remember { mutableStateOf<Uri?>(null)}
         val imageData= remember {mutableStateOf<Bitmap?>(null)}
         val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
@@ -118,13 +147,12 @@ class TestActivity : ComponentActivity() {
                 Image(bitmap = imageData.value!!.asImageBitmap() , contentDescription = null)
             }
             if(imageUri.value!=null && rid!="" && rid.toInt()>=1){
-                Button(onClick = {imageViewModel.addImage(imageUri.value.toString(),rid.toInt())}) {
+                Button(onClick = {imageModel.addImage(imageUri.value.toString(),rid.toInt())}) {
                     Text("add to database")
                 }
             }
         }
     }
-
 
     @Preview(showBackground = true)
     @Composable
@@ -167,6 +195,31 @@ class TestActivity : ComponentActivity() {
 
         }
 
+    }
+
+
+}
+
+@Composable
+private fun reviewsOfUserList(reviewsData: LiveData<UserWithReviews>) {
+    val userWithReviews by reviewsData.observeAsState(null)
+    if(userWithReviews!=null){
+        val reviewList=userWithReviews!!.reviews
+        LazyColumn(){
+            items(reviewList){data->
+                Text(text=data.toString())
+            }
+        }
+    }
+
+}
+@Composable
+fun <T> reviewsList(reviewsData: LiveData<List<T>>){
+    val list by reviewsData.observeAsState(emptyList())
+    LazyColumn {
+        items(list) { data ->
+            Text(text=data.toString())
+        }
     }
 }
 

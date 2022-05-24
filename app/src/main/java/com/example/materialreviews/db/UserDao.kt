@@ -1,10 +1,7 @@
 package com.example.materialreviews.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface UserDao {
@@ -22,4 +19,15 @@ interface UserDao {
 
     @Delete
     suspend fun delete(user: UserEntity)
+
+    @Transaction
+    @Query("SELECT * FROM users")
+    fun getUsersAndReviews(): LiveData<List<UserWithReviews>>
+
+
+    @Transaction
+    @Query("SELECT * FROM users WHERE uid LIKE :userId")
+    fun getReviewsOfUser(userId: Int): LiveData<UserWithReviews>
+
+
 }
