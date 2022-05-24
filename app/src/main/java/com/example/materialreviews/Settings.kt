@@ -1,78 +1,151 @@
 package com.example.materialreviews
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.materialreviews.ui.theme.MaterialReviewsTheme
+import com.example.materialreviews.ui.theme.DarkThemeSwitch
+import com.example.materialreviews.ui.theme.DynamicColorsSwitch
+import com.example.materialreviews.ui.theme.SyncWithSystemSwitch
+import com.example.materialreviews.ui.theme.currentColorScheme
 
+
+// Liste di colori per visualizzare il tema
+data class ColorWithName(
+    var name: String,
+    var color: Color,
+    var onColor: Color
+)
+
+fun getColorSchemeWithName(colorScheme: ColorScheme) : List<ColorWithName> {
+    val colorWithNameList = listOf(
+        //ColorWithName("", colorScheme., colorScheme.),
+        ColorWithName("Primary", colorScheme.primary, colorScheme.onPrimary),
+        ColorWithName("On Primary", colorScheme.onPrimary, colorScheme.primary),
+        ColorWithName("Primary Container", colorScheme.primaryContainer, colorScheme.onPrimaryContainer),
+        ColorWithName("On Primary Container", colorScheme.onPrimaryContainer, colorScheme.primaryContainer),
+        ColorWithName("Inverse Primary", colorScheme.inversePrimary, colorScheme.primary),
+
+        ColorWithName("Secondary", colorScheme.secondary, colorScheme.onSecondary),
+        ColorWithName("On Secondary", colorScheme.onSecondary, colorScheme.secondary),
+        ColorWithName("Secondary Container", colorScheme.secondaryContainer, colorScheme.onSecondaryContainer),
+        ColorWithName("On Secondary Container", colorScheme.onSecondaryContainer, colorScheme.secondaryContainer),
+
+        ColorWithName("Tertiary", colorScheme.tertiary, colorScheme.onTertiary),
+        ColorWithName("On Tertiary", colorScheme.onTertiary, colorScheme.tertiary),
+        ColorWithName("Tertiary Container", colorScheme.tertiaryContainer, colorScheme.onTertiaryContainer),
+        ColorWithName("On Tertiary Container", colorScheme.onTertiaryContainer, colorScheme.tertiaryContainer),
+
+        ColorWithName("Background", colorScheme.background, colorScheme.onBackground),
+        ColorWithName("On Background", colorScheme.onBackground, colorScheme.background),
+        ColorWithName("Outline", colorScheme.outline, colorScheme.background),
+
+        ColorWithName("Surface", colorScheme.surface, colorScheme.onSurface),
+        ColorWithName("On Surface", colorScheme.onSurface, colorScheme.surface),
+        ColorWithName("Surface Variant", colorScheme.surfaceVariant, colorScheme.onSurfaceVariant),
+        ColorWithName("On Surface Variant", colorScheme.onSurfaceVariant, colorScheme.surfaceVariant),
+        ColorWithName("Inverse Surface", colorScheme.inverseSurface, colorScheme.inverseOnSurface),
+        ColorWithName("Inverse On Surface", colorScheme.inverseOnSurface, colorScheme.inverseSurface),
+        ColorWithName("Surface Tint", colorScheme.surfaceTint, colorScheme.surface),
+
+        ColorWithName("Error", colorScheme.error, colorScheme.onError),
+        ColorWithName("On Error", colorScheme.onError, colorScheme.error),
+        ColorWithName("Error Container", colorScheme.errorContainer, colorScheme.onErrorContainer),
+        ColorWithName("On Error Container", colorScheme.onErrorContainer, colorScheme.errorContainer),
+    )
+
+    return colorWithNameList
+}
+
+@Preview
 @Composable
 fun ThemeGrid() {
     val currentColorScheme: ColorScheme = MaterialTheme.colorScheme
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Row(
-            modifier = Modifier.height(50.dp)
-        ) {
-            ColorBox(currentColorScheme.primary)
-            ColorBox(currentColorScheme.onPrimary)
-            ColorBox(currentColorScheme.primaryContainer)
-            ColorBox(currentColorScheme.onPrimaryContainer)
-        }
-        Row(
-            modifier = Modifier.height(50.dp)
-        ) {
-            ColorBox(currentColorScheme.secondary)
-            ColorBox(currentColorScheme.onSecondary)
-            ColorBox(currentColorScheme.secondaryContainer)
-            ColorBox(currentColorScheme.onSecondaryContainer)
-        }
-        Row(
-            modifier = Modifier.height(50.dp)
-        ) {
-            ColorBox(currentColorScheme.tertiary)
-            ColorBox(currentColorScheme.onTertiary)
-            ColorBox(currentColorScheme.tertiaryContainer)
-            ColorBox(currentColorScheme.onTertiaryContainer)
-        }
-        Row(
-            modifier = Modifier.height(50.dp)
-        ) {
-            ColorBox(currentColorScheme.background)
-            ColorBox(currentColorScheme.onBackground)
-            ColorBox(currentColorScheme.surface)
-            ColorBox(currentColorScheme.onSurface)
-        }
-        Row(
-            modifier = Modifier.height(50.dp)
-        ) {
-            ColorBox(currentColorScheme.surfaceVariant)
-            ColorBox(currentColorScheme.onSurfaceVariant)
-            ColorBox(currentColorScheme.outline)
-        }
-        Row(
-            modifier = Modifier.height(50.dp)
-        ) {
-            ColorBox(currentColorScheme.error)
-            ColorBox(currentColorScheme.onError)
-            ColorBox(currentColorScheme.errorContainer)
-            ColorBox(currentColorScheme.onErrorContainer)
-        }
+        SyncWithSystemSwitch()
+        DarkThemeSwitch()
+        DynamicColorsSwitch()
+
+        val currentColorSchemeWithName = getColorSchemeWithName(currentColorScheme)
+
+        ColorSet(currentColorSchemeWithName.subList(0, 5), "Colori primari")
+        ColorSet(currentColorSchemeWithName.subList(5, 9), "Colori secondari")
+        ColorSet(currentColorSchemeWithName.subList(9, 13), "Colori terziari")
+        ColorSet(currentColorSchemeWithName.subList(13, 16), "Colori per sfondi e outline")
+        ColorSet(currentColorSchemeWithName.subList(16, 23), "Colori per superfici")
+        ColorSet(currentColorSchemeWithName.subList(23, 27), "Colori per i messaggi d'errore")
     }
 }
 
 @Composable
-fun ColorBox(color: Color, size: Dp = 50.dp) {
+fun ColorBox(colorItem: ColorWithName, width: Dp) {
     Box(
         modifier = Modifier
-            .size(size)
-            .background(color)
-    )
+            .height(35.dp)
+            .width(width)
+            .background(colorItem.color)
+            .padding(start = 5.dp)
+    ) {
+        Text(
+            text = colorItem.name,
+            color = colorItem.onColor
+        )
+    }
+}
+
+@Composable
+fun ColorSet(listOfColors: List<ColorWithName>, title: String) {
+    // Titolo del gruppo di colori
+    val textSize: TextStyle = MaterialTheme.typography.titleMedium
+    Text(text = title, style = textSize)
+
+    // Forma del wrapper
+    val boxShape = RoundedCornerShape(8.dp)
+
+    // Grid che contiene i colori
+    BoxWithConstraints(
+        modifier = Modifier
+            .border(1.dp, currentColorScheme.outline, boxShape)
+            .clip(shape = boxShape)
+    ) {
+        // Ogni ColorBox occupa metà larghezza
+        val boxMaxWidth = maxWidth
+
+        Column() {
+
+            // Prendo i colori a coppie e li metto "in riga per due"
+            for (i in 0..listOfColors.size-1 step 2) {
+                val j = if (i >= listOfColors.size-1) 1 else 2
+                val colorCouple = listOfColors.subList(i, i+j)
+
+                Row() {
+                    for(color in colorCouple) {
+                        ColorBox(colorItem = color, width = boxMaxWidth/j)
+                    }
+                }
+            }
+        }
+    }
 }
