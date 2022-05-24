@@ -34,18 +34,18 @@ fun RestaurantCard(restaurant: Restaurant,
     val stars = restaurant.rating
     val restImage = restaurant.image
 
-    Card(
+    ElevatedCard(
         shape = MaterialTheme.shapes.medium,
-        modifier = modifier
+        modifier = Modifier.padding(10.dp)
     ) {
-        Column(modifier = modifier){
+        Column(modifier = modifier ){
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_background),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
             )
-            Row(Modifier.padding(3.dp),
+            Row(Modifier.padding(start = 3.dp, end = 12.dp),
                 verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.padding(3.dp)) {
             Row(){
@@ -76,7 +76,7 @@ fun RestaurantCard(restaurant: Restaurant,
                 imageVector = icon,
                 contentDescription = "Aggiungi a elementi salvati",
                 tint = tint,
-                modifier = Modifier.size(50.dp)
+                modifier = Modifier.size(35.dp)
             )
             }
     }
@@ -95,7 +95,6 @@ fun ListOfRestaurants(restaurants: List<Restaurant>) {
         }
     }
 }
-
     @ExperimentalMaterial3Api
     @Preview
     @Composable
