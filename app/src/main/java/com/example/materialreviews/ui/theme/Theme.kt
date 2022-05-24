@@ -1,12 +1,22 @@
 package com.example.materialreviews.ui.theme
 
 import android.os.Build
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,28 +81,40 @@ private val UnipdThemeDark = darkColorScheme(
     inversePrimary = md_theme_dark_inversePrimary,
 )
 
-// Indica se l'app ha lo stesso tema (chiaro/scuro) del sistema
+/**
+ * Indica se l'app ha lo stesso tema (chiaro/scuro) del sistema
+ */
 var isFollowingSystemDarkTheme by mutableStateOf(false)
 
-// Indica se l'app dta utilizzando il tema scuro
+/**
+ * Indica se l'app dta utilizzando il tema scuro
+ */
 var isInDarkTheme by mutableStateOf(false)
 
-// Indica se l'app sta utilizzando il dynamic color fornito dal sistema
+/**
+ * Indica se l'app sta utilizzando il dynamic color fornito dal sistema
+ */
 var isUsingDynamicColor by mutableStateOf(false)
 
 var LightColorScheme = UnipdThemeLight
 var DarkColorScheme = UnipdThemeDark
 
-// Schema di colori attualmente in uso nell'app
+/**
+ * Schema di colori attualmente in uso nell'app
+ */
 var currentColorScheme: ColorScheme by mutableStateOf(LightColorScheme)
 
-// Funzione che setta il tema chiaro/scuro
+/**
+ * Imposta il tema scuro in funzione del parametro passato
+ */
 fun setDarkTheme(darkTheme: Boolean = true) {
     isInDarkTheme = darkTheme
     currentColorScheme = if(darkTheme) DarkColorScheme else LightColorScheme
 }
 
-// Switch per attivare la sincronizzazione del tema (chiaro/scuro) con il sistema
+/**
+ * Switch per attivare la sincronizzazione del tema (chiaro/scuro) con il sistema
+ */
 @Preview
 @Composable
 fun SyncWithSystemSwitch() {
@@ -108,7 +130,9 @@ fun SyncWithSystemSwitch() {
     }
 }
 
-// Switch per passare da tema chiaro a tema scuro
+/**
+ * Switch per passare da tema chiaro a tema scuro
+ */
 @Preview
 @Composable
 fun DarkThemeSwitch() {
@@ -125,7 +149,82 @@ fun DarkThemeSwitch() {
     }
 }
 
-// Switch per usare i colori dinamici o il tema di default
+/**
+ * Tre Pulsanti per selezionare il tema tra le opzioni Chiaro | Scuro | Sistema
+ */
+@ExperimentalMaterial3Api
+@Preview
+@Composable
+fun ThemeSelector() {
+    val possibleThemes = listOf( "Chiaro", "Scuro", "Sistema" )
+    var selectedTheme = if (isFollowingSystemDarkTheme) "Sistema" else { if(isInDarkTheme) "Scuro" else "Chiaro" }
+
+    val shape = RoundedCornerShape(8.dp)
+    Box(
+        modifier = Modifier
+            .clip(shape)
+            .border(1.dp, currentColorScheme.onPrimaryContainer, shape)
+    ) {
+        Row {
+            ThemeSelectorItem(
+                name = "Chiaro",
+                selectedTheme = selectedTheme,
+                onClick = {
+                    isFollowingSystemDarkTheme = false
+                    setDarkTheme(false)
+                }
+            )
+            ThemeSelectorItem(
+                name = "Scuro",
+                selectedTheme = selectedTheme,
+                onClick = {
+                    isFollowingSystemDarkTheme = false
+                    setDarkTheme(true)
+                }
+            )
+            ThemeSelectorItem(
+                name = "Sistema",
+                selectedTheme = selectedTheme,
+                onClick = {
+                    isFollowingSystemDarkTheme = true
+                }
+            )
+        }
+    }
+}
+
+/**
+ * Singoli elementi del ThemeSelector
+ */
+@ExperimentalMaterial3Api
+@Composable
+fun ThemeSelectorItem(name: String, shape: Shape = RectangleShape, selectedTheme: String, onClick: ()->Unit = {}) {
+    val selected = (name == selectedTheme)
+    val selectedColor = if (isInDarkTheme) currentColorScheme.primaryContainer else currentColorScheme.primary
+    val unselectedColor = if (isInDarkTheme) currentColorScheme.primary else currentColorScheme.primaryContainer
+    val background = if (selected) selectedColor else unselectedColor
+    val textColor = currentColorScheme.contentColorFor(background)
+
+    Box(
+        modifier = Modifier
+            .background(background)
+            .clip(shape)
+            .border(0.5f.dp, currentColorScheme.onPrimaryContainer, shape)
+            .clickable(
+                onClick = onClick
+            )
+            .padding(10.dp)
+    ) {
+        Text(
+            text = name,
+            color = textColor
+        )
+    }
+}
+
+/**
+ * Switch per usare i colori dinamici o il tema di default
+ */
 @Preview
 @Composable
 fun DynamicColorsSwitch() {
@@ -142,6 +241,9 @@ fun DynamicColorsSwitch() {
     }
 }
 
+/**
+ * Tema attualmente in uso nell'app
+ */
 @Composable
 fun MaterialReviewsTheme(
     content: @Composable () -> Unit

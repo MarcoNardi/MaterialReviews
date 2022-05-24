@@ -7,10 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,19 +17,19 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.materialreviews.ui.theme.DarkThemeSwitch
-import com.example.materialreviews.ui.theme.DynamicColorsSwitch
-import com.example.materialreviews.ui.theme.SyncWithSystemSwitch
-import com.example.materialreviews.ui.theme.currentColorScheme
+import com.example.materialreviews.ui.theme.*
 
 
 // Liste di colori per visualizzare il tema
 data class ColorWithName(
-    var name: String,
-    var color: Color,
-    var onColor: Color
+    var name: String,   // Nome del colore
+    var color: Color,   // Il colore in questione
+    var onColor: Color  // Il colore delle scritte
 )
 
+/**
+ * Produce una lista di oggetti ColorWithName. Ogni elemento e` associato ad uno dei colori del ColorScheme passato come parametro
+ */
 fun getColorSchemeWithName(colorScheme: ColorScheme) : List<ColorWithName> {
     val colorWithNameList = listOf(
         //ColorWithName("", colorScheme., colorScheme.),
@@ -73,9 +70,13 @@ fun getColorSchemeWithName(colorScheme: ColorScheme) : List<ColorWithName> {
     return colorWithNameList
 }
 
+/**
+ * Visualizza il tema, mostrando i singoli colori
+ */
+@ExperimentalMaterial3Api
 @Preview
 @Composable
-fun ThemeGrid() {
+fun ThemeVisualizer() {
     val currentColorScheme: ColorScheme = MaterialTheme.colorScheme
 
     Column(
@@ -87,6 +88,7 @@ fun ThemeGrid() {
         SyncWithSystemSwitch()
         DarkThemeSwitch()
         DynamicColorsSwitch()
+        ThemeSelector()
 
         val currentColorSchemeWithName = getColorSchemeWithName(currentColorScheme)
 
@@ -99,6 +101,11 @@ fun ThemeGrid() {
     }
 }
 
+/**
+ * Produce una singola Box con il nome del colore e lo sfondo del colore in questione
+ * @param colorItem il colore in questione.
+ * @param width larghezza della Box: viene passata dal parent
+ */
 @Composable
 fun ColorBox(colorItem: ColorWithName, width: Dp) {
     Box(
@@ -115,6 +122,9 @@ fun ColorBox(colorItem: ColorWithName, width: Dp) {
     }
 }
 
+/**
+ * Data una lista di ColorAndName, raggruppa i colori in una unica Box
+ */
 @Composable
 fun ColorSet(listOfColors: List<ColorWithName>, title: String) {
     // Titolo del gruppo di colori

@@ -31,7 +31,7 @@ fun ReviewCard(review: Review) {
     val comment = review.comment
     val date = review.date
 
-    Card(
+    ElevatedCard(
         shape = RoundedCornerShape(15.dp)
     ) {
         Column(

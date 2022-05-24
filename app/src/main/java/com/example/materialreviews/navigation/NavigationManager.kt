@@ -17,10 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.materialreviews.ProfileScreen
-import com.example.materialreviews.ListOfReviewsPreview
-import com.example.materialreviews.TestComposable
-import com.example.materialreviews.ThemeGrid
+import com.example.materialreviews.*
 
 // Lista che contiene le schermate a cui e` possibile navigare
 val destinationsList = listOf(
@@ -52,10 +49,10 @@ fun NavigationManager() {
                     startDestination = destinationsList[1],
                 ) {
                     composable(destinationsList[0]) {
-                        ListOfReviewsPreview()
+                        ListOfRestaurantsPreview()
                     }
                     composable(destinationsList[1]) {
-                        ThemeGrid()
+                        ThemeVisualizer()
                     }
                     composable(destinationsList[2]) {
                         ProfileScreen()

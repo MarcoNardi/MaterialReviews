@@ -34,7 +34,7 @@ fun RestaurantCard(restaurant: Restaurant,
     val stars = restaurant.rating
     val restImage = restaurant.image
 
-    Surface(
+    Card(
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
     ) {
@@ -95,6 +95,7 @@ fun ListOfRestaurants(restaurants: List<Restaurant>) {
         }
     }
 }
+
     @ExperimentalMaterial3Api
     @Preview
     @Composable
