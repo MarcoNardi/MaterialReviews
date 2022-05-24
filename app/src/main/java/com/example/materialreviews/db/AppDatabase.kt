@@ -5,13 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.materialreviews.getInitialrestaurantsData
+import com.example.materialreviews.getInitialRestaurantsData
 
-@Database(entities = [UserEntity::class, ImageEntity::class, RestaurantEntity::class], version = 4, exportSchema = false)
+@Database(entities = [UserEntity::class, ImageEntity::class, RestaurantEntity::class, ReviewEntity::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun restaurantDao(): RestaurantDao
     abstract fun imageDao(): ImageDao
+    abstract fun reviewDao(): ReviewDao
 
 
     companion object {
@@ -34,11 +35,11 @@ abstract class AppDatabase : RoomDatabase() {
                 ).fallbackToDestructiveMigration().addCallback(object:Callback(){
                     override fun onCreate ( db: SupportSQLiteDatabase){
                         super.onCreate(db)
-                        val restaurants= getInitialrestaurantsData()
-                        for(restaurant in restaurants){
-                            db.execSQL("INSERT INTO restaurants VALUES ($restaurant.rid , $restaurant.name , $restaurant.sito , $restaurant.orario , $restaurant.address)")
+                        //val restaurants= getInitialrestaurantsData()
+                        //for(restaurant in restaurants){
+                           // db.execSQL("INSERT INTO restaurants VALUES ($restaurant.rid , $restaurant.name , $restaurant.sito , $restaurant.orario , $restaurant.address)")
 
-                        }
+                        //}
                     }
 
                 }).build()

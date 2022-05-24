@@ -21,12 +21,20 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
         insertRestaurant(createRestaurantEntry(id, name, sito, citta, via, num_civico, orario ))
     }
 
+
+    fun addRestaurant(restaurant: RestaurantEntity){
+        insertRestaurant(restaurant)
+    }
+
     fun getAllRestaurants() :  LiveData<List<RestaurantEntity>>{
         return restaurantDao.getAll()
     }
 
     fun getRestaurantsWithImage() : LiveData<List<RestaurantWithImages>>{
         return restaurantDao.getRestaurantsAndImages()
+    }
+    fun getRestaurantsWithReviews() : LiveData<List<RestaurantWithReviews>>{
+        return restaurantDao.getRestaurantsAndReviews()
     }
 }
 

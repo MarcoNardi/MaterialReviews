@@ -23,4 +23,11 @@ interface UserDao {
     @Transaction
     @Query("SELECT * FROM users")
     fun getUsersAndReviews(): LiveData<List<UserWithReviews>>
+
+
+    @Transaction
+    @Query("SELECT * FROM users WHERE uid LIKE :userId")
+    fun getReviewsOfUser(userId: Int): LiveData<UserWithReviews>
+
+
 }
