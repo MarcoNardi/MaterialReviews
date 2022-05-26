@@ -1,25 +1,21 @@
 package com.example.materialreviews.ui.theme
 
 import android.os.Build
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import com.example.materialreviews.R
 
 // Palette generate da https://material-foundation.github.io/material-theme-builder/#/custom
 private val UnipdThemeLight = lightColorScheme(
@@ -150,46 +146,59 @@ fun DarkThemeSwitch() {
 }
 
 /**
- * Tre Pulsanti per selezionare il tema tra le opzioni Chiaro | Scuro | Sistema
+ * Tre Pulsanti per selector il tema tra le opzioni Chiaro | Scuro | Sistema
  */
 @ExperimentalMaterial3Api
 @Preview
 @Composable
 fun ThemeSelector() {
-    val possibleThemes = listOf( "Chiaro", "Scuro", "Sistema" )
-    var selectedTheme = if (isFollowingSystemDarkTheme) "Sistema" else { if(isInDarkTheme) "Scuro" else "Chiaro" }
+    // Indica quale tema e` attualmente in uso
+    val selectedTheme = if (isFollowingSystemDarkTheme) "Sistema" else { if(isInDarkTheme) "Scuro" else "Chiaro" }
 
-    val shape = RoundedCornerShape(8.dp)
-    Box(
-        modifier = Modifier
-            .clip(shape)
-            .border(1.dp, currentColorScheme.onPrimaryContainer, shape)
-    ) {
-        Row {
-            ThemeSelectorItem(
-                name = "Chiaro",
-                selectedTheme = selectedTheme,
-                onClick = {
-                    isFollowingSystemDarkTheme = false
-                    setDarkTheme(false)
-                }
-            )
-            ThemeSelectorItem(
-                name = "Scuro",
-                selectedTheme = selectedTheme,
-                onClick = {
-                    isFollowingSystemDarkTheme = false
-                    setDarkTheme(true)
-                }
-            )
-            ThemeSelectorItem(
-                name = "Sistema",
-                selectedTheme = selectedTheme,
-                onClick = {
-                    isFollowingSystemDarkTheme = true
-                }
-            )
-        }
+    // Forme per i pulsanti
+    val leftShape = multiButtonShapes[0]
+    val centerShape = multiButtonShapes[1]
+    val rightShape = multiButtonShapes[2]
+
+    // https://stackoverflow.com/questions/65665563/android-jetpack-compose-icons-doesnt-contain-some-of-the-material-icons
+    // Icone per i temi
+    val lightIconPainter = painterResource(id = R.drawable.ic_baseline_brightness_7_24)
+    val darkIconPainter = painterResource(id = R.drawable.ic_baseline_brightness_3_24)
+    val systemIconPainter = painterResource(id = R.drawable.ic_baseline_android_24)
+
+    Row() {
+        ThemeSelectorItem(
+            name = "Chiaro",
+            iconPainter = lightIconPainter,
+            shape = leftShape,
+            index = 0,
+            selectedTheme = selectedTheme,
+            onClick = {
+                isFollowingSystemDarkTheme = false
+                setDarkTheme(false)
+            },
+        )
+        ThemeSelectorItem(
+            name = "Scuro",
+            iconPainter = darkIconPainter,
+            shape = centerShape,
+            index = 1,
+            selectedTheme = selectedTheme,
+            onClick = {
+                isFollowingSystemDarkTheme = false
+                setDarkTheme(true)
+            },
+        )
+        ThemeSelectorItem(
+            name = "Sistema",
+            iconPainter = systemIconPainter,
+            shape = rightShape,
+            index = 2,
+            selectedTheme = selectedTheme,
+            onClick = {
+                isFollowingSystemDarkTheme = true
+            },
+        )
     }
 }
 
@@ -198,29 +207,95 @@ fun ThemeSelector() {
  */
 @ExperimentalMaterial3Api
 @Composable
-fun ThemeSelectorItem(name: String, shape: Shape = RectangleShape, selectedTheme: String, onClick: ()->Unit = {}) {
-    val selected = (name == selectedTheme)
-    val selectedColor = if (isInDarkTheme) currentColorScheme.primaryContainer else currentColorScheme.primary
-    val unselectedColor = if (isInDarkTheme) currentColorScheme.primary else currentColorScheme.primaryContainer
-    val background = if (selected) selectedColor else unselectedColor
-    val textColor = currentColorScheme.contentColorFor(background)
+fun ThemeSelectorItem(
+    name: String,
+    iconPainter: Painter,
+    shape: Shape,
+    index: Int,
+    selectedTheme: String,
+    onClick: ()->Unit
+) {
+    // Colori per i pulsanti
+    val selectedColor = currentColorScheme.primaryContainer
+    val unselectedColor = currentColorScheme.background
+    val selectedContentColor = currentColorScheme.primary
+    val unselectedContentColor = currentColorScheme.outline
 
-    Box(
-        modifier = Modifier
-            .background(background)
-            .clip(shape)
-            .border(0.5f.dp, currentColorScheme.onPrimaryContainer, shape)
-            .clickable(
-                onClick = onClick
-            )
-            .padding(10.dp)
+    val selected = (selectedTheme == name)
+
+    OutlinedButton(
+        shape = shape,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (selected) selectedColor else unselectedColor,
+            contentColor = if (selected) selectedContentColor else unselectedContentColor
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = if (selected) selectedContentColor else unselectedContentColor
+        ),
+        onClick = onClick,
+
+        //https://stackoverflow.com/questions/67023923/materialbuttontogglegroup-in-jetpack-compose
+        modifier = when (index) {
+            0 -> Modifier
+                .offset(0.dp, 0.dp)
+                .zIndex(if (selected) 1f else 0f)
+            else -> Modifier
+                .offset((-1 * index).dp, 0.dp)
+                .zIndex(if (selected) 1f else 0f)
+        }
     ) {
-        Text(
-            text = name,
-            color = textColor
+        Icon(
+            painter = iconPainter,
+            contentDescription = "theme",
+            modifier = Modifier.padding(end = 5.dp)
+        )
+        Text(name)
+    }
+}
+
+/**
+ * Multi toggle button per utilizzare i colori dinamici o meno
+ */
+@ExperimentalMaterial3Api
+@Preview
+@Composable
+fun DynamicColorSelector() {
+    // Indica quali colori sono attualmente in uso nell'app
+    val selectedColors = if (isUsingDynamicColor) "Dinamici" else "Default"
+
+    // Forme per i pulsanti
+    val leftShape = multiButtonShapes[0]
+    val rightShape = multiButtonShapes[2]
+
+    // Icone
+    val dynamicIconPainter = painterResource(id = R.drawable.ic_baseline_color_lens_24)
+    val defaultIconPainter = painterResource(id = R.drawable.ic_baseline_android_24)
+
+    Row() {
+        ThemeSelectorItem(
+            name = "Dinamici",
+            iconPainter = dynamicIconPainter,
+            shape = leftShape,
+            index = 0,
+            selectedTheme = selectedColors,
+            onClick = {
+                isUsingDynamicColor = true
+            },
+        )
+        ThemeSelectorItem(
+            name = "Default",
+            iconPainter = defaultIconPainter,
+            shape = rightShape,
+            index = 1,
+            selectedTheme = selectedColors,
+            onClick = {
+                isUsingDynamicColor = false
+            },
         )
     }
 }
+
 
 /**
  * Switch per usare i colori dinamici o il tema di default

@@ -35,7 +35,7 @@ fun NavigationManager() {
 
     // Scaffold = topBar + bottomBar + content
     Scaffold(
-        topBar = { TopBar() },
+        topBar = { TopBar(navController) },
         bottomBar = { BottomBar(navController) },
         content = { paddingValues ->
             Box(
@@ -57,6 +57,9 @@ fun NavigationManager() {
                     composable(destinationsList[2]) {
                         ProfileScreen()
                     }
+                    composable("Settings") {
+                        ThemeVisualizer()
+                    }
                 }
             }
         },
@@ -64,7 +67,7 @@ fun NavigationManager() {
 }
 
 @Composable
-fun TopBar() {
+fun TopBar(navController: NavHostController) {
     SmallTopAppBar(
         // Titolo che appare nella barra in alto
         title = { Text("Titolo") },
@@ -88,7 +91,11 @@ fun TopBar() {
                     contentDescription = "Localized description"
                 )
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(
+                onClick = {
+                    navController.navigate("Settings")
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Settings,
                     contentDescription = "Localized description"

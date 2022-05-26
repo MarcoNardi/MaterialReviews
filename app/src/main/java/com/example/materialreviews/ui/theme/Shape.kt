@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -24,5 +25,14 @@ val Shapes = Shapes(
     small = RoundedCornerShape(4.dp),
     medium = RoundedCornerShape(4.dp),
     large = RoundedCornerShape(0.dp)
+)
+
+/**
+ * Forme per i multiButton
+ */
+val multiButtonShapes = listOf(
+    RoundedCornerShape(topStart = 50f, bottomStart = 50f),   // Left
+    RectangleShape,   // Center
+    RoundedCornerShape(topEnd = 50f, bottomEnd = 50f),   // Right
 )
 

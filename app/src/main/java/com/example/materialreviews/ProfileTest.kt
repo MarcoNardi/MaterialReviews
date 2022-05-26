@@ -49,7 +49,6 @@ fun ProfileScreen() {
                             .padding(start = 30.dp)
                     )
                 }
-                Text(text = "Impostazioni")
 
                 Divider()
 
