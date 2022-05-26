@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -69,25 +70,40 @@ fun getColorSchemeWithName(colorScheme: ColorScheme) : List<ColorWithName> {
 }
 
 /**
+ * Schermata per le impostazioni
+ */
+@ExperimentalMaterial3Api
+@Preview
+@Composable
+fun SettingsScreen() {
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        ThemeSelector()
+        DynamicColorSelector()
+
+        Text(text = "Schema di colori in uso", style = MaterialTheme.typography.titleMedium)
+        ColorSchemeVisualizer()
+    }
+}
+
+/**
  * Visualizza il tema, mostrando i singoli colori
  */
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun ThemeVisualizer() {
+fun ColorSchemeVisualizer() {
     val currentColorScheme: ColorScheme = MaterialTheme.colorScheme
 
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SyncWithSystemSwitch()
-        DarkThemeSwitch()
-        DynamicColorsSwitch()
-        DynamicColorSelector()
-        ThemeSelector()
 
         val currentColorSchemeWithName = getColorSchemeWithName(currentColorScheme)
 
@@ -128,7 +144,7 @@ fun ColorBox(colorItem: ColorWithName, width: Dp) {
 fun ColorSet(listOfColors: List<ColorWithName>, title: String) {
     // Titolo del gruppo di colori
     val textSize: TextStyle = MaterialTheme.typography.titleMedium
-    Text(text = title, style = textSize)
+    //Text(text = title, style = textSize)
 
     // Forma del wrapper
     val boxShape = RoundedCornerShape(8.dp)

@@ -1,5 +1,6 @@
 package com.example.materialreviews.ui.theme
 
+import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -9,17 +10,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.core.view.ViewCompat
 import com.example.materialreviews.R
 
 // Palette generate da https://material-foundation.github.io/material-theme-builder/#/custom
 private val UnipdThemeLight = lightColorScheme(
-
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
@@ -48,7 +50,6 @@ private val UnipdThemeLight = lightColorScheme(
     inversePrimary = md_theme_light_inversePrimary,
 )
 private val UnipdThemeDark = darkColorScheme(
-
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     primaryContainer = md_theme_dark_primaryContainer,
@@ -86,6 +87,11 @@ var isFollowingSystemDarkTheme by mutableStateOf(false)
  * Indica se l'app dta utilizzando il tema scuro
  */
 var isInDarkTheme by mutableStateOf(false)
+
+/**
+ * Indica se il sistema puo` utilizzare i colori dinamici
+ */
+val canUseDynamicColors = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
 
 /**
  * Indica se l'app sta utilizzando il dynamic color fornito dal sistema
@@ -166,39 +172,50 @@ fun ThemeSelector() {
     val darkIconPainter = painterResource(id = R.drawable.ic_baseline_brightness_3_24)
     val systemIconPainter = painterResource(id = R.drawable.ic_baseline_android_24)
 
-    Row() {
-        ThemeSelectorItem(
-            name = "Chiaro",
-            iconPainter = lightIconPainter,
-            shape = leftShape,
-            index = 0,
-            selectedTheme = selectedTheme,
-            onClick = {
-                isFollowingSystemDarkTheme = false
-                setDarkTheme(false)
-            },
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Tema",
+            style = MaterialTheme.typography.titleMedium
         )
-        ThemeSelectorItem(
-            name = "Scuro",
-            iconPainter = darkIconPainter,
-            shape = centerShape,
-            index = 1,
-            selectedTheme = selectedTheme,
-            onClick = {
-                isFollowingSystemDarkTheme = false
-                setDarkTheme(true)
-            },
-        )
-        ThemeSelectorItem(
-            name = "Sistema",
-            iconPainter = systemIconPainter,
-            shape = rightShape,
-            index = 2,
-            selectedTheme = selectedTheme,
-            onClick = {
-                isFollowingSystemDarkTheme = true
-            },
-        )
+        Row() {
+            MultiToggleButtonItem(
+                name = "Chiaro",
+                iconPainter = lightIconPainter,
+                shape = leftShape,
+                index = 0,
+                selectedItem = selectedTheme,
+                enabled = true,
+                onClick = {
+                    isFollowingSystemDarkTheme = false
+                    setDarkTheme(false)
+                },
+            )
+            MultiToggleButtonItem(
+                name = "Scuro",
+                iconPainter = darkIconPainter,
+                shape = centerShape,
+                index = 1,
+                selectedItem = selectedTheme,
+                enabled = true,
+                onClick = {
+                    isFollowingSystemDarkTheme = false
+                    setDarkTheme(true)
+                },
+            )
+            MultiToggleButtonItem(
+                name = "Sistema",
+                iconPainter = systemIconPainter,
+                shape = rightShape,
+                index = 2,
+                selectedItem = selectedTheme,
+                enabled = true,
+                onClick = {
+                    isFollowingSystemDarkTheme = true
+                },
+            )
+        }
     }
 }
 
@@ -207,12 +224,13 @@ fun ThemeSelector() {
  */
 @ExperimentalMaterial3Api
 @Composable
-fun ThemeSelectorItem(
+fun MultiToggleButtonItem(
     name: String,
     iconPainter: Painter,
     shape: Shape,
     index: Int,
-    selectedTheme: String,
+    selectedItem: String,
+    enabled: Boolean,
     onClick: ()->Unit
 ) {
     // Colori per i pulsanti
@@ -221,9 +239,10 @@ fun ThemeSelectorItem(
     val selectedContentColor = currentColorScheme.primary
     val unselectedContentColor = currentColorScheme.outline
 
-    val selected = (selectedTheme == name)
+    val selected = (selectedItem == name)
 
     OutlinedButton(
+        enabled = enabled,
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (selected) selectedColor else unselectedColor,
@@ -272,27 +291,37 @@ fun DynamicColorSelector() {
     val dynamicIconPainter = painterResource(id = R.drawable.ic_baseline_color_lens_24)
     val defaultIconPainter = painterResource(id = R.drawable.ic_baseline_android_24)
 
-    Row() {
-        ThemeSelectorItem(
-            name = "Dinamici",
-            iconPainter = dynamicIconPainter,
-            shape = leftShape,
-            index = 0,
-            selectedTheme = selectedColors,
-            onClick = {
-                isUsingDynamicColor = true
-            },
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Colori",
+            style = MaterialTheme.typography.titleMedium
         )
-        ThemeSelectorItem(
-            name = "Default",
-            iconPainter = defaultIconPainter,
-            shape = rightShape,
-            index = 1,
-            selectedTheme = selectedColors,
-            onClick = {
-                isUsingDynamicColor = false
-            },
-        )
+        Row() {
+            MultiToggleButtonItem(
+                name = "Dinamici",
+                iconPainter = dynamicIconPainter,
+                shape = leftShape,
+                index = 0,
+                selectedItem = selectedColors,
+                enabled = canUseDynamicColors,
+                onClick = {
+                    isUsingDynamicColor = true
+                },
+            )
+            MultiToggleButtonItem(
+                name = "Default",
+                iconPainter = defaultIconPainter,
+                shape = rightShape,
+                index = 1,
+                selectedItem = selectedColors,
+                enabled = true,
+                onClick = {
+                    isUsingDynamicColor = false
+                },
+            )
+        }
     }
 }
 
@@ -308,7 +337,7 @@ fun DynamicColorsSwitch() {
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Switch(
-            enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
+            enabled = canUseDynamicColors,
             checked = isUsingDynamicColor,
             onCheckedChange = { isUsingDynamicColor = !isUsingDynamicColor }
         )
@@ -323,26 +352,9 @@ fun DynamicColorsSwitch() {
 fun MaterialReviewsTheme(
     content: @Composable () -> Unit
 ) {
-    /*
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
-            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
-        }
-    }
-    */
     if (isUsingDynamicColor) {
         // Controlla che sia su Android 12
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (canUseDynamicColors) {
             val context = LocalContext.current
             LightColorScheme = dynamicLightColorScheme(context)
             DarkColorScheme = dynamicDarkColorScheme(context)
@@ -358,6 +370,15 @@ fun MaterialReviewsTheme(
     }
     else {
         setDarkTheme(isInDarkTheme)
+    }
+
+    // Cambia il colore della status bar di sistema
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            (view.context as Activity).window.statusBarColor = currentColorScheme.primary.toArgb()
+            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = isInDarkTheme
+        }
     }
 
     MaterialTheme(

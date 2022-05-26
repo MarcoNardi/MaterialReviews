@@ -52,13 +52,13 @@ fun NavigationManager() {
                         ListOfRestaurantsPreview()
                     }
                     composable(destinationsList[1]) {
-                        ThemeVisualizer()
+                        ListOfReviewsPreview()
                     }
                     composable(destinationsList[2]) {
                         ProfileScreen()
                     }
                     composable("Settings") {
-                        ThemeVisualizer()
+                        SettingsScreen()
                     }
                 }
             }
