@@ -1,5 +1,6 @@
 package com.example.materialreviews.navigation
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
@@ -11,13 +12,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.materialreviews.*
+import com.example.materialreviews.db.*
 
 // Lista che contiene le schermate a cui e` possibile navigare
 val destinationsList = listOf(
@@ -32,7 +36,12 @@ val destinationsList = listOf(
 fun NavigationManager() {
     // Definisco il navController
     val navController = rememberNavController()
+    val context = LocalContext.current
 
+
+    val restaurantViewModel: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(
+        AppDatabase.getDatabase(context ).restaurantDao()
+    ))
     // Scaffold = topBar + bottomBar + content
     Scaffold(
         topBar = { TopBar(navController) },
@@ -49,7 +58,7 @@ fun NavigationManager() {
                     startDestination = destinationsList[1],
                 ) {
                     composable(destinationsList[0]) {
-                        ListOfRestaurantsPreview()
+                        ListOfRestaurantsPreview(restaurantViewModel)
                     }
                     composable(destinationsList[1]) {
                         ListOfReviewsPreview()

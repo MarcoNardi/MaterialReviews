@@ -14,6 +14,8 @@ data class RestaurantEntity(
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "sito") val sito: String?,
     @ColumnInfo(name = "orario") val orario: String?,
+    @ColumnInfo(name = "categoria") val categoria: String?,
+    @ColumnInfo(name = "preferito") val preferito: Boolean?,
     @Embedded val address: Address?
 )
 

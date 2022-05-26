@@ -170,9 +170,11 @@ class TestActivity : ComponentActivity() {
             nameField(citta, {citta=it})
             nameField(via, {via=it})
             numberField(num_civico, {num_civico=it})
+            //non è aggiornata a ultima versione di database
+            /*
             Button(onClick = { restaurantModel.addRestaurant(0, name, sito, citta, via, num_civico.toInt(), orario) }) {
                 Text(text="aggiungi al database")
-            }
+            }*/
             RestaurantList(restaurantData = restaurantModel.getAllRestaurants().observeAsState())
         }
 
@@ -188,9 +190,10 @@ class TestActivity : ComponentActivity() {
 
             nameField(firstname, {firstname=it})
             nameField(firstName = lastname, onNameChange = {lastname=it})
-            Button(onClick = { userModel.addUser(0, firstName = firstname, lastName = lastname) }) {
+           // non è aggiornata a ultima versione di db
+           /* Button(onClick = { userModel.addUser(0, firstName = firstname, lastName = lastname) }) {
                 Text(text="aggiungi al database")
-            }
+            }*/
             userList(usersData = userModel.getAllUsers().observeAsState())
 
         }

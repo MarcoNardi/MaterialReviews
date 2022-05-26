@@ -12,12 +12,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
+import com.example.materialreviews.db.RestaurantEntity
+import com.example.materialreviews.db.RestaurantViewModel
 
 data class Restaurant(
     val image: Nothing? = null,
@@ -27,12 +32,12 @@ data class Restaurant(
 )
 @ExperimentalMaterial3Api
 @Composable
-fun RestaurantCard(restaurant: Restaurant,
+fun RestaurantCard(restaurant: RestaurantEntity,
                    modifier: Modifier = Modifier) {
-    val restName = restaurant.name
-    val restPosition = restaurant.position
-    val stars = restaurant.rating
-    val restImage = restaurant.image
+    val restName = restaurant.name!!
+    val restPosition = restaurant.address.toString()
+    val stars = 4
+    val restImage = R.drawable.ic_launcher_background
 
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
@@ -85,12 +90,13 @@ fun RestaurantCard(restaurant: Restaurant,
 }
 @ExperimentalMaterial3Api
 @Composable
-fun ListOfRestaurants(restaurants: List<Restaurant>) {
+fun ListOfRestaurants(restaurants: LiveData<List<RestaurantEntity>>) {
+    val data by restaurants.observeAsState(emptyList())
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         //modifier = Modifier.padding(horizontal = 10.dp)
     ) {
-        items(restaurants) { restaurant ->
+        items(data) { restaurant ->
             RestaurantCard( restaurant )
         }
     }
@@ -100,5 +106,13 @@ fun ListOfRestaurants(restaurants: List<Restaurant>) {
     @Composable
     fun ListOfRestaurantsPreview() {
         val restaurants = listOf(Restaurant(), Restaurant(), Restaurant())
-        ListOfRestaurants(restaurants)
+        //ListOfRestaurants(restaurants)
     }
+
+
+@ExperimentalMaterial3Api
+@Composable
+fun ListOfRestaurantsPreview(model: RestaurantViewModel) {
+    //val restaurants = listOf(Restaurant(), Restaurant(), Restaurant())
+    ListOfRestaurants(model.getAllRestaurants())
+}

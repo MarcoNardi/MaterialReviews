@@ -13,12 +13,12 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
         }
     }
 
-    private fun createUserEntry(id: Int, firstName: String, lastName: String): UserEntity{
-        return UserEntity(id, firstName, lastName)
+    private fun createUserEntry(id: Int, firstName: String, lastName: String, imageUri: String): UserEntity{
+        return UserEntity(id, firstName, lastName, imageUri)
     }
 
-    fun addUser(id: Int, firstName: String, lastName: String){
-        insertUser(createUserEntry(id,firstName,lastName))
+    fun addUser(id: Int, firstName: String, lastName: String, imageUri: String){
+        insertUser(createUserEntry(id,firstName,lastName, imageUri ))
     }
 
     fun addUser(user:UserEntity){
