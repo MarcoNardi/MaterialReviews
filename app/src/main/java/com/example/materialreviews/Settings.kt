@@ -143,7 +143,7 @@ fun ColorBox(colorItem: ColorWithName, width: Dp) {
 @Composable
 fun ColorSet(listOfColors: List<ColorWithName>, title: String) {
     // Titolo del gruppo di colori
-    val textSize: TextStyle = MaterialTheme.typography.titleMedium
+    //val textSize: TextStyle = MaterialTheme.typography.titleMedium
     //Text(text = title, style = textSize)
 
     // Forma del wrapper
