@@ -40,8 +40,8 @@ data class Restaurant(
 
 @ExperimentalMaterial3Api
 @Composable
-fun RestaurantCard(restaurant: RestaurantEntity,
-                   modifier: Modifier = Modifier
+fun  RestaurantCard(restaurant: RestaurantEntity,
+                   onClickSeeAll: (Int) -> Unit
                    ) {
 
     val restId = restaurant.rid
@@ -56,8 +56,9 @@ fun RestaurantCard(restaurant: RestaurantEntity,
 
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
+        modifier = Modifier.clickable { onClickSeeAll(restId) }
     ) {
-        Column(modifier = modifier ){
+        Column(modifier = Modifier ){
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_background),
                 contentDescription = null,
@@ -119,7 +120,9 @@ fun RestaurantCard(restaurant: RestaurantEntity,
 }
 @ExperimentalMaterial3Api
 @Composable
-fun ListOfRestaurants(restaurants: LiveData<List<RestaurantEntity>>) {
+fun ListOfRestaurants(model: RestaurantViewModel,
+                      onClickSeeAll: (Int) -> Unit = {}
+) {
     val data = getInitialRestaurantsData()
     //val data by restaurants.observeAsState(emptyList())
     LazyColumn(
@@ -127,7 +130,7 @@ fun ListOfRestaurants(restaurants: LiveData<List<RestaurantEntity>>) {
         //modifier = Modifier.padding(horizontal = 10.dp)
     ) {
         items(data) { restaurant ->
-            RestaurantCard( restaurant )
+            RestaurantCard( restaurant, onClickSeeAll = onClickSeeAll )
         }
     }
 }
@@ -145,5 +148,5 @@ fun ListOfRestaurantsPreview() {
 @Composable
 fun ListOfRestaurantsPreview(model: RestaurantViewModel) {
     //val restaurants = listOf(Restaurant(), Restaurant(), Restaurant())
-    ListOfRestaurants(model.getAllRestaurants())
+    //ListOfRestaurants(model.getAllRestaurants())
 }
