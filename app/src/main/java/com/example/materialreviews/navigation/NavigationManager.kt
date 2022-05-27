@@ -3,7 +3,6 @@ package com.example.materialreviews.navigation
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -11,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,9 +27,10 @@ import com.example.materialreviews.db.*
 val destinationsList = listOf(
     "Preferiti",
     "Esplora",
-    "Profilo"
+    "Impostazioni"
 )
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
 @Preview
 @Composable
@@ -64,10 +65,10 @@ fun NavigationManager() {
                         ListOfReviewsPreview()
                     }
                     composable(destinationsList[2]) {
-                        ProfileScreen()
-                    }
-                    composable("Settings") {
                         SettingsScreen()
+                    }
+                    composable("Profilo") {
+                        ProfileScreen()
                     }
                 }
             }
@@ -83,10 +84,17 @@ fun TopBar(navController: NavHostController) {
 
         // Button per tornare indietro
         navigationIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(
+                onClick = {
+                    // Controllo che ci sia almeno un altro elemento nella backStack
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Localized description"
+                    contentDescription = "Back"
                 )
             }
         },
@@ -102,11 +110,11 @@ fun TopBar(navController: NavHostController) {
             }
             IconButton(
                 onClick = {
-                    navController.navigate("Settings")
+                    navController.navigate("Profilo")
                 }
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Settings,
+                    imageVector = Icons.Filled.Person,
                     contentDescription = "Localized description"
                 )
             }
@@ -133,7 +141,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (selectedScreen == destinationsList[1]),
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+            icon = { Icon(Icons.Filled.Place, contentDescription = null) },
             label = { Text(destinationsList[1]) },
             onClick = {
                 selectedScreen = destinationsList[1]
@@ -143,7 +151,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (selectedScreen == destinationsList[2]),
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+            icon = { Icon(Icons.Filled.Settings, contentDescription = null) },
             label = { Text(destinationsList[2]) },
             onClick = {
                 selectedScreen = destinationsList[2]

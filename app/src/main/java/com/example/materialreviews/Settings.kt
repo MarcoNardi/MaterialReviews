@@ -94,7 +94,7 @@ fun SettingsScreen() {
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun ColorSchemeVisualizer() {
+fun ColorSchemeVisualizer(colorBoxHeight: Dp = 35.dp) {
     val currentColorScheme: ColorScheme = MaterialTheme.colorScheme
 
     Column(
@@ -107,12 +107,12 @@ fun ColorSchemeVisualizer() {
 
         val currentColorSchemeWithName = getColorSchemeWithName(currentColorScheme)
 
-        ColorSet(currentColorSchemeWithName.subList(0, 5), "Colori primari")
-        ColorSet(currentColorSchemeWithName.subList(5, 9), "Colori secondari")
-        ColorSet(currentColorSchemeWithName.subList(9, 13), "Colori terziari")
-        ColorSet(currentColorSchemeWithName.subList(13, 16), "Colori per sfondi e outline")
-        ColorSet(currentColorSchemeWithName.subList(16, 23), "Colori per superfici")
-        ColorSet(currentColorSchemeWithName.subList(23, 27), "Colori per i messaggi d'errore")
+        ColorSet(currentColorSchemeWithName.subList(0, 5), "Colori primari", colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(5, 9), "Colori secondari", colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(9, 13), "Colori terziari", colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(13, 16), "Colori per sfondi e outline", colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(16, 23), "Colori per superfici", colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(23, 27), "Colori per i messaggi d'errore", colorBoxHeight)
     }
 }
 
@@ -122,10 +122,10 @@ fun ColorSchemeVisualizer() {
  * @param width larghezza della Box: viene passata dal parent
  */
 @Composable
-fun ColorBox(colorItem: ColorWithName, width: Dp) {
+fun ColorBox(colorItem: ColorWithName, width: Dp, height: Dp) {
     Box(
         modifier = Modifier
-            .height(35.dp)
+            .height(height)
             .width(width)
             .background(colorItem.color)
             .padding(start = 5.dp)
@@ -141,7 +141,7 @@ fun ColorBox(colorItem: ColorWithName, width: Dp) {
  * Data una lista di ColorAndName, raggruppa i colori in una unica Box
  */
 @Composable
-fun ColorSet(listOfColors: List<ColorWithName>, title: String) {
+fun ColorSet(listOfColors: List<ColorWithName>, title: String, height: Dp) {
     // Titolo del gruppo di colori
     //val textSize: TextStyle = MaterialTheme.typography.titleMedium
     //Text(text = title, style = textSize)
@@ -150,24 +150,29 @@ fun ColorSet(listOfColors: List<ColorWithName>, title: String) {
     val boxShape = RoundedCornerShape(8.dp)
 
     // Grid che contiene i colori
-    BoxWithConstraints(
+    Box(
         modifier = Modifier
             .border(1.dp, currentColorScheme.outline, boxShape)
             .clip(shape = boxShape)
     ) {
-        // Ogni ColorBox occupa metà larghezza
-        val boxMaxWidth = maxWidth
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            // Ogni ColorBox occupa metà larghezza
+            val boxMaxWidth = maxWidth
 
-        Column() {
+            Column() {
 
-            // Prendo i colori a coppie e li metto "in riga per due"
-            for (i in 0..listOfColors.size-1 step 2) {
-                val j = if (i >= listOfColors.size-1) 1 else 2
-                val colorCouple = listOfColors.subList(i, i+j)
+                // Prendo i colori a coppie e li metto "in riga per due"
+                for (i in 0..listOfColors.size-1 step 2) {
+                    val j = if (i >= listOfColors.size-1) 1 else 2
+                    val colorCouple = listOfColors.subList(i, i+j)
 
-                Row() {
-                    for(color in colorCouple) {
-                        ColorBox(colorItem = color, width = boxMaxWidth/j)
+                    Row() {
+                        for(color in colorCouple) {
+                            ColorBox(colorItem = color, width = boxMaxWidth/j, height = height)
+                        }
                     }
                 }
             }

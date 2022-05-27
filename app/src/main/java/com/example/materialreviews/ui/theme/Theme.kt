@@ -236,7 +236,7 @@ fun MultiToggleButtonItem(
     // Colori per i pulsanti
     val selectedColor = currentColorScheme.primaryContainer
     val unselectedColor = currentColorScheme.background
-    val selectedContentColor = currentColorScheme.primary
+    val selectedContentColor = currentColorScheme.onPrimaryContainer
     val unselectedContentColor = currentColorScheme.outline
 
     val selected = (selectedItem == name)
