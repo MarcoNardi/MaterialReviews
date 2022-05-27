@@ -1,8 +1,11 @@
 package com.example.materialreviews.navigation
 
+import android.provider.ContactsContract
+import android.service.autofill.UserData
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -17,9 +20,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.materialreviews.*
 import com.example.materialreviews.db.*
 
@@ -27,7 +32,7 @@ import com.example.materialreviews.db.*
 val destinationsList = listOf(
     "Preferiti",
     "Esplora",
-    "Impostazioni"
+    "Profilo"
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -38,6 +43,7 @@ fun NavigationManager() {
     // Definisco il navController
     val navController = rememberNavController()
     val context = LocalContext.current
+    val allScreens = MaterialReviewsScreen.values().toList()
 
 
     val restaurantViewModel: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(
@@ -56,19 +62,34 @@ fun NavigationManager() {
                 // Associazioni stringa-composable
                 NavHost(
                     navController = navController,
-                    startDestination = destinationsList[1],
+                    startDestination = MaterialReviewsScreen.Explore.name,
                 ) {
-                    composable(destinationsList[0]) {
-                        ListOfRestaurantsPreview(restaurantViewModel)
+                    composable(MaterialReviewsScreen.Favourites.name) {
+                        ListOfRestaurants(restaurantViewModel, onClickSeeAll = { restId ->
+                            navigateToSingleRestaurant(navController, restId)
+                        })
                     }
-                    composable(destinationsList[1]) {
+                    composable(MaterialReviewsScreen.Explore.name) {
                         ListOfReviewsPreview()
                     }
-                    composable(destinationsList[2]) {
+                    composable(MaterialReviewsScreen.Reviews.name) {
+                        ProfileScreen()
+                    }
+                    composable(MaterialReviewsScreen.Profile.name) {
                         SettingsScreen()
                     }
-                    composable("Profilo") {
-                        ProfileScreen()
+
+                    val restId = MaterialReviewsScreen.Reviews.name
+                    composable(
+                        route = "$restId/{name}",
+                        arguments = listOf(
+                            navArgument("name") {
+                                type = NavType.IntType
+                            }
+                        )
+                    ) { entry ->
+                        val restId = entry.arguments?.getInt("name")
+                        ListOfReviews2(restId = restId)
                     }
                 }
             }
@@ -110,11 +131,11 @@ fun TopBar(navController: NavHostController) {
             }
             IconButton(
                 onClick = {
-                    navController.navigate("Profilo")
+                    navController.navigate("Settings")
                 }
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Person,
+                    imageVector = Icons.Filled.Settings,
                     contentDescription = "Localized description"
                 )
             }
@@ -123,40 +144,45 @@ fun TopBar(navController: NavHostController) {
 }
 
 
-var selectedScreen by mutableStateOf(destinationsList[1])
+var selectedScreen by mutableStateOf(MaterialReviewsScreen.Explore.name)
 
 @Composable
 fun BottomBar(navController: NavHostController) {
     NavigationBar() {
 
         NavigationBarItem(
-            selected = (selectedScreen == destinationsList[0]),
+            selected = (selectedScreen == MaterialReviewsScreen.Explore.name),
             icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-            label = { Text(destinationsList[0]) },
+            label = { Text(MaterialReviewsScreen.Explore.name) },
             onClick = {
-                selectedScreen = destinationsList[0]
-                navController.navigate(destinationsList[0])
+                selectedScreen = MaterialReviewsScreen.Explore.name
+                navController.navigate(MaterialReviewsScreen.Explore.name)
             },
         )
 
         NavigationBarItem(
-            selected = (selectedScreen == destinationsList[1]),
-            icon = { Icon(Icons.Filled.Place, contentDescription = null) },
-            label = { Text(destinationsList[1]) },
+            selected = (selectedScreen == MaterialReviewsScreen.Favourites.name),
+            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+            label = { Text(MaterialReviewsScreen.Favourites.name) },
             onClick = {
-                selectedScreen = destinationsList[1]
-                navController.navigate(destinationsList[1])
+                selectedScreen = MaterialReviewsScreen.Favourites.name
+                navController.navigate(MaterialReviewsScreen.Favourites.name)
             },
         )
 
         NavigationBarItem(
-            selected = (selectedScreen == destinationsList[2]),
-            icon = { Icon(Icons.Filled.Settings, contentDescription = null) },
-            label = { Text(destinationsList[2]) },
+            selected = (selectedScreen == MaterialReviewsScreen.Profile.name),
+            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+            label = { Text(MaterialReviewsScreen.Profile.name) },
             onClick = {
-                selectedScreen = destinationsList[2]
-                navController.navigate(destinationsList[2])
+                selectedScreen = MaterialReviewsScreen.Profile.name
+                navController.navigate(MaterialReviewsScreen.Profile.name)
             },
         )
     }
 }
+
+private fun navigateToSingleRestaurant(navController: NavHostController, restId: Int) {
+navController.navigate("${MaterialReviewsScreen.Reviews.name}/$restId")
+}
+
