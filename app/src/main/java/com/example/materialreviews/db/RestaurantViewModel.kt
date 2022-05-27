@@ -13,29 +13,46 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
         }
     }
 
-    private fun createRestaurantEntry(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String): RestaurantEntity{
-        return RestaurantEntity(id, name, sito, orario, Address(citta, via, num_civico ) )
+    private fun createRestaurantEntry(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String): RestaurantEntity{
+        return RestaurantEntity(id, name, sito, orario,categoria,preferito, Address(citta, via, num_civico ) )
+    }
+    //add a restaurant
+    fun addRestaurant(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String){
+        insertRestaurant(createRestaurantEntry(id, name, sito, citta, via, num_civico, orario, preferito, categoria))
     }
 
-    fun addRestaurant(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String){
-        insertRestaurant(createRestaurantEntry(id, name, sito, citta, via, num_civico, orario ))
-    }
-
-
+    //add a restaurant
     fun addRestaurant(restaurant: RestaurantEntity){
         insertRestaurant(restaurant)
     }
+    //get all favorite restaurants
+    fun getALlFavorites(): LiveData<List<RestaurantEntity>>{
+        return restaurantDao.getAllFavorites()
+    }
+    //change the favorite state of a certain restaurant
+    fun changeFavoriteState(restaurantId: Int, isFavorite: Boolean){
+        viewModelScope.launch{
+            restaurantDao.updateFavorite(restaurantId, isFavorite)
+        }
+    }
 
+    //get list of all restaurants
     fun getAllRestaurants() :  LiveData<List<RestaurantEntity>>{
         return restaurantDao.getAll()
     }
-
+    //get images of a certain restaurant
+    fun getImageOfRestaurant(restaurantId: Int) : LiveData<RestaurantWithImages>{
+        return restaurantDao.getImageOfRestaurant(restaurantId)
+    }
+    //get all pairs (restaurant, imageList)
     fun getRestaurantsWithImage() : LiveData<List<RestaurantWithImages>>{
         return restaurantDao.getRestaurantsAndImages()
     }
+    //get all pairs (restaurant, reviewsList)
     fun getRestaurantsWithReviews() : LiveData<List<RestaurantWithReviews>>{
         return restaurantDao.getRestaurantsAndReviews()
     }
+    //get reviews of a certain restaurant
     fun getReviewsOfRestaurant(restaurantId: Int): LiveData<RestaurantWithReviews>{
         return  restaurantDao.getReviewsOfRestaurant(restaurantId)
     }

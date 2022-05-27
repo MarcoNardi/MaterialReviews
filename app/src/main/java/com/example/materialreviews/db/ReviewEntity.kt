@@ -14,6 +14,7 @@ import androidx.room.PrimaryKey
 )
 data class ReviewEntity(
     @ColumnInfo(name="rating") val rating: Int,
+    @ColumnInfo(name="review") val review: String,
     @ColumnInfo(name = "userId") val uid: Int,
     @ColumnInfo(name = "restaurantId") val rid: Int
 )

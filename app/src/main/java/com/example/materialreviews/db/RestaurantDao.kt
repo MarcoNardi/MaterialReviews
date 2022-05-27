@@ -17,12 +17,23 @@ interface RestaurantDao {
     @Insert
     suspend fun insert(restaurant: RestaurantEntity)
 
+    @Query("UPDATE restaurants SET preferito = :isFavorite WHERE rid LIKE :restaurantId")
+    suspend fun updateFavorite(restaurantId: Int, isFavorite: Boolean)
+
     @Delete
     suspend fun delete(restaurant: RestaurantEntity)
+
+    @Query("SELECT * FROM restaurants WHERE preferito = 1" )
+    fun getAllFavorites(): LiveData<List<RestaurantEntity>>
+
 
     @Transaction
     @Query("SELECT * FROM restaurants")
     fun getRestaurantsAndImages(): LiveData<List<RestaurantWithImages>>
+
+    @Transaction
+    @Query("SELECT * FROM restaurants WHERE rid LIKE :restaurantId")
+    fun getImageOfRestaurant(restaurantId: Int): LiveData<RestaurantWithImages>
 
     @Transaction
     @Query("SELECT * FROM restaurants")
