@@ -20,6 +20,9 @@ class ReviewViewModel(private val reviewDao: ReviewDao) : ViewModel() {
     fun addReview(rating: Int, review: String,userId: Int, restaurantId: Int){
         insertReview(createReviewEntry(rating,review, userId, restaurantId))
     }
+    fun addReview(review: ReviewEntity){
+        insertReview(review)
+    }
 
 
 }
