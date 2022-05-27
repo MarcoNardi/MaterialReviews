@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface ImageDao {
-    @Insert
+    @Insert()
     suspend fun insert(img: ImageEntity)
 
     @Delete
