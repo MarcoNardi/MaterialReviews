@@ -76,6 +76,9 @@ fun NavigationManager() {
                         ProfileScreen()
                     }
                     composable(MaterialReviewsScreen.Profile.name) {
+                        ProfileScreen()
+                    }
+                    composable(MaterialReviewsScreen.Settings.name) {
                         SettingsScreen()
                     }
 
@@ -131,7 +134,7 @@ fun TopBar(navController: NavHostController) {
             }
             IconButton(
                 onClick = {
-                    navController.navigate("Settings")
+                    navController.navigate(MaterialReviewsScreen.Settings.name)
                 }
             ) {
                 Icon(
