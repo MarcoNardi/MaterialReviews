@@ -10,8 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.rounded.Face
-import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -23,7 +21,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
@@ -192,8 +189,9 @@ fun ReviewCard(review: Review) {
 
 @ExperimentalMaterial3Api
 @Composable
-fun ReviewCard(review: ReviewEntity, user:UserEntity) {
-    val userName = user.firstName+" "+user.lastName
+fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>) {
+    val user by getUserInfo(review.uid).observeAsState()
+    val userName = (user?.firstName ?:"help" ) +" "+ (user?.lastName ?:"halp" )
     val stars = review.rating
     val comment = review.review
     val date = review.date
@@ -280,8 +278,9 @@ fun ListOfReviews2(restId: Int?, restaurantModel: RestaurantViewModel= viewModel
    ) {
 
     val reviews by restaurantModel.getReviewsOfRestaurant(restId!!).observeAsState()
-    restaurantModel.getImageOfRestaurant(restId!!)
-    val data = getInitialReviewsData()
+   // val reviewList = getInitialReviewsData().subList(0,3)
+    //restaurantModel.getImageOfRestaurant(restId!!)
+
     //val reviews = listOf(Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"), Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"))
 
     if(reviews!=null){
@@ -294,10 +293,11 @@ fun ListOfReviews2(restId: Int?, restaurantModel: RestaurantViewModel= viewModel
             }
             if(reviews !=null) {
                 items(reviews!!.reviews) { review ->
-                    val user by userModel.getUser(review.uid).observeAsState()
-                    if(user!=null){
-                        ReviewCard(review, user!!)
-                    }
+                    //val user by userModel.getUser(review.uid).observeAsState()
+                    //il passaggio di user è diventata una lambda
+                        ReviewCard(review) {
+                            userModel.getUser(it)
+                        }
                 }
             }
         }

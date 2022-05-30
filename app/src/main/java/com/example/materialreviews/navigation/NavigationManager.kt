@@ -28,12 +28,13 @@ import androidx.navigation.navArgument
 import com.example.materialreviews.*
 import com.example.materialreviews.db.*
 
-// Lista che contiene le schermate a cui e` possibile navigare
+// Lista che contiene le schermate a cui e` possibile navigare non più necessaria
+/*
 val destinationsList = listOf(
     "Preferiti",
     "Esplora",
     "Profilo"
-)
+)*/
 
 @OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
