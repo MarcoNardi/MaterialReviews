@@ -1,10 +1,14 @@
 package com.example.materialreviews
 
+import android.content.ContentResolver
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
 import com.example.materialreviews.db.Address
 import com.example.materialreviews.db.RestaurantEntity
 import com.example.materialreviews.db.ReviewEntity
 import com.example.materialreviews.db.UserEntity
 
+val restaurantImageUri="android.resource://com.example.materialreviews/drawable/restaurantphoto"
 
 val ristorante1 = RestaurantEntity(1, "da luca", "www.luca.pizza", "12.30-23.00", "pizzeria", false,"3895216253", Address("Padova", "padova", 1))
 val ristorante2 = ristorante1.copy(rid=2, name="Da Fabio")

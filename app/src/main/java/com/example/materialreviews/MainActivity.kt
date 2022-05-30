@@ -33,8 +33,20 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun M3App() {
     MaterialReviewsTheme() {
-/*
+        /*
         val context= LocalContext.current
+        val imageModel: ImageViewModel=viewModel(factory = ImageViewModelFactory(
+            AppDatabase.getDatabase(context).imageDao()
+            )
+        )
+        imageModel.addImage(restaurantImageUri+"1", rid =1)
+        imageModel.addImage(restaurantImageUri+"2", rid =2)
+        imageModel.addImage(restaurantImageUri+"3", rid =3)
+        imageModel.addImage(restaurantImageUri+"4", rid =4)
+        imageModel.addImage(restaurantImageUri+"5", rid =5)
+
+
+
         val userModel: UserViewModel=viewModel(factory = UserViewModelFactory(
             AppDatabase.getDatabase(context).userDao()
             )

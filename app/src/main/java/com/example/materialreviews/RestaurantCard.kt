@@ -1,5 +1,10 @@
 package com.example.materialreviews
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -15,9 +20,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,6 +30,7 @@ import com.example.materialreviews.db.AppDatabase
 import com.example.materialreviews.db.RestaurantEntity
 import com.example.materialreviews.db.RestaurantViewModel
 import com.example.materialreviews.db.RestaurantViewModelFactory
+
 
 data class Restaurant(
     val image: Nothing? = null,
@@ -37,7 +43,7 @@ data class Restaurant(
 @Composable
 fun  RestaurantCard(restaurant: RestaurantEntity,
                    onClickSeeAll: (Int) -> Unit,
-                    onCheckedChange:(Boolean)-> Unit
+                    onCheckedChange:(Boolean)-> Unit, imageUri: String
                    ) {
     val restId = restaurant.rid
     val restName = restaurant.name
@@ -49,16 +55,36 @@ fun  RestaurantCard(restaurant: RestaurantEntity,
     val restImage = R.drawable.ic_launcher_background
     val context = LocalContext.current
 
+    //LocalContext.current.resources.getResourcePackageName(R.drawable.restaurantphoto1)
+    //Resources.getResourcePackageName(R.drawable.restaurantphoto1)
+    //val imageUri=Uri.parse("android.resource://com.example.materialreviews/drawable/restaurantphoto1")
+    val uri=Uri.parse(imageUri)
+    val displayMetrics = context.resources.displayMetrics
+    val dpHeight = displayMetrics.heightPixels / displayMetrics.density
+    val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+    val imageData: Bitmap
+    if (Build.VERSION.SDK_INT < 28) {
+        imageData= MediaStore.Images
+            .Media.getBitmap(LocalContext.current.contentResolver, uri)
+
+    } else {
+        val dataSource =
+            ImageDecoder
+                .createSource(LocalContext.current.contentResolver, uri)
+
+        imageData= ImageDecoder.decodeBitmap(dataSource!!)
+    }
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier.clickable { onClickSeeAll(restId) }
     ) {
         Column(modifier = Modifier ){
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
+                //painter = painterResource(id = R.drawable.ic_launcher_background)
+                bitmap = imageData.asImageBitmap(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
             )
             Row(Modifier.padding(start = 3.dp, end = 12.dp),
                 verticalAlignment = Alignment.CenterVertically) {
@@ -117,15 +143,15 @@ fun ListOfRestaurants(model: RestaurantViewModel = viewModel(factory = Restauran
                       onClickSeeAll: (Int) -> Unit = {}
 ) {
     //val data = getInitialRestaurantsData()
-    val data by model.getAllRestaurants().observeAsState(emptyList())
+    val data by model.getRestaurantsWithImage().observeAsState(emptyList())
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         //modifier = Modifier.padding(horizontal = 10.dp)
     ) {
-        items(data) { restaurant ->
-            RestaurantCard( restaurant, onClickSeeAll = onClickSeeAll , onCheckedChange = {it->
-                model.changeFavoriteState(restaurant.rid, it)
-            })
+        items(data) { tuple ->
+            RestaurantCard( tuple.restaurant, onClickSeeAll = onClickSeeAll , onCheckedChange = {it->
+                model.changeFavoriteState(tuple.restaurant.rid, it)
+            }, imageUri=tuple.images[0].uri)
         }
     }
 }
