@@ -145,3 +145,6 @@ fun ListOfRestaurantsPreview(model: RestaurantViewModel) {
     //val restaurants = listOf(Restaurant(), Restaurant(), Restaurant())
     //ListOfRestaurants(model.getAllRestaurants())
 }
+
+
+

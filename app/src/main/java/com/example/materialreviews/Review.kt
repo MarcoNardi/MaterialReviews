@@ -190,6 +190,69 @@ fun ReviewCard(review: Review) {
     }
 }
 
+@ExperimentalMaterial3Api
+@Composable
+fun ReviewCard(review: ReviewEntity, user:UserEntity) {
+    val userName = user.firstName+" "+user.lastName
+    val stars = review.rating
+    val comment = review.review
+    val date = review.date
+
+    ElevatedCard(
+        shape = RoundedCornerShape(15.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                //Immagine del profilo
+                ProfilePicture(size = 40.dp, null, 1.dp)
+
+                //Nome utente
+                Text(
+                    text = userName,
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(Modifier.weight(1f))
+
+                // Menu
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Filled.MoreVert,
+                        contentDescription = "Star",
+                    )
+                }
+            }
+
+            // Stelline e data
+            Row() {
+                for (i in 0..4) {
+                    val icon = Icons.Filled.Star
+                    val tint = if (i<stars) Color(252, 185, 0) else Color.LightGray
+                    Icon(
+                        imageVector = icon,
+                        tint = tint,
+                        contentDescription = "Star",
+                    )
+                }
+
+                Spacer(Modifier.weight(1f))
+
+                Text(text = date)
+            }
+
+            // Testo della recensione
+            Text(text = comment)
+        }
+    }
+}
+
 
 @ExperimentalMaterial3Api
 @Composable
@@ -210,28 +273,36 @@ fun ListOfReviews(reviews: List<Review>) {
 @ExperimentalMaterial3Api
 
 @Composable
-fun ListOfReviews2(restId: Int?, model: RestaurantViewModel= viewModel(factory= RestaurantViewModelFactory(AppDatabase.getDatabase(
-    LocalContext.current).restaurantDao()))) {
+fun ListOfReviews2(restId: Int?, restaurantModel: RestaurantViewModel= viewModel(factory= RestaurantViewModelFactory(AppDatabase.getDatabase(
+    LocalContext.current).restaurantDao())),
+    userModel: UserViewModel=viewModel(factory=UserViewModelFactory(AppDatabase.getDatabase(
+        LocalContext.current).userDao()))
+   ) {
 
-    val reviews by model.getReviewsOfRestaurant(restId!!).observeAsState()
-    model.getImageOfRestaurant(restId!!)
+    val reviews by restaurantModel.getReviewsOfRestaurant(restId!!).observeAsState()
+    restaurantModel.getImageOfRestaurant(restId!!)
     val data = getInitialReviewsData()
     //val reviews = listOf(Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"), Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"))
-    Column() {
-        if(reviews!=null){
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                //modifier = Modifier.padding(horizontal = 10.dp)
-            ) {
-                item() {
-                    RestaurantInfo(restId = 1)
-                }
+
+    if(reviews!=null){
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            //modifier = Modifier.padding(horizontal = 10.dp)
+        ) {
+            item() {
+                RestaurantInfo(restId = 1)
+            }
+            if(reviews !=null) {
                 items(reviews!!.reviews) { review ->
-                    ReviewCard( review )
+                    val user by userModel.getUser(review.uid).observeAsState()
+                    if(user!=null){
+                        ReviewCard(review, user!!)
+                    }
                 }
             }
         }
     }
+
 
 
 }
