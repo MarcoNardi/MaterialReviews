@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
@@ -14,6 +13,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Edit
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -145,6 +147,7 @@ fun ListOfRestaurants(
 ) {
     //val data = getInitialRestaurantsData()
     val data by model.getRestaurantsWithImage().observeAsState(emptyList())
+    /*
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         //modifier = Modifier.padding(horizontal = 10.dp)
@@ -153,6 +156,17 @@ fun ListOfRestaurants(
             RestaurantCard( tuple.restaurant, onClickSeeAll = onClickSeeAll , onCheckedChange = {it->
                 model.changeFavoriteState(tuple.restaurant.rid, it)
             }, imageUri=tuple.images[0].uri)
+        }
+    }
+    */
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        data.forEach { restaurantWithImages ->
+            RestaurantCard( restaurantWithImages.restaurant, onClickSeeAll = onClickSeeAll , onCheckedChange = {it->
+                model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
+            }, imageUri=restaurantWithImages.images[0].uri)
         }
     }
 }
