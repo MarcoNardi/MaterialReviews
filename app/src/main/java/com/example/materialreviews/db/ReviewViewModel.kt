@@ -13,12 +13,12 @@ class ReviewViewModel(private val reviewDao: ReviewDao) : ViewModel() {
         }
     }
 
-    private fun createReviewEntry(rating: Int, review: String, userId: Int, restaurantId: Int): ReviewEntity{
-        return ReviewEntity(rating,review, userId, restaurantId)
+    private fun createReviewEntry(rating: Int, review: String, userId: Int, restaurantId: Int, date:String): ReviewEntity{
+        return ReviewEntity(rating,review, userId, restaurantId,date)
     }
     //add a review
-    fun addReview(rating: Int, review: String,userId: Int, restaurantId: Int){
-        insertReview(createReviewEntry(rating,review, userId, restaurantId))
+    fun addReview(rating: Int, review: String,userId: Int, restaurantId: Int, date:String){
+        insertReview(createReviewEntry(rating,review, userId, restaurantId, date))
     }
     //add a review
     fun addReview(review: ReviewEntity){
