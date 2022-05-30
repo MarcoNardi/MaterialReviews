@@ -1,11 +1,6 @@
 package com.example.materialreviews
 
-import android.content.Context
-import android.content.Intent
-import android.media.Image
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,24 +8,23 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
-import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.materialreviews.db.AppDatabase
 import com.example.materialreviews.db.RestaurantEntity
 import com.example.materialreviews.db.RestaurantViewModel
+import com.example.materialreviews.db.RestaurantViewModelFactory
 
 data class Restaurant(
     val image: Nothing? = null,
@@ -42,14 +36,14 @@ data class Restaurant(
 @ExperimentalMaterial3Api
 @Composable
 fun  RestaurantCard(restaurant: RestaurantEntity,
-                   onClickSeeAll: (Int) -> Unit
+                   onClickSeeAll: (Int) -> Unit,
+                    onCheckedChange:(Boolean)-> Unit
                    ) {
-
     val restId = restaurant.rid
     val restName = restaurant.name!!
     val restCity = restaurant.address!!.citta!!
-    val restRoad = restaurant.address!!.via!!
-    val restCivic = restaurant.address!!.num_civico!!
+    val restRoad = restaurant.address.via!!
+    val restCivic = restaurant.address.num_civico!!
 
     val stars = 4
     val restImage = R.drawable.ic_launcher_background
@@ -99,11 +93,9 @@ fun  RestaurantCard(restaurant: RestaurantEntity,
 
                 val icon = Icons.Filled.Favorite
 
-                var checked by remember {
-                    mutableStateOf(false)
-                }
-                IconToggleButton( checked = checked, onCheckedChange = {checked = it}) {
-                    val tint by animateColorAsState(if (checked) Color.Red else Color.LightGray)
+
+                IconToggleButton( checked = restaurant.preferito, onCheckedChange = onCheckedChange) {
+                    val tint by animateColorAsState(if (restaurant.preferito) Color.Red else Color.LightGray)
                     Icon(
 
                         imageVector = icon,
@@ -121,17 +113,19 @@ fun  RestaurantCard(restaurant: RestaurantEntity,
 }
 @ExperimentalMaterial3Api
 @Composable
-fun ListOfRestaurants(model: RestaurantViewModel,
+fun ListOfRestaurants(model: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(restaurantDao =  AppDatabase.getDatabase(LocalContext.current).restaurantDao())),
                       onClickSeeAll: (Int) -> Unit = {}
 ) {
-    val data = getInitialRestaurantsData()
-    //val data by restaurants.observeAsState(emptyList())
+    //val data = getInitialRestaurantsData()
+    val data by model.getAllRestaurants().observeAsState(emptyList())
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         //modifier = Modifier.padding(horizontal = 10.dp)
     ) {
         items(data) { restaurant ->
-            RestaurantCard( restaurant, onClickSeeAll = onClickSeeAll )
+            RestaurantCard( restaurant, onClickSeeAll = onClickSeeAll , onCheckedChange = {it->
+                model.changeFavoriteState(restaurant.rid, it)
+            })
         }
     }
 }

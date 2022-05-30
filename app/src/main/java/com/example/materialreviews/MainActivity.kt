@@ -32,7 +32,8 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun M3App() {
-    MaterialReviewsTheme() {/*
+    MaterialReviewsTheme() {
+        /*
         val context= LocalContext.current
         val userModel: UserViewModel=viewModel(factory = UserViewModelFactory(
             AppDatabase.getDatabase(context).userDao()
@@ -56,8 +57,8 @@ fun M3App() {
         }
         for(i in getInitialReviewsData()){
             reviewModel.addReview(i)
-        }
-            */
+        }*/
+
 
         NavigationManager()
     }
