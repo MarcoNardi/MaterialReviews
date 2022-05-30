@@ -186,6 +186,6 @@ fun BottomBar(navController: NavHostController) {
 }
 
 private fun navigateToSingleRestaurant(navController: NavHostController, restId: Int) {
-navController.navigate("${MaterialReviewsScreen.Reviews.name}/$restId")
+    navController.navigate("${MaterialReviewsScreen.Reviews.name}/$restId")
 }
 

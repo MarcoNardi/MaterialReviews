@@ -14,6 +14,7 @@ import androidx.compose.material.icons.rounded.Face
 import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.materialreviews.db.*
 
 data class Review(
     val user: String = "Eli Ferin", // oggetto di classe User quando e` pronta
@@ -206,12 +210,27 @@ fun ListOfReviews(reviews: List<Review>) {
 @ExperimentalMaterial3Api
 
 @Composable
-fun ListOfReviews2(restId: Int?) {
+fun ListOfReviews2(restId: Int?, model: RestaurantViewModel= viewModel(factory= RestaurantViewModelFactory(AppDatabase.getDatabase(
+    LocalContext.current).restaurantDao()))) {
 
-        val data = getInitialReviewsData()
-        val reviews = listOf(Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"), Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"))
+    val reviews by model.getReviewsOfRestaurant(restId!!).observeAsState()
+    model.getImageOfRestaurant(restId!!)
+    val data = getInitialReviewsData()
+    //val reviews = listOf(Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"), Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"))
     Column() {
-        ListOfReviews(reviews)
+        if(reviews!=null){
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                //modifier = Modifier.padding(horizontal = 10.dp)
+            ) {
+                item() {
+                    RestaurantInfo(restId = 1)
+                }
+                items(reviews!!.reviews) { review ->
+                    ReviewCard( review )
+                }
+            }
+        }
     }
 
 
