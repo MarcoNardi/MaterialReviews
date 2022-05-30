@@ -1,8 +1,5 @@
 package com.example.materialreviews.navigation
 
-import android.provider.ContactsContract
-import android.service.autofill.UserData
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
@@ -93,7 +90,7 @@ fun NavigationManager() {
                         )
                     ) { entry ->
                         val restId = entry.arguments?.getInt("name")
-                        ListOfReviews2(restId = restId)
+                        RestaurantDetailsAndReviews(restId = restId!!)
                     }
                 }
             }
