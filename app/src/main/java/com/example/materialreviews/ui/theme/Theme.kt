@@ -81,7 +81,7 @@ private val UnipdThemeDark = darkColorScheme(
 /**
  * Indica se l'app ha lo stesso tema (chiaro/scuro) del sistema
  */
-var isFollowingSystemDarkTheme by mutableStateOf(false)
+var isFollowingSystemDarkTheme by mutableStateOf(true)
 
 /**
  * Indica se l'app dta utilizzando il tema scuro

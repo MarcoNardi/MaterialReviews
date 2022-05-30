@@ -152,7 +152,9 @@ fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>)
  */
 @Preview
 @Composable
-fun RowOfStars(rating: Int = 4) {
+fun RowOfStars(
+    rating: Int = 4,
+) {
     Row() {
         for (i in 0..4) {
             val icon = Icons.Filled.Star
@@ -164,6 +166,94 @@ fun RowOfStars(rating: Int = 4) {
             )
         }
     }
+}
+
+/**
+ * 5 stelline, colorate in funzione del parametro, cliccabile
+ */
+@Preview
+@Composable
+fun RowOfStars(
+    rating: Int = 1,
+    onClick: (Int)->Unit = {}
+) {
+    Row() {
+        for (i in 0..4) {
+            val icon = Icons.Filled.Star
+            val tint = if (i<rating) Color(252, 185, 0) else Color.LightGray
+
+            // Quando viene cliccata una stella, passa alla lambda la posizione della stella (da 1 a 5)
+            IconButton(
+                onClick = { onClick(i+1) },
+            ) {
+                Icon(
+                    imageVector = icon,
+                    tint = tint,
+                    contentDescription = "Star",
+                )
+            }
+
+        }
+    }
+}
+
+/**
+ * Apre il dialog per inserire una nuova recensione. Ritorna un int e una stringa
+ */
+@OptIn(ExperimentalComposeUiApi::class)
+@ExperimentalMaterial3Api
+@Composable
+fun AddReviewDialog(
+    closeDialog: ()->Unit,
+    onConfirmClick: (Int, String)->Unit
+) {
+    // Variabili della recensione
+    var rating by remember{mutableStateOf(1)}
+    var comment by remember{ mutableStateOf("")}
+
+    AlertDialog(
+        onDismissRequest = closeDialog,
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+        modifier = Modifier.fillMaxWidth(0.9f),
+        title = { Text("Scrivi una recensione") },
+        text = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // Seleziona quante stelle mettere nella recensione
+                RowOfStars(
+                    rating = rating,
+                    onClick = { selectedRating ->
+                        rating = selectedRating
+                    }
+                )
+
+                // Inserisce il testo della recensione
+                OutlinedTextField(
+                    value = comment,
+                    onValueChange = {comment = it},
+                    label = { Text("Inserisci un commento") }
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirmClick(rating, comment)
+                }
+            ) {
+                Text("Pubblica")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = closeDialog
+            ) {
+                Text("Annulla")
+            }
+        },
+    )
 }
 
 
@@ -181,42 +271,6 @@ fun ListOfReviews(reviews: List<Review>) {
             ReviewCard( review )
         }
     }
-}
-
-@OptIn(ExperimentalComposeUiApi::class)
-@ExperimentalMaterial3Api
-@Composable
-fun AddReviewDialog(
-    returnReviewEntity: (ReviewEntity)->Unit,
-    onDismissClick: ()->Unit
-) {
-    AlertDialog(
-        // Chiude il Dialog se viene cliccato nella parte oscurata
-        onDismissRequest = onDismissClick,
-        modifier = Modifier.fillMaxWidth(0.9f),
-        title = {
-            Text(text = "Il tuo profilo")
-        },
-        // Posso mettere dentro qualsiasi composable
-        text = {
-            ColorSchemeVisualizer()
-        },
-        confirmButton = {
-            TextButton(
-                onClick = onDismissClick
-            ) {
-                Text("Confirm")
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = onDismissClick
-            ) {
-                Text("Dismiss")
-            }
-        },
-        properties = DialogProperties(usePlatformDefaultWidth = false)
-    )
 }
 
 @ExperimentalMaterial3Api

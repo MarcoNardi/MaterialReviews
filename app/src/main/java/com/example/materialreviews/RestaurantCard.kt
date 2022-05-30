@@ -2,6 +2,7 @@ package com.example.materialreviews
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -24,7 +25,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 
@@ -169,12 +169,19 @@ fun RestaurantDetailsAndReviews(
 ) {
     val restaurantWithReviews by restaurantModel.getReviewsOfRestaurant(restId).observeAsState()
 
+    // Ottengo l'ID dell'utente
+    val userId = /* TODO: ID dell'utente che sta usando l'app */ 1
+
     // Indica se mostrare il dialog per aggiungere una recensione
     var showAddReviewDialog by remember { mutableStateOf(false) }
     if (showAddReviewDialog) {
         AddReviewDialog(
-            returnReviewEntity = {},
-            onDismissClick = {
+            closeDialog = {
+                showAddReviewDialog = false
+            },
+            onConfirmClick = { rating, comment ->
+                Log.v(null, "$rating, $comment")
+                /* TODO: Salvare la review nel db */
                 showAddReviewDialog = false
             }
         )
@@ -188,6 +195,7 @@ fun RestaurantDetailsAndReviews(
             item() {
                 RestaurantDetails(
                     restId = 1,
+                    // Passo la lambda per mostrare il dialog per aggiungere le recensioni
                     addReviewButtonOnClick = {
                         showAddReviewDialog = true
                     }
