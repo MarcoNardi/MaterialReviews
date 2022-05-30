@@ -40,10 +40,10 @@ fun  RestaurantCard(restaurant: RestaurantEntity,
                     onCheckedChange:(Boolean)-> Unit
                    ) {
     val restId = restaurant.rid
-    val restName = restaurant.name!!
-    val restCity = restaurant.address!!.citta!!
-    val restRoad = restaurant.address.via!!
-    val restCivic = restaurant.address.num_civico!!
+    val restName = restaurant.name
+    val restCity = restaurant.address!!.citta
+    val restRoad = restaurant.address.via
+    val restCivic = restaurant.address.num_civico
 
     val stars = 4
     val restImage = R.drawable.ic_launcher_background

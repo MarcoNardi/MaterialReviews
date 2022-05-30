@@ -6,7 +6,7 @@ import com.example.materialreviews.db.ReviewEntity
 import com.example.materialreviews.db.UserEntity
 
 
-val ristorante1 = RestaurantEntity(1, "da luca", "www.luca.pizza", "12.30-23.00", "pizzeria", false, Address("Padova", "padova", 1))
+val ristorante1 = RestaurantEntity(1, "da luca", "www.luca.pizza", "12.30-23.00", "pizzeria", false,"3895216253", Address("Padova", "padova", 1))
 val ristorante2 = ristorante1.copy(rid=2, name="Da Fabio")
 val ristorante3 = ristorante1.copy(rid=3, name="Da Ciccio")
 val ristorante4 = ristorante1.copy(rid=4, name="Da Francesco")

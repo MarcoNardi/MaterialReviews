@@ -13,12 +13,12 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
         }
     }
 
-    private fun createRestaurantEntry(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String): RestaurantEntity{
-        return RestaurantEntity(id, name, sito, orario,categoria,preferito, Address(citta, via, num_civico ) )
+    private fun createRestaurantEntry(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String, nTelefono:String): RestaurantEntity{
+        return RestaurantEntity(id, name, sito, orario,categoria,preferito,nTelefono, Address(citta, via, num_civico ) )
     }
     //add a restaurant
-    fun addRestaurant(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String){
-        insertRestaurant(createRestaurantEntry(id, name, sito, citta, via, num_civico, orario, preferito, categoria))
+    fun addRestaurant(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String, nTelefono:String){
+        insertRestaurant(createRestaurantEntry(id, name, sito, citta, via, num_civico, orario, preferito, categoria, nTelefono))
     }
 
     //add a restaurant
