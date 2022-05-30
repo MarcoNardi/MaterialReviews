@@ -4,8 +4,12 @@ import android.content.Context
 import android.provider.ContactsContract
 import android.service.autofill.UserData
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -14,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -190,7 +195,7 @@ fun BottomBar(navController: NavHostController) {
             onClick = {
                 selectedScreen = MaterialReviewsScreen.Favourites.name
                 navController.navigate(MaterialReviewsScreen.Favourites.name)
-            },
+            }
         )
 
         NavigationBarItem(

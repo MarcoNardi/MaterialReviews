@@ -203,7 +203,7 @@ fun RestaurantDetailsAndReviews(
     val userEntity by userModel.getUser(1).observeAsState()
 
     // Ottengo l'ID del ristorante e dell'utente
-    val restaurantId = if (restaurantWithReviews != null) restaurantWithReviews!!.restaurant.rid else 1
+    val restaurantId = 4 //if (restaurantWithReviews != null) restaurantWithReviews!!.restaurant.rid else 1
     val userId = if (userEntity != null) userEntity!!.uid else 0
 
     val reviewViewModel: ReviewViewModel = viewModel(
