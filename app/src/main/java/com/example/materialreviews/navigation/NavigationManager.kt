@@ -93,7 +93,7 @@ fun NavigationManager() {
                         )
                     ) { entry ->
                         val restId = entry.arguments?.getInt("name")
-                        ListOfReviews2(restId = restId)
+                        RestaurantDetailsAndReviews(restId = restId!!)
                     }
                 }
             }
@@ -172,6 +172,7 @@ var selectedScreen by mutableStateOf(MaterialReviewsScreen.Explore.name)
 @Composable
 fun BottomBar(navController: NavHostController) {
     NavigationBar() {
+
         NavigationBarItem(
             selected = (selectedScreen == MaterialReviewsScreen.Explore.name),
             icon = { Icon(Icons.Filled.Home, contentDescription = null) },
@@ -202,11 +203,7 @@ fun BottomBar(navController: NavHostController) {
             },
         )
     }
-
-
-
 }
-
 
 private fun navigateToSingleRestaurant(navController: NavHostController, restId: Int) {
     navController.navigate("${MaterialReviewsScreen.Reviews.name}/$restId")

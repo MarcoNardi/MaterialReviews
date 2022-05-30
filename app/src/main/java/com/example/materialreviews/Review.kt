@@ -1,9 +1,5 @@
 package com.example.materialreviews
 
-import android.content.Intent
-import android.net.Uri
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,15 +10,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 
 data class Review(
@@ -32,97 +26,7 @@ data class Review(
     val date: String = "12/04/1987"
 )
 
-@ExperimentalMaterial3Api
-@Composable
-fun RestaurantInfo(restId: Int?) {
-    val context = LocalContext.current
-    Surface(  ) {
-        Column(modifier = Modifier.padding(5.dp)) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Row(verticalAlignment = Alignment.CenterVertically){
-            Column() {
-            Row(modifier =  Modifier.padding(top = 3.dp)) {
-                for (i in 0..4) {
-                    val icon = Icons.Filled.Star
-                    val tint = if (i<2) Color(252, 185, 0) else Color.LightGray
-                    Icon(
-                        imageVector = icon,
-                        tint = tint,
-                        contentDescription = "Star",
-                    )
-                }
 
-            }
-            Text(text = restId.toString(),
-                Modifier.padding(top = 3.dp)
-            )
-            }
-                Spacer(Modifier.weight(1f))
-                val icon = Icons.Filled.Favorite
-
-                var checked by remember {
-                    mutableStateOf(false)
-                }
-                IconToggleButton( checked = checked, onCheckedChange = {checked = it}, modifier = Modifier.padding(end = 12.dp)) {
-                    val tint by animateColorAsState(if (checked) Color.Red else Color.LightGray)
-                    Icon(
-
-                        imageVector = icon,
-                        contentDescription = "Aggiungi a elementi salvati",
-                        tint = tint,
-                        modifier = Modifier.size(35.dp)
-                    )
-
-                }
-            }
-            Text(text = "Posizione",
-                Modifier.padding(top = 3.dp)
-            )
-            Text(text = "Posizione2",
-                Modifier.padding(top = 3.dp)
-            )
-            Row(modifier = Modifier.padding(top = 3.dp)) {
-                IconButton(  modifier = Modifier.padding(end = 12.dp),
-                    onClick = {
-                        val intent = Intent(Intent.ACTION_DIAL)
-                        intent.data = Uri.parse("tel:<3467640861")
-                        context.startActivity(intent)
-                    }) {
-
-                    Icon(
-
-                        imageVector = Icons.Filled.Call,
-                        contentDescription = "Chiama",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(25.dp)
-                    )
-
-                }
-                IconButton( onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data = Uri.parse("https://retireinprogress.com/404books/")
-                        context.startActivity(intent)
-                    }) {
-
-                    Icon(
-
-                        painter = painterResource(id = R.drawable.ic_baseline_language_24),
-                        contentDescription = "Vai al sito",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(25.dp)
-                    )
-
-                }
-
-            }
-        }
-    }
-}
 
 @ExperimentalMaterial3Api
 @Composable
@@ -230,15 +134,7 @@ fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>)
 
             // Stelline e data
             Row() {
-                for (i in 0..4) {
-                    val icon = Icons.Filled.Star
-                    val tint = if (i<stars) Color(252, 185, 0) else Color.LightGray
-                    Icon(
-                        imageVector = icon,
-                        tint = tint,
-                        contentDescription = "Star",
-                    )
-                }
+                RowOfStars(stars)
 
                 Spacer(Modifier.weight(1f))
 
@@ -251,6 +147,115 @@ fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>)
     }
 }
 
+/**
+ * 5 stelline, colorate in funzione del parametro
+ */
+@Preview
+@Composable
+fun RowOfStars(
+    rating: Int = 4,
+) {
+    Row() {
+        for (i in 0..4) {
+            val icon = Icons.Filled.Star
+            val tint = if (i<rating) Color(252, 185, 0) else Color.LightGray
+            Icon(
+                imageVector = icon,
+                tint = tint,
+                contentDescription = "Star",
+            )
+        }
+    }
+}
+
+/**
+ * 5 stelline, colorate in funzione del parametro, cliccabile
+ */
+@Preview
+@Composable
+fun RowOfStars(
+    rating: Int = 1,
+    onClick: (Int)->Unit = {}
+) {
+    Row() {
+        for (i in 0..4) {
+            val icon = Icons.Filled.Star
+            val tint = if (i<rating) Color(252, 185, 0) else Color.LightGray
+
+            // Quando viene cliccata una stella, passa alla lambda la posizione della stella (da 1 a 5)
+            IconButton(
+                onClick = { onClick(i+1) },
+            ) {
+                Icon(
+                    imageVector = icon,
+                    tint = tint,
+                    contentDescription = "Star",
+                )
+            }
+
+        }
+    }
+}
+
+/**
+ * Apre il dialog per inserire una nuova recensione. Ritorna un int e una stringa
+ */
+@OptIn(ExperimentalComposeUiApi::class)
+@ExperimentalMaterial3Api
+@Composable
+fun AddReviewDialog(
+    closeDialog: ()->Unit,
+    onConfirmClick: (Int, String)->Unit
+) {
+    // Variabili della recensione
+    var rating by remember{mutableStateOf(1)}
+    var comment by remember{ mutableStateOf("")}
+
+    AlertDialog(
+        onDismissRequest = closeDialog,
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+        modifier = Modifier.fillMaxWidth(0.9f),
+        title = { Text("Scrivi una recensione") },
+        text = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // Seleziona quante stelle mettere nella recensione
+                RowOfStars(
+                    rating = rating,
+                    onClick = { selectedRating ->
+                        rating = selectedRating
+                    }
+                )
+
+                // Inserisce il testo della recensione
+                OutlinedTextField(
+                    value = comment,
+                    onValueChange = {comment = it},
+                    label = { Text("Inserisci un commento") }
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirmClick(rating, comment)
+                }
+            ) {
+                Text("Pubblica")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = closeDialog
+            ) {
+                Text("Annulla")
+            }
+        },
+    )
+}
+
 
 @ExperimentalMaterial3Api
 @Composable
@@ -260,51 +265,12 @@ fun ListOfReviews(reviews: List<Review>) {
         //modifier = Modifier.padding(horizontal = 10.dp)
     ) {
         item() {
-            RestaurantInfo(restId = 1)
+            RestaurantDetails(restId = 1, {})
         }
         items(reviews) { review ->
             ReviewCard( review )
         }
     }
-}
-
-@ExperimentalMaterial3Api
-
-@Composable
-fun ListOfReviews2(restId: Int?, restaurantModel: RestaurantViewModel= viewModel(factory= RestaurantViewModelFactory(AppDatabase.getDatabase(
-    LocalContext.current).restaurantDao())),
-    userModel: UserViewModel=viewModel(factory=UserViewModelFactory(AppDatabase.getDatabase(
-        LocalContext.current).userDao()))
-   ) {
-
-    val reviews by restaurantModel.getReviewsOfRestaurant(restId!!).observeAsState()
-   // val reviewList = getInitialReviewsData().subList(0,3)
-    //restaurantModel.getImageOfRestaurant(restId!!)
-
-    //val reviews = listOf(Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"), Review(), Review(user = "Marco Nardi"), Review(user = "Marco Trincanato"))
-
-    if(reviews!=null){
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            //modifier = Modifier.padding(horizontal = 10.dp)
-        ) {
-            item() {
-                RestaurantInfo(restId = 1)
-            }
-            if(reviews !=null) {
-                items(reviews!!.reviews) { review ->
-                    //val user by userModel.getUser(review.uid).observeAsState()
-                    //il passaggio di user è diventata una lambda
-                        ReviewCard(review) {
-                            userModel.getUser(it)
-                        }
-                }
-            }
-        }
-    }
-
-
-
 }
 
 @ExperimentalMaterial3Api

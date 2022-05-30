@@ -5,6 +5,9 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -12,32 +15,24 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.materialreviews.db.AppDatabase
-import com.example.materialreviews.db.RestaurantEntity
-import com.example.materialreviews.db.RestaurantViewModel
-import com.example.materialreviews.db.RestaurantViewModelFactory
-
-
-data class Restaurant(
-    val image: Nothing? = null,
-    val name: String = "NoNome",
-    val position: String = "NoPos",
-    val rating: Int = 3
-)
+import com.example.materialreviews.db.*
 
 @ExperimentalMaterial3Api
 @Composable
@@ -79,6 +74,8 @@ fun  RestaurantCard(restaurant: RestaurantEntity,
         modifier = Modifier.clickable { onClickSeeAll(restId) }
     ) {
         Column(modifier = Modifier ){
+
+            // "Foto profilo" del ristorante
             Image(
                 //painter = painterResource(id = R.drawable.ic_launcher_background)
                 bitmap = imageData.asImageBitmap(),
@@ -86,30 +83,33 @@ fun  RestaurantCard(restaurant: RestaurantEntity,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
             )
-            Row(Modifier.padding(start = 3.dp, end = 12.dp),
-                verticalAlignment = Alignment.CenterVertically) {
+
+            // Altri elementi
+            Row(
+                Modifier.padding(start = 3.dp, end = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Column(Modifier.padding(3.dp)) {
-                    Row(){
-                        for (i in 0..4) {
-                            val icon = Icons.Filled.Star
-                            val tint = if (i<stars) Color(252, 185, 0) else Color.LightGray
-                            Icon(
-                                imageVector = icon,
-                                tint = tint,
-                                contentDescription = "Star",
-                            )
-                        }
+                    // Nome del ristorante
+                    Text(
+                        text = restName,
+                        Modifier.padding(3.dp),
+                        style = MaterialTheme.typography.displaySmall
+                    )
+
+                    // Stelle della recensione
+                    Row {
+                        RowOfStars(stars)
                         //Spacer(Modifier.weight(1f))
                     }
-                    Text(text = restName,
-                        Modifier.padding(3.dp),
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Text(text = restCity,
+
+                    Text(
+                        text = restCity,
                         Modifier.padding(start = 3.dp, bottom = 3.dp),
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    Text(text = "Via $restRoad, $restCivic",
+                    Text(
+                        text = "Via $restRoad, $restCivic",
                         Modifier.padding(start = 3.dp, bottom = 3.dp),
                         style = MaterialTheme.typography.bodySmall
                     )
@@ -117,30 +117,31 @@ fun  RestaurantCard(restaurant: RestaurantEntity,
                 }
                 Spacer(Modifier.weight(1f))
 
+                // Pulsante per salvare il ristorante nei preferiti
                 val icon = Icons.Filled.Favorite
-
-
                 IconToggleButton( checked = restaurant.preferito, onCheckedChange = onCheckedChange) {
                     val tint by animateColorAsState(if (restaurant.preferito) Color.Red else Color.LightGray)
                     Icon(
-
                         imageVector = icon,
                         contentDescription = "Aggiungi a elementi salvati",
                         tint = tint,
                         modifier = Modifier.size(35.dp)
                     )
-                    
                 }
-
             }
         }
     }
-
 }
+
 @ExperimentalMaterial3Api
 @Composable
-fun ListOfRestaurants(model: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(restaurantDao =  AppDatabase.getDatabase(LocalContext.current).restaurantDao())),
-                      onClickSeeAll: (Int) -> Unit = {}
+fun ListOfRestaurants(
+    model: RestaurantViewModel = viewModel(
+        factory = RestaurantViewModelFactory(
+            restaurantDao = AppDatabase.getDatabase(LocalContext.current).restaurantDao()
+        )
+    ),
+    onClickSeeAll: (Int) -> Unit = {}
 ) {
     //val data = getInitialRestaurantsData()
     val data by model.getRestaurantsWithImage().observeAsState(emptyList())
@@ -156,6 +157,184 @@ fun ListOfRestaurants(model: RestaurantViewModel = viewModel(factory = Restauran
     }
 }
 
+@ExperimentalComposeUiApi
+@ExperimentalMaterial3Api
+@Preview
+@Composable
+fun RestaurantDetailsAndReviews(
+    restId: Int = 1,
+    restaurantModel: RestaurantViewModel = viewModel(
+        factory = RestaurantViewModelFactory(
+            AppDatabase.getDatabase(
+                LocalContext.current
+            ).restaurantDao()
+        )
+    ),
+    userModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(
+            AppDatabase.getDatabase(
+                LocalContext.current
+            ).userDao()
+        )
+    )
+) {
+    val restaurantWithReviews by restaurantModel.getReviewsOfRestaurant(restId).observeAsState()
+
+    // Ottengo l'ID dell'utente
+    val userId = /* TODO: ID dell'utente che sta usando l'app */ 1
+
+    // Indica se mostrare il dialog per aggiungere una recensione
+    var showAddReviewDialog by remember { mutableStateOf(false) }
+    if (showAddReviewDialog) {
+        AddReviewDialog(
+            closeDialog = {
+                showAddReviewDialog = false
+            },
+            onConfirmClick = { rating, comment ->
+                Log.v(null, "$rating, $comment")
+                /* TODO: Salvare la review nel db */
+                showAddReviewDialog = false
+            }
+        )
+    }
+
+    if(restaurantWithReviews!=null){
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            //modifier = Modifier.padding(horizontal = 10.dp)
+        ) {
+            item() {
+                RestaurantDetails(
+                    restId = 1,
+                    // Passo la lambda per mostrare il dialog per aggiungere le recensioni
+                    addReviewButtonOnClick = {
+                        showAddReviewDialog = true
+                    }
+                )
+            }
+            if(restaurantWithReviews !=null) {
+                items(restaurantWithReviews!!.reviews) { review ->
+                    //val user by userModel.getUser(review.uid).observeAsState()
+                    //il passaggio di user è diventata una lambda
+                    ReviewCard(review) {
+                        userModel.getUser(it)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@ExperimentalMaterial3Api
+@Composable
+fun RestaurantDetails(
+    restId: Int?,
+    addReviewButtonOnClick: () -> Unit
+) {
+    val context = LocalContext.current
+
+    Surface() {
+        Column(modifier = Modifier.padding(5.dp)) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Row(verticalAlignment = Alignment.CenterVertically){
+                Column() {
+                    // Nome del ristorante
+                    Text(
+                        text = "RestaurantDetails",
+                        style = MaterialTheme.typography.displaySmall
+                    )
+                    // Valutazione media
+                    RowOfStars(4)
+                }
+
+                Spacer(Modifier.weight(1f))
+
+                // Pulsante per salvarlo nei preferiti
+                val icon = Icons.Filled.Favorite
+                var checked by remember { mutableStateOf(false) }
+                IconToggleButton( checked = checked, onCheckedChange = {checked = it}, modifier = Modifier.padding(end = 12.dp)) {
+                    val tint by animateColorAsState(if (checked) Color.Red else Color.LightGray)
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = "Aggiungi a elementi salvati",
+                        tint = tint,
+                        modifier = Modifier.size(35.dp)
+                    )
+
+                }
+            }
+            Text(text = "Posizione",
+                Modifier.padding(top = 3.dp)
+            )
+            Text(text = "Posizione2",
+                Modifier.padding(top = 3.dp)
+            )
+            Row(modifier = Modifier.padding(top = 3.dp)) {
+                IconButton(
+                    modifier = Modifier.padding(end = 12.dp),
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_DIAL)
+                        intent.data = Uri.parse("tel:<3467640861")
+                        context.startActivity(intent)
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Call,
+                        contentDescription = "Chiama",
+                        tint = Color.Gray,
+                        modifier = Modifier.size(25.dp)
+                    )
+
+                }
+                IconButton(
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse("https://retireinprogress.com/404books/")
+                        context.startActivity(intent)
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_language_24),
+                        contentDescription = "Vai al sito",
+                        tint = Color.Gray,
+                        modifier = Modifier.size(25.dp)
+                    )
+
+                }
+
+            }
+
+            // Pulsante per aggiungere una recensione al ristorante
+            AddReviewButton(onClick = addReviewButtonOnClick)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AddReviewButton(
+    onClick: ()->Unit = {}
+) {
+    FilledTonalButton(onClick = onClick) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Edit,
+                contentDescription = "Scrivi recensione"
+            )
+            Text("Scrivi recensione")
+        }
+    }
+}
+
+/*
 @ExperimentalMaterial3Api
 @Preview
 @Composable
@@ -171,6 +350,6 @@ fun ListOfRestaurantsPreview(model: RestaurantViewModel) {
     //val restaurants = listOf(Restaurant(), Restaurant(), Restaurant())
     //ListOfRestaurants(model.getAllRestaurants())
 }
-
+*/
 
 
