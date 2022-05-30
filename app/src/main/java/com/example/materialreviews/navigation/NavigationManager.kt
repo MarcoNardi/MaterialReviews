@@ -1,5 +1,6 @@
 package com.example.materialreviews.navigation
 
+import android.content.Context
 import android.provider.ContactsContract
 import android.service.autofill.UserData
 import androidx.activity.viewModels
@@ -9,13 +10,12 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.materialreviews.*
+import com.example.materialreviews.R
 import com.example.materialreviews.db.*
 
 // Lista che contiene le schermate a cui e` possibile navigare non più necessaria
@@ -44,15 +45,14 @@ fun NavigationManager() {
     // Definisco il navController
     val navController = rememberNavController()
     val context = LocalContext.current
-    val allScreens = MaterialReviewsScreen.values().toList()
-
+    var topBarTitle by rememberSaveable() { mutableStateOf("")    }
 
     val restaurantViewModel: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(
         AppDatabase.getDatabase(context ).restaurantDao()
     ))
     // Scaffold = topBar + bottomBar + content
     Scaffold(
-        topBar = { TopBar(navController) },
+        topBar = { TopBar(navController, topBarTitle) },
         bottomBar = { BottomBar(navController) },
         content = { paddingValues ->
             Box(
@@ -99,13 +99,32 @@ fun NavigationManager() {
             }
         },
     )
+
+    LaunchedEffect(navController) {
+        navController.currentBackStackEntryFlow.collect { backStackEntry ->
+            // You can map the title based on the route using:
+            topBarTitle = getTitleByRoute(context, backStackEntry.destination.route)
+        }
+    }
+}
+
+fun getTitleByRoute(context: Context, route:String?): String {
+    return when (route) {
+        MaterialReviewsScreen.Profile.name -> context.getString(R.string.profile)
+        MaterialReviewsScreen.Settings.name -> context.getString(R.string.settings)
+        MaterialReviewsScreen.Explore.name -> context.getString(R.string.explore)
+        MaterialReviewsScreen.Favourites.name -> context.getString(R.string.favourites)
+        MaterialReviewsScreen.Reviews.name -> context.getString(R.string.reviews)
+        else -> context.getString(R.string.explore)
+    }
+
 }
 
 @Composable
-fun TopBar(navController: NavHostController) {
+fun TopBar(navController: NavHostController, topBarTitle: String) {
     SmallTopAppBar(
         // Titolo che appare nella barra in alto
-        title = { Text("Titolo") },
+        title = { Text(topBarTitle) },
 
         // Button per tornare indietro
         navigationIcon = {
@@ -153,11 +172,10 @@ var selectedScreen by mutableStateOf(MaterialReviewsScreen.Explore.name)
 @Composable
 fun BottomBar(navController: NavHostController) {
     NavigationBar() {
-
         NavigationBarItem(
             selected = (selectedScreen == MaterialReviewsScreen.Explore.name),
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-            label = { Text(MaterialReviewsScreen.Explore.name) },
+            icon = { Icon(Icons.Filled.Home, contentDescription = null) },
+            label = { Text(text = stringResource(id = R.string.explore)) },
             onClick = {
                 selectedScreen = MaterialReviewsScreen.Explore.name
                 navController.navigate(MaterialReviewsScreen.Explore.name)
@@ -167,7 +185,7 @@ fun BottomBar(navController: NavHostController) {
         NavigationBarItem(
             selected = (selectedScreen == MaterialReviewsScreen.Favourites.name),
             icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-            label = { Text(MaterialReviewsScreen.Favourites.name) },
+            label = { Text(text = stringResource(R.string.favourites)) },
             onClick = {
                 selectedScreen = MaterialReviewsScreen.Favourites.name
                 navController.navigate(MaterialReviewsScreen.Favourites.name)
@@ -176,15 +194,19 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (selectedScreen == MaterialReviewsScreen.Profile.name),
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-            label = { Text(MaterialReviewsScreen.Profile.name) },
+            icon = { Icon(Icons.Filled.Person, contentDescription = null) },
+            label = { Text(text = stringResource(R.string.profile)) },
             onClick = {
                 selectedScreen = MaterialReviewsScreen.Profile.name
                 navController.navigate(MaterialReviewsScreen.Profile.name)
             },
         )
     }
+
+
+
 }
+
 
 private fun navigateToSingleRestaurant(navController: NavHostController, restId: Int) {
     navController.navigate("${MaterialReviewsScreen.Reviews.name}/$restId")

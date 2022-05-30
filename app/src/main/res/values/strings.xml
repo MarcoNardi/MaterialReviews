@@ -3,6 +3,12 @@
     <string name="title_activity_m3test">M3test</string>
     <string name="title_activity_main">MainActivity</string>
 
+    <string name ="settings">Impostazioni</string>
+    <string name="profile">Profilo</string>
+    <string name="explore">Esplora</string>
+    <string name="favourites">Preferiti</string>
+    <string name="reviews">Recensioni</string>
+
     <string-array name="navigationDestinations">
         <item>Destination 1</item>
         <item>Destination 2</item>
