@@ -38,10 +38,12 @@ import com.example.materialreviews.db.*
 
 @ExperimentalMaterial3Api
 @Composable
-fun  RestaurantCard(restaurant: RestaurantEntity,
-                   onClickSeeAll: (Int) -> Unit,
-                    onCheckedChange:(Boolean)-> Unit, imageUri: String
-                   ) {
+fun  RestaurantCard(
+    restaurant: RestaurantEntity,
+    onClickSeeAll: (Int) -> Unit,
+    onCheckedChange: (Boolean) -> Unit,
+    imageUri: String
+) {
     val restId = restaurant.rid
     val restName = restaurant.name
     val restCity = restaurant.address!!.citta
@@ -69,7 +71,7 @@ fun  RestaurantCard(restaurant: RestaurantEntity,
             ImageDecoder
                 .createSource(LocalContext.current.contentResolver, uri)
 
-        imageData= ImageDecoder.decodeBitmap(dataSource!!)
+        imageData= ImageDecoder.decodeBitmap(dataSource)
     }
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
@@ -164,9 +166,14 @@ fun ListOfRestaurants(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         data.forEach { restaurantWithImages ->
-            RestaurantCard( restaurantWithImages.restaurant, onClickSeeAll = onClickSeeAll , onCheckedChange = {it->
-                model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
-            }, imageUri=restaurantWithImages.images[0].uri)
+            RestaurantCard(
+                restaurantWithImages.restaurant,
+                onClickSeeAll = onClickSeeAll,
+                onCheckedChange = { it ->
+                    model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
+                },
+                imageUri = restaurantWithImages.images[0].uri
+            )
         }
     }
 }
@@ -193,9 +200,19 @@ fun RestaurantDetailsAndReviews(
     )
 ) {
     val restaurantWithReviews by restaurantModel.getReviewsOfRestaurant(restId).observeAsState()
+    val userEntity by userModel.getUser(1).observeAsState()
 
-    // Ottengo l'ID dell'utente
-    val userId = /* TODO: ID dell'utente che sta usando l'app */ 1
+    // Ottengo l'ID del ristorante e dell'utente
+    val restaurantId = if (restaurantWithReviews != null) restaurantWithReviews!!.restaurant.rid else 1
+    val userId = if (userEntity != null) userEntity!!.uid else 0
+
+    val reviewViewModel: ReviewViewModel = viewModel(
+        factory = ReviewViewModelFactory(
+            AppDatabase.getDatabase(
+                LocalContext.current
+            ).reviewDao()
+        )
+    )
 
     // Indica se mostrare il dialog per aggiungere una recensione
     var showAddReviewDialog by remember { mutableStateOf(false) }
@@ -207,6 +224,14 @@ fun RestaurantDetailsAndReviews(
             onConfirmClick = { rating, comment ->
                 Log.v(null, "$rating, $comment")
                 /* TODO: Salvare la review nel db */
+                reviewViewModel.addReview(
+                    rating = rating,
+                    review = comment,
+                    userId = userId,
+                    restaurantId = restaurantId,
+                    date = "MyDate"
+                )
+
                 showAddReviewDialog = false
             }
         )
@@ -219,7 +244,7 @@ fun RestaurantDetailsAndReviews(
         ) {
             item() {
                 RestaurantDetails(
-                    restId = 1,
+                    restId = restaurantId,
                     // Passo la lambda per mostrare il dialog per aggiungere le recensioni
                     addReviewButtonOnClick = {
                         showAddReviewDialog = true
