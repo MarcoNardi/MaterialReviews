@@ -112,7 +112,8 @@ fun ProfileScreen(
                         textAlign = TextAlign.Center)
                 }
 
-            })
+            },
+            properties = DialogProperties(usePlatformDefaultWidth = false))
     }
 
     //Scaffold che permette di inserire un FAB
@@ -150,8 +151,15 @@ fun ProfileScreen(
                             .padding(top = 10.dp)
                     )
                     val restaurant by model.getRestaurant(2).observeAsState()
-                    val restName = restaurant!!.preferito
-                    Toast.makeText(LocalContext.current,"$restName", Toast.LENGTH_LONG)
+                    val restName: String
+                    if(restaurant != null) {
+                        restName = restaurant!!.preferito.toString()
+                    }else{
+                        restName = "fau"
+                    }
+                    val toast = Toast.makeText(LocalContext.current,"$restName", Toast.LENGTH_LONG)
+                    toast.show()
+
                     Row(
                         Modifier
                             .fillMaxWidth()
@@ -203,7 +211,7 @@ fun ProfileScreen(
 @ExperimentalMaterial3Api
 @Composable
 fun ListOfReviews2(model: RestaurantViewModel, modelReview: UserViewModel) {
-    val reviews by modelReview.getReviewsOfUser(1).observeAsState()
+    val reviews by modelReview.getReviewsOfUser(2).observeAsState()
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
