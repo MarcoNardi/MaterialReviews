@@ -265,7 +265,7 @@ fun ListOfReviews(reviews: List<Review>) {
         //modifier = Modifier.padding(horizontal = 10.dp)
     ) {
         item() {
-            RestaurantDetails(restId = 1, {})
+            //RestaurantDetails(restId = 1, {})
         }
         items(reviews) { review ->
             ReviewCard( review )

@@ -1,17 +1,23 @@
 package com.example.materialreviews.db
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.lifecycle.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel() {
+
     private fun insertRestaurant(restaurant: RestaurantEntity) {
         viewModelScope.launch{
             restaurantDao.insert(restaurant)
         }
     }
+
 
     private fun createRestaurantEntry(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String, nTelefono:String): RestaurantEntity{
         return RestaurantEntity(id, name, sito, orario,categoria,preferito,nTelefono, Address(citta, via, num_civico ) )
@@ -63,6 +69,27 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     }
     fun getAverageRatingOfRestaurant(restaurantId: Int) :LiveData<Float>{
         return restaurantDao.getAverageRating(restaurantId)
+    }
+    fun getImageData(imageUri:String, context: Context): MutableLiveData<Bitmap> {
+        val imageBitmap: MutableLiveData<Bitmap> by lazy {
+            MutableLiveData<Bitmap>()
+        }
+        viewModelScope.launch{
+            val uri = Uri.parse(imageUri)
+            if (Build.VERSION.SDK_INT < 28) {
+                imageBitmap.value = MediaStore.Images
+                    .Media.getBitmap(context.contentResolver, uri)
+
+            } else {
+                val dataSource =
+                    ImageDecoder
+                        .createSource(context.contentResolver, uri)
+
+                imageBitmap.value = ImageDecoder.decodeBitmap(dataSource)
+            }
+
+        }
+        return imageBitmap
     }
 }
 
