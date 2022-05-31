@@ -25,6 +25,11 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     fun addRestaurant(restaurant: RestaurantEntity){
         insertRestaurant(restaurant)
     }
+
+    fun getRestaurant(restaurantId: Int): LiveData<RestaurantEntity>{
+        return restaurantDao.findById(restaurantId)
+    }
+
     //get all favorite restaurants
     fun getALlFavorites(): LiveData<List<RestaurantEntity>>{
         return restaurantDao.getAllFavorites()
@@ -55,6 +60,9 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     //get reviews of a certain restaurant
     fun getReviewsOfRestaurant(restaurantId: Int): LiveData<RestaurantWithReviews>{
         return  restaurantDao.getReviewsOfRestaurant(restaurantId)
+    }
+    fun getAverageRatingOfRestaurant(restaurantId: Int) :LiveData<Int>{
+        return restaurantDao.getAverageRating(restaurantId)
     }
 }
 
