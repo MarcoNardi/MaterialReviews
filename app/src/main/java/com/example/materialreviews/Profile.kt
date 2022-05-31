@@ -1,7 +1,6 @@
 package com.example.materialreviews
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -157,8 +156,6 @@ fun ProfileScreen(
                     }else{
                         restName = "fau"
                     }
-                    val toast = Toast.makeText(LocalContext.current,"$restName", Toast.LENGTH_LONG)
-                    toast.show()
 
                     Row(
                         Modifier
@@ -235,8 +232,6 @@ fun ReviewCard2(review: ReviewEntity, model: RestaurantViewModel) {
 
     val rId = review.rid
     val restaurant by model.getRestaurant(rId).observeAsState()
-    val toast = Toast.makeText(LocalContext.current, " $rId", Toast.LENGTH_LONG)
-    toast.show()
     if(restaurant != null)
     {
     val restName = restaurant!!.name
