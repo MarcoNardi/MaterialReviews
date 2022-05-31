@@ -89,7 +89,10 @@ fun NavigationManager() {
                         ProfileScreen(userViewModel, restaurantViewModel)
                     }
                     composable(MaterialReviewsScreen.Profile.name) {
-                        ProfileScreen(userViewModel, restaurantViewModel)
+                        ProfileScreen(userViewModel, restaurantViewModel, onClickSeeRestaurant = { restId
+                            ->
+                            navigateToSingleRestaurant(navController, restId)
+                        })
                     }
                     composable(MaterialReviewsScreen.Settings.name) {
                         SettingsScreen()

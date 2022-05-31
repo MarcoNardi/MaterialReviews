@@ -1,5 +1,6 @@
 package com.example.materialreviews
 
+import android.app.Dialog
 import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -36,11 +37,11 @@ val profilePicture = null
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
-
 @Composable
 fun ProfileScreen(
     modelReview: UserViewModel,
-    model: RestaurantViewModel
+    model: RestaurantViewModel,
+    onClickSeeRestaurant: (Int) -> Unit = {}
 ) {
 
     val user by modelReview.getUser(3).observeAsState()
@@ -50,9 +51,34 @@ fun ProfileScreen(
     // Indica se disegnare il dialog
     var openDialog by remember {mutableStateOf(false)}
 
-    var openDialog2 by remember {mutableStateOf(false)}
+    var openData by remember { mutableStateOf("")}
+
+    var visible by remember { mutableStateOf(true) }
+
+    var confirmText: String
+    when(openData) {
+        "Tema" -> confirmText = "Conferma"
+        "Recensioni" ->  confirmText = "Chiudi"
+        "Esci" -> confirmText = "ESCI"
+        "Elimina" -> confirmText = "ELIMINA"
+        else -> {
+            confirmText ="Errore"
+        }
+    }
+
+    var dismissText: String
+    when(openData) {
+        "Tema" -> dismissText = ""
+        "Recensioni" ->  dismissText = ""
+        "Esci" -> dismissText = "ANNULLA"
+        "Elimina" -> dismissText = "ANNULLA"
+        else -> {
+            dismissText ="Errore"
+        }
+    }
 
     if (openDialog) {
+
         AlertDialog(
             // Chiude il Dialog se viene cliccato nella parte oscurata
             onDismissRequest = {
@@ -60,10 +86,25 @@ fun ProfileScreen(
             },
             modifier = Modifier.fillMaxWidth(0.99f),
             title = {
-                Text(text = "Il tuo profilo")
+                when(openData) {
+                    "Tema" -> Text(text ="Il tuo tema")
+                    "Recensioni" ->  Text(text ="Le mie recensioni")
+                    "Esci" -> Text(text = "Uscire dall'account?")
+                    "Elimina" -> Text(text = "Eliminare l'account?")
+                    else -> {
+                        Text(text ="Errore")
+                    }
+                }
             },
             // Posso mettere dentro qualsiasi composable
-            text = { SettingsScreen() } ,
+            text = {
+                when(openData) {
+                    "Tema" -> SettingsScreen()
+                    "Recensioni" ->  ListOfReviews2(model, modelReview, onClickSeeRestaurant = onClickSeeRestaurant)
+                    else -> {
+                        Text(text ="Errore")
+                    }
+                } } ,
 
             confirmButton = {
 
@@ -72,48 +113,26 @@ fun ProfileScreen(
                         openDialog = false
                     }
                 ) {
-                    Text("Conferma",
+                    Text(confirmText,
                     textAlign = TextAlign.Center)
                 }
 
                             },
-            /*
             dismissButton = {
-
                 TextButton(
                     onClick = {
+                        if(visible)
                         openDialog = false
                     }
                 ) {
-                    Text("Dismiss")
+                    Text(dismissText)
                 }
-            },*/
+            },
             properties = DialogProperties(usePlatformDefaultWidth = false)
         )
     }
 
-    if(openDialog2) {
 
-        AlertDialog(onDismissRequest = {openDialog2 = false},
-            modifier = Modifier.fillMaxWidth(0.99f),
-            title = {
-                Text(text = "Le tue recensioni")
-            },
-            // Posso mettere dentro qualsiasi composable
-            text = { ListOfReviews2(model, modelReview) } ,
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        openDialog2 = false
-                    }
-                ) {
-                    Text("Conferma",
-                        textAlign = TextAlign.Center)
-                }
-
-            },
-            properties = DialogProperties(usePlatformDefaultWidth = false))
-    }
 
     //Scaffold che permette di inserire un FAB
     Scaffold(
@@ -182,32 +201,51 @@ fun ProfileScreen(
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier
                             .padding(top = 10.dp)
-                            .clickable { openDialog = true }
+                            .clickable {
+                                openData = "Tema"
+                                openDialog = true
+                                visible = false}
                     )
                     Text(text = AnnotatedString(" Le mie recensioni"),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier
                             .padding(top = 10.dp)
-                            .clickable { openDialog2 = true },
-                        //onClick = { openDialog = true }
+                            .clickable {
+                                openData = "Recensioni"
+                                openDialog = true
+                                visible = false},
+
                     )
-                    Text(text = AnnotatedString("Esci"),
+                    Text(text = AnnotatedString("Esci dall'account"),
                         style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(top = 10.dp),
-                        //onClick = { openDialog = true }
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable{
+                                openData = "Esci"
+                                openDialog = true
+                                visible = true
+                            }
+
                     )
                     Text(text = AnnotatedString(" Elimina account"),
                         style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 20.dp),
+                        modifier = Modifier
+                            .padding(top = 20.dp) .
+                            clickable{
+                                openData = "Elimina"
+                                openDialog = true
+                                visible = true
+                            }
                         //onClick = { openDialog = true }
                     )
             }
         }
     }
 }
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
 @Composable
-fun ListOfReviews2(model: RestaurantViewModel, modelReview: UserViewModel) {
+fun ListOfReviews2(model: RestaurantViewModel, modelReview: UserViewModel, onClickSeeRestaurant: (Int) -> Unit) {
     val reviews by modelReview.getReviewsOfUser(2).observeAsState()
 
     LazyColumn(
@@ -216,30 +254,81 @@ fun ListOfReviews2(model: RestaurantViewModel, modelReview: UserViewModel) {
     ) {
         if(reviews !=null) {
             items(reviews!!.reviews) { review ->
-                    ReviewCard2(review, model)
+                ReviewCard2(review, model, onClickSeeRestaurant = onClickSeeRestaurant)
             }
         }
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
 @Composable
-fun ReviewCard2(review: ReviewEntity, model: RestaurantViewModel) {
+fun ReviewCard2(review: ReviewEntity,
+                model: RestaurantViewModel,
+                onClickSeeRestaurant: (Int) -> Unit) {
 
     val stars = review.rating
     val comment = review.review
     val date = review.date
 
-    val rId = review.rid
-    val restaurant by model.getRestaurant(rId).observeAsState()
+    var openDialog by remember { mutableStateOf(false) }
+    val reviewViewModel: ReviewViewModel = viewModel(factory = ReviewViewModelFactory(
+        AppDatabase.getDatabase(LocalContext.current).reviewDao()
+    ))
+
+    val restId = review.rid
+    val restaurant by model.getRestaurant(restId).observeAsState()
     if(restaurant != null)
     {
     val restName = restaurant!!.name
     val restCity = restaurant!!.address!!.citta
     val restCivic = restaurant!!.address!!.num_civico
     val restRoute = restaurant!!.address!!.via
+        if(openDialog) {
+
+            AlertDialog(onDismissRequest = { openDialog = false },
+                modifier = Modifier.fillMaxWidth(0.9f),
+                title = {
+                    Text(text = "Sicuro di voler eliminare la tua recensione?")
+                },
+                // Posso mettere dentro qualsiasi composable
+                text = {
+                    Row() {
+                        Text(text = "Nessuno potrà più vederla e non sarà più possibile recuperarla")
+                    }
+                },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                openDialog = false
+                                //reviewViewModel.del
+                            }
+                        ) {
+                            Text(
+                                "ELIMINA",
+                            )
+                        }
+
+                    },
+                    dismissButton = {
+                        TextButton(
+                            onClick = {
+                                openDialog = false
+                            }
+                        ) {
+                            Text(
+                                "ANNULLA",
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    },
+                    properties = DialogProperties(usePlatformDefaultWidth = false)
+                    )
+                }
+
     ElevatedCard(
-        shape = RoundedCornerShape(15.dp)
+        shape = RoundedCornerShape(15.dp),
+    modifier = Modifier.clickable{ onClickSeeRestaurant(restId)}
     ) {
         Column(
             modifier = Modifier
@@ -260,7 +349,6 @@ fun ReviewCard2(review: ReviewEntity, model: RestaurantViewModel) {
             )
             Spacer(Modifier.weight(1f))
 
-
             // Stelline e data
             Row() {
                 RowOfStars(stars)
@@ -272,11 +360,20 @@ fun ReviewCard2(review: ReviewEntity, model: RestaurantViewModel) {
 
             // Testo della recensione
             Text(text = comment)
+            Row(Modifier.fillMaxWidth()) {
+                Button(onClick = {openDialog = true}) {
+                    Text(text = "ELIMINA")
+
+                }
         }
     }
+        }
     }
 }
 
+@ExperimentalMaterial3Api
+@Composable
+fun seeDialog() {}
 
 @Preview
 @Composable
