@@ -70,6 +70,9 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     fun getAverageRatingOfRestaurant(restaurantId: Int) :LiveData<Float>{
         return restaurantDao.getAverageRating(restaurantId)
     }
+
+
+
     fun getImageData(imageUri:String, context: Context): MutableLiveData<Bitmap> {
         val imageBitmap: MutableLiveData<Bitmap> by lazy {
             MutableLiveData<Bitmap>()
