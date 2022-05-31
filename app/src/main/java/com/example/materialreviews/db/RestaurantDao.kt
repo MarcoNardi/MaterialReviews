@@ -42,4 +42,7 @@ interface RestaurantDao {
     @Transaction
     @Query("SELECT * FROM restaurants WHERE rid LIKE :restaurantId")
     fun getReviewsOfRestaurant(restaurantId: Int): LiveData<RestaurantWithReviews>
+
+    @Query("SELECT AVG(rating) FROM reviews WHERE restaurantId=:restaurantId")
+    fun getAverageRating(restaurantId: Int): LiveData<Float>
 }

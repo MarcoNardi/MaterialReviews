@@ -1,5 +1,6 @@
 package com.example.materialreviews
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -33,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 
@@ -42,6 +44,7 @@ fun  RestaurantCard(
     restaurant: RestaurantEntity,
     onClickSeeAll: (Int) -> Unit,
     onCheckedChange: (Boolean) -> Unit,
+    getAverageRating: () -> LiveData<Float>,
     imageUri: String
 ) {
     val restId = restaurant.rid
@@ -50,42 +53,44 @@ fun  RestaurantCard(
     val restRoad = restaurant.address.via
     val restCivic = restaurant.address.num_civico
 
-    val stars = 4
     val restImage = R.drawable.ic_launcher_background
     val context = LocalContext.current
 
+    val displayMetrics = context.resources.displayMetrics
+    val dpWidth = displayMetrics.widthPixels / displayMetrics.density
     //LocalContext.current.resources.getResourcePackageName(R.drawable.restaurantphoto1)
     //Resources.getResourcePackageName(R.drawable.restaurantphoto1)
     //val imageUri=Uri.parse("android.resource://com.example.materialreviews/drawable/restaurantphoto1")
-    val uri=Uri.parse(imageUri)
-    val displayMetrics = context.resources.displayMetrics
-    val dpWidth = displayMetrics.widthPixels / displayMetrics.density
-    val imageData: Bitmap
-    if (Build.VERSION.SDK_INT < 28) {
-        imageData= MediaStore.Images
-            .Media.getBitmap(LocalContext.current.contentResolver, uri)
+    //val imageData: Bitmap = getImageBitmap(imageUri, LocalContext.current)
 
-    } else {
-        val dataSource =
-            ImageDecoder
-                .createSource(LocalContext.current.contentResolver, uri)
-
-        imageData= ImageDecoder.decodeBitmap(dataSource)
-    }
+    val restaurantModel: RestaurantViewModel = viewModel(
+        factory = RestaurantViewModelFactory(
+            AppDatabase.getDatabase(
+                LocalContext.current
+            ).restaurantDao()
+        )
+    )
+    val imageData = getImageBitmap(imageUri , context)
+    val averageRating by getAverageRating().observeAsState()
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier.clickable { onClickSeeAll(restId) }
     ) {
         Column(modifier = Modifier ){
-
-            // "Foto profilo" del ristorante
             Image(
+                bitmap = imageData!!.asImageBitmap(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
+            )
+            // "Foto profilo" del ristorante
+            /*Image(
                 //painter = painterResource(id = R.drawable.ic_launcher_background)
                 bitmap = imageData.asImageBitmap(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
-            )
+            )*/
 
             // Altri elementi
             Row(
@@ -102,7 +107,11 @@ fun  RestaurantCard(
 
                     // Stelle della recensione
                     Row {
-                        RowOfStars(stars)
+                        if(averageRating!=null){
+                            RowOfStars(averageRating!!.toInt())
+                        }else{
+                            RowOfStars(0)
+                        }
                         //Spacer(Modifier.weight(1f))
                     }
 
@@ -136,6 +145,23 @@ fun  RestaurantCard(
     }
 }
 
+fun getImageBitmap(imageUri: String, context: Context): Bitmap {
+    val uri = Uri.parse(imageUri)
+    val imageData: Bitmap
+    if (Build.VERSION.SDK_INT < 28) {
+        imageData = MediaStore.Images
+            .Media.getBitmap(context.contentResolver, uri)
+
+    } else {
+        val dataSource =
+            ImageDecoder
+                .createSource(context.contentResolver, uri)
+
+        imageData = ImageDecoder.decodeBitmap(dataSource)
+    }
+    return imageData
+}
+
 @ExperimentalMaterial3Api
 @Composable
 fun ListOfRestaurants(
@@ -148,7 +174,7 @@ fun ListOfRestaurants(
 ) {
     //val data = getInitialRestaurantsData()
     val data by model.getRestaurantsWithImage().observeAsState(emptyList())
-    /*
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         //modifier = Modifier.padding(horizontal = 10.dp)
@@ -156,10 +182,12 @@ fun ListOfRestaurants(
         items(data) { tuple ->
             RestaurantCard( tuple.restaurant, onClickSeeAll = onClickSeeAll , onCheckedChange = {it->
                 model.changeFavoriteState(tuple.restaurant.rid, it)
-            }, imageUri=tuple.images[0].uri)
+            }, imageUri=tuple.images[0].uri,
+                getAverageRating={model.getAverageRatingOfRestaurant(tuple.restaurant.rid)})
         }
     }
-    */
+
+    /*
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -171,10 +199,11 @@ fun ListOfRestaurants(
                 onCheckedChange = { it ->
                     model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
                 },
-                imageUri = restaurantWithImages.images[0].uri
+                imageUri = restaurantWithImages.images[0].uri,
+                getAverageRating={model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid)}
             )
         }
-    }
+    }*/
 }
 
 @ExperimentalComposeUiApi
@@ -200,7 +229,7 @@ fun RestaurantDetailsAndReviews(
 ) {
     val restaurantWithReviews by restaurantModel.getReviewsOfRestaurant(restId).observeAsState()
     val userEntity by userModel.getUser(1).observeAsState()
-
+    val restaurantWithImages by restaurantModel.getImageOfRestaurant(restId).observeAsState()
     // Ottengo l'ID del ristorante e dell'utente
     val restaurantId = 4 //if (restaurantWithReviews != null) restaurantWithReviews!!.restaurant.rid else 1
     val userId = if (userEntity != null) userEntity!!.uid else 0
@@ -236,14 +265,19 @@ fun RestaurantDetailsAndReviews(
         )
     }
 
-    if(restaurantWithReviews!=null){
+    if(restaurantWithReviews!=null && restaurantWithImages!=null){
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             //modifier = Modifier.padding(horizontal = 10.dp)
         ) {
             item() {
                 RestaurantDetails(
-                    restId = restaurantId,
+                    restaurant = restaurantWithReviews!!.restaurant, restaurantWithImages!!.images[0].uri, { it ->
+                        restaurantModel.changeFavoriteState(restaurantWithImages!!.restaurant.rid, it)
+                    },
+                    getAverageRating = {
+                        restaurantModel.getAverageRatingOfRestaurant(restaurantWithImages!!.restaurant.rid)
+                    },
                     // Passo la lambda per mostrare il dialog per aggiungere le recensioni
                     addReviewButtonOnClick = {
                         showAddReviewDialog = true
@@ -265,38 +299,49 @@ fun RestaurantDetailsAndReviews(
 
 @ExperimentalMaterial3Api
 @Composable
-fun RestaurantDetails(
-    restId: Int?,
-    addReviewButtonOnClick: () -> Unit
+fun RestaurantDetails(restaurant: RestaurantEntity, imageUri: String, onCheckedChange: (Boolean) -> Unit, getAverageRating:()-> LiveData<Float>,
+                      addReviewButtonOnClick: () -> Unit
 ) {
     val context = LocalContext.current
-
+   // val imageData= getImageBitmap(imageUri , context)
+    val restaurantModel: RestaurantViewModel = viewModel(
+    factory = RestaurantViewModelFactory(
+        AppDatabase.getDatabase(
+            LocalContext.current
+        ).restaurantDao()
+    )
+    )
+    val imageData = getImageBitmap(imageUri , context)
+    val averageRating by getAverageRating().observeAsState()
     Surface() {
         Column(modifier = Modifier.padding(5.dp)) {
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
+                bitmap = imageData!!.asImageBitmap(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
             )
             Row(verticalAlignment = Alignment.CenterVertically){
-                Column() {
+                Column {
                     // Nome del ristorante
                     Text(
-                        text = "RestaurantDetails",
+                        text = restaurant.name,
                         style = MaterialTheme.typography.displaySmall
                     )
                     // Valutazione media
-                    RowOfStars(4)
+                    if(averageRating!=null){
+                        RowOfStars(averageRating!!.toInt())
+                    }else{
+                        RowOfStars(0)
+                    }
                 }
 
                 Spacer(Modifier.weight(1f))
 
                 // Pulsante per salvarlo nei preferiti
                 val icon = Icons.Filled.Favorite
-                var checked by remember { mutableStateOf(false) }
-                IconToggleButton( checked = checked, onCheckedChange = {checked = it}, modifier = Modifier.padding(end = 12.dp)) {
-                    val tint by animateColorAsState(if (checked) Color.Red else Color.LightGray)
+                IconToggleButton( checked = restaurant.preferito, onCheckedChange = onCheckedChange, modifier = Modifier.padding(end = 12.dp)) {
+                    val tint by animateColorAsState(if (restaurant.preferito) Color.Red else Color.LightGray)
                     Icon(
                         imageVector = icon,
                         contentDescription = "Aggiungi a elementi salvati",
@@ -306,10 +351,10 @@ fun RestaurantDetails(
 
                 }
             }
-            Text(text = "Posizione",
+            Text(text = restaurant.address?.citta ?: "citta",
                 Modifier.padding(top = 3.dp)
             )
-            Text(text = "Posizione2",
+            Text(text = "Via "+ restaurant.address?.via!!+" "+ restaurant.address?.num_civico!!.toString(),
                 Modifier.padding(top = 3.dp)
             )
             Row(modifier = Modifier.padding(top = 3.dp)) {
@@ -317,7 +362,7 @@ fun RestaurantDetails(
                     modifier = Modifier.padding(end = 12.dp),
                     onClick = {
                         val intent = Intent(Intent.ACTION_DIAL)
-                        intent.data = Uri.parse("tel:<3467640861")
+                        intent.data = Uri.parse("tel:<${restaurant.nTelefono}")
                         context.startActivity(intent)
                     }
                 ) {
@@ -332,7 +377,7 @@ fun RestaurantDetails(
                 IconButton(
                     onClick = {
                         val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data = Uri.parse("https://retireinprogress.com/404books/")
+                        intent.data = Uri.parse("https://"+restaurant.sito)
                         context.startActivity(intent)
                     }
                 ) {
