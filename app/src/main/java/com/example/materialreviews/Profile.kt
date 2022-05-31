@@ -41,7 +41,8 @@ val profilePicture = null
 fun ProfileScreen(
     modelReview: UserViewModel,
     model: RestaurantViewModel,
-    onClickSeeRestaurant: (Int) -> Unit = {}
+    onClickSeeRestaurant: (Int) -> Unit = {},
+    onClickEdit: () -> Unit = {}
 ) {
 
     val user by modelReview.getUser(3).observeAsState()
@@ -168,28 +169,7 @@ fun ProfileScreen(
                         modifier = Modifier
                             .padding(top = 10.dp)
                     )
-                    val restaurant by model.getRestaurant(2).observeAsState()
-                    val restName: String
-                    if(restaurant != null) {
-                        restName = restaurant!!.preferito.toString()
-                    }else{
-                        restName = "fau"
-                    }
 
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 10.dp),
-                        horizontalArrangement = Arrangement.End
-                        ) {
-                        IconButton(onClick = { /*TODO*/ }) {
-                            Icon(
-                                imageVector = Icons.Filled.Edit,
-                                contentDescription = "Edit"
-                            )
-                        }
-
-                    }
 
                     Divider(
                         Modifier.padding(horizontal = 20.dp),
@@ -216,6 +196,15 @@ fun ProfileScreen(
                                 visible = false},
 
                     )
+                    Text(text = AnnotatedString(" Modifica profilo"),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable {
+                                onClickEdit()
+                                       }
+
+                        )
                     Text(text = AnnotatedString("Esci dall'account"),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier
@@ -301,7 +290,7 @@ fun ReviewCard2(review: ReviewEntity,
                         TextButton(
                             onClick = {
                                 openDialog = false
-                                //reviewViewModel.del
+                                reviewViewModel.deleteReview(review)
                             }
                         ) {
                             Text(

@@ -8,6 +8,7 @@
     <string name="explore">Esplora</string>
     <string name="favourites">Preferiti</string>
     <string name="reviews">Recensioni</string>
+    <string name="edit_profile">Modifica profilo</string>
 
     <string-array name="navigationDestinations">
         <item>Destination 1</item>

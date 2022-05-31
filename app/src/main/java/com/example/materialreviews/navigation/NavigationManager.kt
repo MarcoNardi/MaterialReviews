@@ -92,10 +92,14 @@ fun NavigationManager() {
                         ProfileScreen(userViewModel, restaurantViewModel, onClickSeeRestaurant = { restId
                             ->
                             navigateToSingleRestaurant(navController, restId)
-                        })
+                        },
+                        onClickEdit = { navController.navigate(MaterialReviewsScreen.EditProfile.name)})
                     }
                     composable(MaterialReviewsScreen.Settings.name) {
                         SettingsScreen()
+                    }
+                    composable(MaterialReviewsScreen.EditProfile.name){
+                        EditProfile()
                     }
 
                     val restId = MaterialReviewsScreen.Reviews.name
@@ -130,6 +134,7 @@ fun getTitleByRoute(context: Context, route:String?): String {
         MaterialReviewsScreen.Explore.name -> context.getString(R.string.explore)
         MaterialReviewsScreen.Favourites.name -> context.getString(R.string.favourites)
         MaterialReviewsScreen.Reviews.name -> context.getString(R.string.reviews)
+        MaterialReviewsScreen.EditProfile.name -> context.getString(R.string.edit_profile)
         else -> context.getString(R.string.explore)
     }
 

@@ -8,7 +8,8 @@ enum class MaterialReviewsScreen ( ) {
     Reviews( ),
     Favourites(),
     Profile(),
-    Settings();
+    Settings(),
+    EditProfile();
 
     companion object {
         fun fromRoute(route: String?): MaterialReviewsScreen =
@@ -18,6 +19,7 @@ enum class MaterialReviewsScreen ( ) {
                 Favourites.name -> Favourites
                 Profile.name -> Profile
                 Settings.name -> Settings
+                EditProfile.name -> EditProfile
                 null -> Explore
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }
