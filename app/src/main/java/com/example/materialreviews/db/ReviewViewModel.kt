@@ -24,6 +24,12 @@ class ReviewViewModel(private val reviewDao: ReviewDao) : ViewModel() {
     fun addReview(review: ReviewEntity){
         insertReview(review)
     }
+    fun updateReview(restaurantId: Int, userId: Int, newComment:String, newDate:String, newRating: Int){
+        viewModelScope.launch {
+            reviewDao.updateReview(restaurantId, userId, newComment, newDate, newRating)
+        }
+    }
+
 
 
 }

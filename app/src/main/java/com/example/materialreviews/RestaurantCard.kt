@@ -59,7 +59,6 @@ fun  RestaurantCard(
     //val imageUri=Uri.parse("android.resource://com.example.materialreviews/drawable/restaurantphoto1")
     val uri=Uri.parse(imageUri)
     val displayMetrics = context.resources.displayMetrics
-    val dpHeight = displayMetrics.heightPixels / displayMetrics.density
     val dpWidth = displayMetrics.widthPixels / displayMetrics.density
     val imageData: Bitmap
     if (Build.VERSION.SDK_INT < 28) {
