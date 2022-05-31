@@ -1,6 +1,7 @@
 package com.example.materialreviews.navigation
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.provider.ContactsContract
 import android.service.autofill.UserData
 import androidx.activity.viewModels
@@ -52,8 +53,14 @@ fun NavigationManager() {
     val context = LocalContext.current
     var topBarTitle by rememberSaveable() { mutableStateOf("")    }
 
+
+
     val restaurantViewModel: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(
         AppDatabase.getDatabase(context ).restaurantDao()
+    ))
+
+    val userViewModel: UserViewModel = viewModel(factory = UserViewModelFactory(
+        AppDatabase.getDatabase(context ).userDao()
     ))
     // Scaffold = topBar + bottomBar + content
     Scaffold(
@@ -79,10 +86,10 @@ fun NavigationManager() {
                         ListOfReviewsPreview()
                     }
                     composable(MaterialReviewsScreen.Reviews.name) {
-                        ProfileScreen()
+                        ProfileScreen(userViewModel, restaurantViewModel)
                     }
                     composable(MaterialReviewsScreen.Profile.name) {
-                        ProfileScreen()
+                        ProfileScreen(userViewModel, restaurantViewModel)
                     }
                     composable(MaterialReviewsScreen.Settings.name) {
                         SettingsScreen()
