@@ -61,7 +61,7 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     fun getReviewsOfRestaurant(restaurantId: Int): LiveData<RestaurantWithReviews>{
         return  restaurantDao.getReviewsOfRestaurant(restaurantId)
     }
-    fun getAverageRatingOfRestaurant(restaurantId: Int) :LiveData<Int>{
+    fun getAverageRatingOfRestaurant(restaurantId: Int) :LiveData<Float>{
         return restaurantDao.getAverageRating(restaurantId)
     }
 }
