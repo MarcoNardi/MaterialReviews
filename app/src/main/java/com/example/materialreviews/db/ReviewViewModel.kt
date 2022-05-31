@@ -29,6 +29,17 @@ class ReviewViewModel(private val reviewDao: ReviewDao) : ViewModel() {
             reviewDao.updateReview(restaurantId, userId, newComment, newDate, newRating)
         }
     }
+    fun deleteReview(review: ReviewEntity){
+        viewModelScope.launch {
+            reviewDao.delete(review)
+        }
+    }
+
+    fun deleteReviewByIds(restaurantId: Int, userId: Int){
+        viewModelScope.launch {
+            reviewDao.deleteByIds(restaurantId, userId)
+        }
+    }
 
 
 
