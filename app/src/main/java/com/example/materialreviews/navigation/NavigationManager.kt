@@ -86,7 +86,7 @@ fun NavigationManager() {
                     composable(MaterialReviewsScreen.Explore.name) {
                         ListOfRestaurants(restaurantViewModel, onClickSeeAll = { restId ->
                             navigateToSingleRestaurant(navController, restId)
-                        },onlyFavorites = true)
+                        },onlyFavorites = false)
                     }
                     composable(MaterialReviewsScreen.Reviews.name) {
                         ProfileScreen(userViewModel, restaurantViewModel)
