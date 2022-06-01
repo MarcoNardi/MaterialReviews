@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
+import com.example.materialreviews.db.UserEntity
 import com.example.materialreviews.db.UserViewModel
 
 
@@ -59,7 +60,10 @@ fun EditProfile(model: UserViewModel) {
     val user by model.getUser(login_id).observeAsState()
     val name = (user?.firstName ?: "help")
     val surname = (user?.lastName ?: "halp")
+    val profile_image = user?.imageUri
+    if(profile_image == null) {
 
+    }
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -123,8 +127,8 @@ fun EditProfile(model: UserViewModel) {
             color = Color.Gray,
             thickness = 1.dp
         )
-        ExpandableCard(onCardArrowClick = {expandPersonalData = !(expandPersonalData) }, expanded = expandPersonalData, "Modifica dati anagrafici", 1)
-        ExpandableCard(onCardArrowClick = {expandPassword = !(expandPassword) }, expanded = expandPassword, "Modifica password", 2)
+        ExpandableCard(onCardArrowClick = {expandPersonalData = !(expandPersonalData) }, expanded = expandPersonalData, "Modifica dati anagrafici", 1, model)
+        ExpandableCard(onCardArrowClick = {expandPassword = !(expandPassword) }, expanded = expandPassword, "Modifica password", 2, model)
     }
 }
 const val EXPAND_ANIMATION_DURATION = 300
@@ -141,7 +145,8 @@ fun ExpandableCard(
     onCardArrowClick: () -> Unit,
     expanded: Boolean,
     title:String,
-    type:Int
+    type:Int,
+    model: UserViewModel
 ) {
     val transitionState = remember {
         MutableTransitionState(expanded).apply {
@@ -187,7 +192,7 @@ fun ExpandableCard(
                 CardTitle(title = title)
             }
 
-                ExpandableContent(visible = expanded, type)
+                ExpandableContent(visible = expanded, type, model)
 
         }
     }
@@ -227,7 +232,8 @@ fun CardTitle(title: String) {
 @Composable
 fun ExpandableContent(
     visible: Boolean = true,
-    type: Int
+    type: Int,
+    model:UserViewModel
 ) {
     val enterFadeIn = remember {
         fadeIn(
@@ -257,18 +263,22 @@ fun ExpandableContent(
         exit = exitCollapse + exitFadeOut
     ) {
         if(type == 1) {
-        EditPersonalData()
+        EditPersonalData(model)
         }else if (type == 2) {
-            EditPassword()
+            EditPassword(model)
         }
     }
 }
 
 @Composable
-fun EditPersonalData()
+fun EditPersonalData(model:UserViewModel)
 {
-    var name by rememberSaveable { mutableStateOf("Text") }
-    var surname by rememberSaveable { mutableStateOf("Text2")}
+    val myPreferences = MyPreferences(LocalContext.current)
+    var login_id = myPreferences.getId()
+
+
+    var name by rememberSaveable { mutableStateOf("") }
+    var surname by rememberSaveable { mutableStateOf("")}
     Column(modifier = Modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.heightIn(10.dp))
@@ -304,7 +314,9 @@ fun EditPersonalData()
                 Modifier.padding(top = 5.dp, bottom = 5.dp))}
         )
         Spacer(modifier = Modifier.heightIn(8.dp))
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            model.updateFirstNameOfUser(login_id,name)
+            model.updateLastNameOfUser(login_id,surname)}) {
             Text(text = "Salva")
         }
     }
@@ -312,7 +324,7 @@ fun EditPersonalData()
 }
 
 @Composable
-fun EditPassword() {
+fun EditPassword(model: UserViewModel) {
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column(
