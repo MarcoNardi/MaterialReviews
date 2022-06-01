@@ -39,8 +39,8 @@ fun RestaurantDetailsAndReviews(
     val userEntity by userModel.getUser(1).observeAsState()
     val restaurantWithImages by restaurantModel.getImageOfRestaurant(restId).observeAsState()
     // Ottengo l'ID del ristorante e dell'utente
-    val restaurantId = 4 //if (restaurantWithReviews != null) restaurantWithReviews!!.restaurant.rid else 1
-    val userId = if (userEntity != null) userEntity!!.uid else 0
+    val restaurantId = if (restaurantWithReviews != null) restaurantWithReviews!!.restaurant.rid else 1
+    val userId = 1 //shared preferences
 
     val reviewViewModel: ReviewViewModel = viewModel(
         factory = ReviewViewModelFactory(
@@ -49,6 +49,23 @@ fun RestaurantDetailsAndReviews(
             ).reviewDao()
         )
     )
+
+    // Controlla se esiste gia` una review
+    var existReview = false
+    var existingRating = 1
+    var existingComment = "Ciao Marco"
+
+    if (restaurantWithReviews != null) {
+        val restaurantReviews = restaurantWithReviews!!.reviews
+        for (review in restaurantReviews) {
+            if (review.uid == userId) {
+                existingRating = review.rating
+                existingComment = review.review
+                existReview = true
+                break
+            }
+        }
+    }
 
     // Indica se mostrare il dialog per aggiungere una recensione
     var showAddReviewDialog by remember { mutableStateOf(false) }
@@ -59,17 +76,31 @@ fun RestaurantDetailsAndReviews(
             },
             onConfirmClick = { rating, comment ->
                 Log.v(null, "$rating, $comment")
-                /* TODO: Salvare la review nel db */
-                reviewViewModel.addReview(
-                    rating = rating,
-                    review = comment,
-                    userId = userId,
-                    restaurantId = restaurantId,
-                    date = "MyDate"
-                )
+
+                // Se esiste gia` la review la modifica, altrimenti la aggiunge
+                if (existReview) {
+                    reviewViewModel.updateReview(
+                        newRating = rating,
+                        newComment = comment,
+                        userId = userId,
+                        restaurantId = restaurantId,
+                        newDate = "MyDate"
+                    )
+                }
+                else {
+                    reviewViewModel.addReview(
+                        rating = rating,
+                        review = comment,
+                        userId = userId,
+                        restaurantId = restaurantId,
+                        date = "MyDate"
+                    )
+                }
 
                 showAddReviewDialog = false
-            }
+            },
+            existingRating = existingRating,
+            existingComment = existingComment
         )
     }
 

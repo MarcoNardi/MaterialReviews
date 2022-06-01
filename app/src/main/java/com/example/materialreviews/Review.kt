@@ -146,11 +146,13 @@ fun RowOfStars(
 @Composable
 fun AddReviewDialog(
     closeDialog: ()->Unit,
-    onConfirmClick: (Int, String)->Unit
+    onConfirmClick: (Int, String)->Unit,
+    existingRating: Int = 1,
+    existingComment: String = "Prova",
 ) {
     // Variabili della recensione
-    var rating by remember{mutableStateOf(1)}
-    var comment by remember{ mutableStateOf("")}
+    var rating by remember{mutableStateOf(existingRating)}
+    var comment by remember{mutableStateOf(existingComment)}
 
     AlertDialog(
         onDismissRequest = closeDialog,
