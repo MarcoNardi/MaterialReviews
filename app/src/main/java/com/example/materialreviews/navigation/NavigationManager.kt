@@ -5,6 +5,9 @@ import android.content.SharedPreferences
 import android.provider.ContactsContract
 import android.service.autofill.UserData
 import androidx.activity.viewModels
+import androidx.compose.animation.*
+import androidx.compose.animation.core.Animation
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -29,21 +32,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.materialreviews.*
 import com.example.materialreviews.R
 import com.example.materialreviews.db.*
 
-// Lista che contiene le schermate a cui e` possibile navigare non più necessaria
-/*
-val destinationsList = listOf(
-    "Preferiti",
-    "Esplora",
-    "Profilo"
-)*/
-
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
 @ExperimentalMaterial3Api
 @Preview
 @Composable
@@ -52,6 +48,7 @@ fun NavigationManager() {
     val navController = rememberNavController()
     val context = LocalContext.current
     var topBarTitle by rememberSaveable() { mutableStateOf("")    }
+    val currentRoute = currentRoute(navController = navController)
 
 
 
@@ -78,25 +75,36 @@ fun NavigationManager() {
                     startDestination = MaterialReviewsScreen.Explore.name,
                 ) {
                     composable(MaterialReviewsScreen.Favourites.name) {
-                        ListOfRestaurants(restaurantViewModel, onClickSeeAll = { restId ->
-                            navigateToSingleRestaurant(navController, restId)
-                        },onlyFavorites = true)
-
+                        ListOfRestaurants(
+                            restaurantViewModel,
+                            onClickSeeAll = { restId ->
+                                navigateToSingleRestaurant(navController, restId)
+                            },
+                            onlyFavorites = true
+                        )
                     }
                     composable(MaterialReviewsScreen.Explore.name) {
-                        ListOfRestaurants(restaurantViewModel, onClickSeeAll = { restId ->
-                            navigateToSingleRestaurant(navController, restId)
-                        },onlyFavorites = false)
+                        ListOfRestaurants(
+                            restaurantViewModel,
+                            onClickSeeAll = { restId ->
+                                navigateToSingleRestaurant(navController, restId)
+                            },
+                            onlyFavorites = false
+                        )
                     }
                     composable(MaterialReviewsScreen.Reviews.name) {
                         ProfileScreen(userViewModel, restaurantViewModel)
                     }
                     composable(MaterialReviewsScreen.Profile.name) {
-                        ProfileScreen(userViewModel, restaurantViewModel, onClickSeeRestaurant = { restId
-                            ->
-                            navigateToSingleRestaurant(navController, restId)
-                        },
-                        onClickEdit = { navController.navigate(MaterialReviewsScreen.EditProfile.name)})
+                        ProfileScreen(
+                            userViewModel,
+                            restaurantViewModel,
+                            onClickSeeRestaurant = { restId
+                                ->
+                                navigateToSingleRestaurant(navController, restId)
+                            },
+                            onClickEdit = { navController.navigate(MaterialReviewsScreen.EditProfile.name) }
+                        )
                     }
                     composable(MaterialReviewsScreen.Settings.name) {
                         SettingsScreen()
@@ -141,6 +149,15 @@ fun getTitleByRoute(context: Context, route:String?): String {
         else -> context.getString(R.string.explore)
     }
 
+}
+
+/**
+ * Ritorna la destination attuale come stringa
+ */
+@Composable
+private fun currentRoute(navController: NavHostController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.destination?.route
 }
 
 @Composable
@@ -194,34 +211,34 @@ var selectedScreen by mutableStateOf(MaterialReviewsScreen.Explore.name)
 
 @Composable
 fun BottomBar(navController: NavHostController) {
+
+    val currentRoute = currentRoute(navController)
+
     NavigationBar() {
 
         NavigationBarItem(
-            selected = (selectedScreen == MaterialReviewsScreen.Explore.name),
+            selected = (currentRoute == MaterialReviewsScreen.Explore.name),
             icon = { Icon(Icons.Filled.Home, contentDescription = null) },
             label = { Text(text = stringResource(id = R.string.explore)) },
             onClick = {
-                selectedScreen = MaterialReviewsScreen.Explore.name
                 navController.navigate(MaterialReviewsScreen.Explore.name)
             },
         )
 
         NavigationBarItem(
-            selected = (selectedScreen == MaterialReviewsScreen.Favourites.name),
+            selected = (currentRoute == MaterialReviewsScreen.Favourites.name),
             icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
             label = { Text(text = stringResource(R.string.favourites)) },
             onClick = {
-                selectedScreen = MaterialReviewsScreen.Favourites.name
                 navController.navigate(MaterialReviewsScreen.Favourites.name)
             }
         )
 
         NavigationBarItem(
-            selected = (selectedScreen == MaterialReviewsScreen.Profile.name),
+            selected = (currentRoute == MaterialReviewsScreen.Profile.name),
             icon = { Icon(Icons.Filled.Person, contentDescription = null) },
             label = { Text(text = stringResource(R.string.profile)) },
             onClick = {
-                selectedScreen = MaterialReviewsScreen.Profile.name
                 navController.navigate(MaterialReviewsScreen.Profile.name)
             },
         )
