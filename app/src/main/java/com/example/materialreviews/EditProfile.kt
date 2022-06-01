@@ -55,7 +55,6 @@ fun EditProfile(model: UserViewModel) {
 
 
     val myPreferences = MyPreferences(LocalContext.current)
-    myPreferences.setId(2)
     var login_id = myPreferences.getId()
     val user by model.getUser(login_id).observeAsState()
     val name = (user?.firstName ?: "help")
