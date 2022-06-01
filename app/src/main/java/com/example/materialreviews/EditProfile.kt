@@ -92,6 +92,22 @@ fun EditProfile(model: UserViewModel) {
 
 
         Row(modifier = Modifier.padding(start = 47.dp)) {
+
+
+            if(profile_image==null){
+                ProfilePicture(size = 150.dp)
+            }else{
+                if(profile_image=="")ProfilePicture(size = 150.dp)else{
+                   val imageBitmat = getImageBitmap(profile_image, context)
+                   Image(
+                       bitmap = imageBitmat!!.asImageBitmap(),
+                       contentDescription = null,
+                       contentScale = ContentScale.Crop,
+                       modifier = Modifier.size(150.dp)
+                           .clip(CircleShape)
+                   )
+                }
+            }
             //if(profile_image == "")
             //{
 
