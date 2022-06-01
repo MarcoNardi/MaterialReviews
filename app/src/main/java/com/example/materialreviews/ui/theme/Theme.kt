@@ -159,7 +159,7 @@ fun DarkThemeSwitch() {
 @Composable
 fun ThemeSelector() {
     // Indica quale tema e` attualmente in uso
-    val selectedTheme = if (isFollowingSystemDarkTheme) "Sistema" else { if(isInDarkTheme) "Scuro" else "Chiaro" }
+    val selectedTheme = if (isFollowingSystemDarkTheme) "Sist." else { if(isInDarkTheme) "Scuro" else "Chiaro" }
 
     // Forme per i pulsanti
     val leftShape = multiButtonShapes[0]
@@ -173,11 +173,12 @@ fun ThemeSelector() {
     val systemIconPainter = painterResource(id = R.drawable.ic_baseline_android_24)
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+
     ) {
         Text(
             text = "Tema",
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleSmall
         )
         Row() {
             MultiToggleButtonItem(
@@ -205,7 +206,7 @@ fun ThemeSelector() {
                 },
             )
             MultiToggleButtonItem(
-                name = "Sistema",
+                name = "Sist.",
                 iconPainter = systemIconPainter,
                 shape = rightShape,
                 index = 2,

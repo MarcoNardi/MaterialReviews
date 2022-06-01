@@ -1,6 +1,7 @@
 package com.example.materialreviews.navigation
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.provider.ContactsContract
 import android.service.autofill.UserData
 import androidx.activity.viewModels
@@ -52,8 +53,14 @@ fun NavigationManager() {
     val context = LocalContext.current
     var topBarTitle by rememberSaveable() { mutableStateOf("")    }
 
+
+
     val restaurantViewModel: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(
         AppDatabase.getDatabase(context ).restaurantDao()
+    ))
+
+    val userViewModel: UserViewModel = viewModel(factory = UserViewModelFactory(
+        AppDatabase.getDatabase(context ).userDao()
     ))
     // Scaffold = topBar + bottomBar + content
     Scaffold(
@@ -81,13 +88,20 @@ fun NavigationManager() {
                         },onlyFavorites = true)
                     }
                     composable(MaterialReviewsScreen.Reviews.name) {
-                        ProfileScreen()
+                        ProfileScreen(userViewModel, restaurantViewModel)
                     }
                     composable(MaterialReviewsScreen.Profile.name) {
-                        ProfileScreen()
+                        ProfileScreen(userViewModel, restaurantViewModel, onClickSeeRestaurant = { restId
+                            ->
+                            navigateToSingleRestaurant(navController, restId)
+                        },
+                        onClickEdit = { navController.navigate(MaterialReviewsScreen.EditProfile.name)})
                     }
                     composable(MaterialReviewsScreen.Settings.name) {
                         SettingsScreen()
+                    }
+                    composable(MaterialReviewsScreen.EditProfile.name){
+                        EditProfile()
                     }
 
                     val restId = MaterialReviewsScreen.Reviews.name
@@ -122,6 +136,7 @@ fun getTitleByRoute(context: Context, route:String?): String {
         MaterialReviewsScreen.Explore.name -> context.getString(R.string.explore)
         MaterialReviewsScreen.Favourites.name -> context.getString(R.string.favourites)
         MaterialReviewsScreen.Reviews.name -> context.getString(R.string.reviews)
+        MaterialReviewsScreen.EditProfile.name -> context.getString(R.string.edit_profile)
         else -> context.getString(R.string.explore)
     }
 

@@ -10,6 +10,10 @@ interface ReviewDao {
 
     @Delete
     suspend fun delete(review: ReviewEntity)
+
+    @Query("DELETE FROM reviews WHERE restaurantId=:restaurantId AND userId=:userId")
+    suspend fun deleteByIds(restaurantId: Int, userId: Int)
+
     @Query("UPDATE reviews SET review=:newComment, date=:newDate, rating=:newRating WHERE restaurantId=:restaurantId AND userId=:userId ")
     suspend fun updateReview(restaurantId: Int, userId: Int, newComment: String, newDate: String, newRating: Int)
 
