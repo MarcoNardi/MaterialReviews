@@ -41,6 +41,36 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
     fun getReviewsOfUser(userId: Int) :  LiveData<UserWithReviews>{
         return userDao.getReviewsOfUser(userId)
     }
+
+    fun updateImageOfUser(userId: Int, imageUri: String){
+        viewModelScope.launch {
+            userDao.updateImage(userId, imageUri)
+        }
+    }
+
+    fun updateFirstNameOfUser(userId: Int, firstName: String){
+        viewModelScope.launch {
+            userDao.updateFirstName(userId, firstName)
+        }
+    }
+
+    fun updateLastNameOfUser(userId: Int, lastName: String){
+        viewModelScope.launch {
+            userDao.updateLastName(userId, lastName)
+        }
+    }
+    fun updateUser(user: UserEntity){
+        viewModelScope.launch {
+            userDao.update(user)
+        }
+    }
+
+    fun updateUser(userId: Int, firstName:String, lastName: String, imageUri: String){
+        viewModelScope.launch {
+            userDao.update(createUserEntry(userId ,firstName, lastName, imageUri))
+        }
+    }
+
 }
 
 class UserViewModelFactory(private val userDao: UserDao): ViewModelProvider.Factory {
