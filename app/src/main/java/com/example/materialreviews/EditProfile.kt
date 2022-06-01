@@ -2,11 +2,13 @@ package com.example.materialreviews
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -49,9 +51,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.edit
 import com.example.materialreviews.db.UserEntity
 import com.example.materialreviews.db.UserViewModel
+
+
 
 
 @ExperimentalMaterial3Api
@@ -66,26 +71,24 @@ fun EditProfile(model: UserViewModel) {
     val name = (user?.firstName ?: "help")
     val surname = (user?.lastName ?: "halp")
     val profile_image = user?.imageUri
-    if(profile_image != "") {
-        val t = Toast.makeText(context, "NOPE", Toast.LENGTH_LONG)
-        t.show()
-    }
-    if(profile_image == "") {
-        val t = Toast.makeText(context, "YEP", Toast.LENGTH_LONG)
-        t.show()
-    }
 
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState()),
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())
+        .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         var expandPersonalData by remember { mutableStateOf(false)  }
         var expandPassword by remember { mutableStateOf(false)}
 
         var imageUri by remember { mutableStateOf<Uri?>(null) }
-        var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+        }
+
         val launcher = rememberLauncherForActivityResult(contract =
-        ActivityResultContracts.GetContent()) { uri: Uri? ->
+        ActivityResultContracts.OpenDocument(), ) { uri: Uri? ->
 
             if(uri.toString()!="null"){
                 imageUri = uri
@@ -97,12 +100,12 @@ fun EditProfile(model: UserViewModel) {
 
         Row(modifier = Modifier.padding(start = 47.dp)) {
 
-
             if(profile_image==null){
                 ProfilePicture(size = 150.dp)
             }else{
-                Log.v("aibsua", profile_image)
-                if(profile_image=="" || profile_image=="null")ProfilePicture(size = 150.dp)else{
+                if(profile_image=="" || profile_image=="null")
+                    ProfilePicture(size = 150.dp)
+                else{
                    val imageBitmat = getImageBitmap(profile_image, context)
                    Image(
                        bitmap = imageBitmat!!.asImageBitmap(),
@@ -113,22 +116,9 @@ fun EditProfile(model: UserViewModel) {
                    )
                 }
             }
-            //if(profile_image == "")
-            //{
 
-             //   val imageBitmat = getImageBitmap(profile_image!!, context)
-             //   Image(
-             //       bitmap = imageBitmat!!.asImageBitmap(),
-             //       contentDescription = null,
-             //       contentScale = ContentScale.Crop,
-             //       modifier = Modifier.size(150.dp)
-             //           .clip(CircleShape)
-             //   )
-
-            //}else {
-             //   ProfilePicture(size = 150.dp)
-            //}
-            IconButton(onClick = { launcher.launch("image/*") },
+            val input = arrayOf("image/*")
+            IconButton(onClick = { launcher.launch(input) },
                 modifier = Modifier.padding(top = 100.dp)
             ) {
                 Icon(
