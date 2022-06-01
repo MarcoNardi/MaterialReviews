@@ -80,7 +80,8 @@ fun NavigationManager() {
                     composable(MaterialReviewsScreen.Favourites.name) {
                         ListOfRestaurants(restaurantViewModel, onClickSeeAll = { restId ->
                             navigateToSingleRestaurant(navController, restId)
-                        })
+                        },onlyFavorites = true)
+
                     }
                     composable(MaterialReviewsScreen.Explore.name) {
                         ListOfRestaurants(restaurantViewModel, onClickSeeAll = { restId ->
