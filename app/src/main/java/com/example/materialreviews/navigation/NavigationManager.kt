@@ -99,7 +99,7 @@ fun NavigationManager() {
                         SettingsScreen()
                     }
                     composable(MaterialReviewsScreen.EditProfile.name){
-                        EditProfile()
+                        EditProfile(userViewModel)
                     }
 
                     val restId = MaterialReviewsScreen.Reviews.name

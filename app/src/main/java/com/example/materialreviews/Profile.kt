@@ -44,8 +44,10 @@ fun ProfileScreen(
     onClickSeeRestaurant: (Int) -> Unit = {},
     onClickEdit: () -> Unit = {}
 ) {
+    val myPreferences = MyPreferences(LocalContext.current)
+    var login_id = myPreferences.getId()
 
-    val user by modelReview.getUser(3).observeAsState()
+    val user by modelReview.getUser(login_id).observeAsState()
     val name = (user?.firstName ?: "help")
     val surname = (user?.lastName ?: "halp")
 
@@ -134,10 +136,10 @@ fun ProfileScreen(
     }
 
 
-
+/*
     //Scaffold che permette di inserire un FAB
     Scaffold(
-        /*
+
 
         floatingActionButton = {
             FloatingActionButton(
@@ -149,11 +151,13 @@ fun ProfileScreen(
             }
         },
         floatingActionButtonPosition = FabPosition.End
-         */
+
     ) { paddingValues ->
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
+
+         */
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -228,8 +232,8 @@ fun ProfileScreen(
                         //onClick = { openDialog = true }
                     )
             }
-        }
-    }
+       // }
+    //}
 }
 @OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api

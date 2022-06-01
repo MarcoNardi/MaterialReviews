@@ -1,6 +1,8 @@
 package com.example.materialreviews
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -22,8 +24,10 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,12 +44,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.edit
+import com.example.materialreviews.db.UserViewModel
 
 
 @ExperimentalMaterial3Api
-@Preview
+
 @Composable
-fun EditProfile() {
+fun EditProfile(model: UserViewModel) {
+
+
+    val myPreferences = MyPreferences(LocalContext.current)
+    myPreferences.setId(2)
+    var login_id = myPreferences.getId()
+    val user by model.getUser(login_id).observeAsState()
+    val name = (user?.firstName ?: "help")
+    val surname = (user?.lastName ?: "halp")
+
+
     Column(modifier = Modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -82,16 +98,32 @@ fun EditProfile() {
 
                 }
 
+        Row(modifier = Modifier.padding(start = 47.dp)) {
+            ProfilePicture(size = 150.dp)
+            IconButton(onClick = { launcher.launch("image/*") },
+                modifier = Modifier.padding(top = 100.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Edit,
+                    contentDescription = "Edit",
+                    modifier = Modifier.size(30.dp)
+                )
+            }
+        }
+
+        Text(
+            text = "$name $surname",
+            style = MaterialTheme.typography.displaySmall,
+            modifier = Modifier
+                .padding(top = 10.dp)
+        )
+
+
         Divider(
             Modifier.padding(horizontal = 20.dp),
             color = Color.Gray,
             thickness = 1.dp
         )
-        Button(onClick = {
-            launcher.launch("image/*")
-        }) {
-            Text(text = "Pick image")
-        }
         ExpandableCard(onCardArrowClick = {expandPersonalData = !(expandPersonalData) }, expanded = expandPersonalData, "Modifica dati anagrafici", 1)
         ExpandableCard(onCardArrowClick = {expandPassword = !(expandPassword) }, expanded = expandPassword, "Modifica password", 2)
     }
@@ -322,6 +354,33 @@ fun EditPassword() {
             onValueChange = { password = it },
             shape = RoundedCornerShape(8.dp),
             label = { Text("Inserisci la Password") },
+            singleLine = true,
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = androidx.compose.ui.graphics.Color.White,
+                focusedIndicatorColor =  androidx.compose.ui.graphics.Color.Transparent,
+                unfocusedIndicatorColor =androidx.compose.ui.graphics.Color.Transparent
+            ),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                val image = if (passwordVisible)
+                    painterResource(R.drawable.ic_baseline_visibility_24)
+                else painterResource(R.drawable.ic_baseline_visibility_off_24)
+
+                // Please provide localized description for accessibility services
+                val description = if (passwordVisible) "Hide password" else "Show password"
+
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(painter = image, description)
+                }
+            }
+        )
+        Spacer(modifier = Modifier.heightIn(8.dp))
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            shape = RoundedCornerShape(8.dp),
+            label = { Text("Reinserisci la nuova Password") },
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = androidx.compose.ui.graphics.Color.White,
