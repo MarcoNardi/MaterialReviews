@@ -36,10 +36,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import com.example.materialreviews.navigation.MaterialReviewsScreen
 
-// Variabili che in teoria dovrebbero andare nel db
-
-val profilePicture = null
-
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
 @Composable
@@ -63,27 +59,13 @@ fun ProfileScreen(
 
     var openData by remember { mutableStateOf("")}
 
-    var visible by remember { mutableStateOf(true) }
 
     var confirmText: String
     when(openData) {
         "Tema" -> confirmText = "Conferma"
         "Recensioni" ->  confirmText = "Chiudi"
-        "Esci" -> confirmText = "ESCI"
-        "Elimina" -> confirmText = "ELIMINA"
         else -> {
             confirmText ="Errore"
-        }
-    }
-
-    var dismissText: String
-    when(openData) {
-        "Tema" -> dismissText = ""
-        "Recensioni" ->  dismissText = ""
-        "Esci" -> dismissText = "ANNULLA"
-        "Elimina" -> dismissText = "ANNULLA"
-        else -> {
-            dismissText ="Errore"
         }
     }
 
@@ -110,7 +92,7 @@ fun ProfileScreen(
             text = {
                 when(openData) {
                     "Tema" -> SettingsScreen()
-                    "Recensioni" ->  ListOfReviews2(model, modelReview, onClickSeeRestaurant = onClickSeeRestaurant)
+                    "Recensioni" ->  ListOfReviews2(model, modelReview, onClickSeeRestaurant = onClickSeeRestaurant, login_id)
                     else -> {
                         Text(text ="Errore")
                     }
@@ -123,19 +105,10 @@ fun ProfileScreen(
                         openDialog = false
                     }
                 ) {
-                    Text(confirmText,
-                    textAlign = TextAlign.Center)
-                }
-
-                            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        if(visible)
-                        openDialog = false
-                    }
-                ) {
-                    Text(dismissText)
+                    Text(
+                        confirmText,
+                        textAlign = TextAlign.Center
+                    )
                 }
             },
             properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -143,28 +116,6 @@ fun ProfileScreen(
     }
 
 
-/*
-    //Scaffold che permette di inserire un FAB
-    Scaffold(
-
-
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    openDialog = true
-                }
-            ) {
-                Icon(imageVector = Icons.Filled.Edit, contentDescription = "FAB Edit")
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End
-
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier.padding(paddingValues)
-        ) {
-
-         */
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -203,6 +154,8 @@ fun ProfileScreen(
                         thickness = 1.dp
                     )
 
+                    Spacer(modifier = Modifier.heightIn(15.dp))
+
                     Text(text = AnnotatedString(" Modifica Tema"),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier
@@ -210,7 +163,7 @@ fun ProfileScreen(
                             .clickable {
                                 openData = "Tema"
                                 openDialog = true
-                                visible = false}
+                                }
                     )
                     Text(text = AnnotatedString(" Le mie recensioni"),
                         style = MaterialTheme.typography.titleMedium,
@@ -219,7 +172,7 @@ fun ProfileScreen(
                             .clickable {
                                 openData = "Recensioni"
                                 openDialog = true
-                                visible = false},
+                                }
 
                     )
                     Text(text = AnnotatedString(" Modifica profilo"),
@@ -231,38 +184,19 @@ fun ProfileScreen(
                                        }
 
                         )
-                    Text(text = AnnotatedString("Esci dall'account"),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .clickable{
-                                openData = "Esci"
-                                openDialog = true
-                                visible = true
-                            }
 
-                    )
-                    Text(text = AnnotatedString(" Elimina account"),
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier
-                            .padding(top = 20.dp) .
-                            clickable{
-                                openData = "Elimina"
-                                openDialog = true
-                                visible = true
-                            }
-                        //onClick = { openDialog = true }
-                    )
             }
-       // }
-    //}
+
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+
 @ExperimentalMaterial3Api
 @Composable
-fun ListOfReviews2(model: RestaurantViewModel, modelReview: UserViewModel, onClickSeeRestaurant: (Int) -> Unit) {
-    val reviews by modelReview.getReviewsOfUser(2).observeAsState()
+fun ListOfReviews2(model: RestaurantViewModel,
+                   modelReview: UserViewModel,
+                   onClickSeeRestaurant: (Int) -> Unit,
+                   login_id: Int) {
+    val reviews by modelReview.getReviewsOfUser(login_id).observeAsState()
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -352,26 +286,31 @@ fun ReviewCard2(review: ReviewEntity,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            //Nome ristorante
-            Text(
-                text = "$restName",
-                Modifier.padding(start = 3.dp, bottom = 3.dp),
-                style = MaterialTheme.typography.bodyMedium
-            )
+            //Nome ristorante e data
+            Row() {
+                Text(
+                    text = restName,
+                    Modifier.padding(start = 3.dp, bottom = 3.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(Modifier.weight(1f))
+
+                Text(text = date)
+            }
+
             Text(
                 text = "$restCity, Via  $restRoute, $restCivic ",
                 Modifier.padding(start = 3.dp, bottom = 3.dp),
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.titleSmall
             )
-            Spacer(Modifier.weight(1f))
 
-            // Stelline e data
+            // Stelline
             Row() {
                 RowOfStars(stars)
 
                 Spacer(Modifier.weight(1f))
 
-                Text(text = date)
             }
 
             // Testo della recensione
@@ -379,7 +318,6 @@ fun ReviewCard2(review: ReviewEntity,
             Row(Modifier.fillMaxWidth()) {
                 Button(onClick = {openDialog = true}) {
                     Text(text = "ELIMINA")
-
                 }
         }
     }
@@ -387,9 +325,6 @@ fun ReviewCard2(review: ReviewEntity,
     }
 }
 
-@ExperimentalMaterial3Api
-@Composable
-fun seeDialog() {}
 
 @Preview
 @Composable
