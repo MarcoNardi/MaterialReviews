@@ -1,17 +1,8 @@
 package com.example.materialreviews
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
-import android.provider.DocumentsContract
-import android.provider.MediaStore
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 
@@ -43,17 +34,11 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.edit
-import com.example.materialreviews.db.UserEntity
 import com.example.materialreviews.db.UserViewModel
 
 
@@ -73,7 +58,8 @@ fun EditProfile(model: UserViewModel) {
     val profile_image = user?.imageUri
 
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())
+    Column(modifier = Modifier
+        .verticalScroll(rememberScrollState())
         .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -106,12 +92,13 @@ fun EditProfile(model: UserViewModel) {
                 if(profile_image=="" || profile_image=="null")
                     ProfilePicture(size = 150.dp)
                 else{
-                   val imageBitmat = getImageBitmap(profile_image, context)
+                   val imageBitmap = getImageBitmap(profile_image, context)
                    Image(
-                       bitmap = imageBitmat!!.asImageBitmap(),
+                       bitmap = imageBitmap!!.asImageBitmap(),
                        contentDescription = null,
                        contentScale = ContentScale.Crop,
-                       modifier = Modifier.size(150.dp)
+                       modifier = Modifier
+                           .size(150.dp)
                            .clip(CircleShape)
                    )
                 }
@@ -170,9 +157,12 @@ fun ExpandableCard(
     }
     val transition = updateTransition(transitionState, label = "transition")
 
-    val cardPaddingHorizontal by transition.animateDp({
-        tween(durationMillis = EXPAND_ANIMATION_DURATION)
-    }, label = "paddingTransition") {
+    val cardPaddingHorizontal by transition.animateDp(
+        {
+            tween(durationMillis = EXPAND_ANIMATION_DURATION)
+        },
+        label = "paddingTransition"
+    ) {
         if (expanded) 20.dp else 24.dp
     }
     val cardRoundedCorners by transition.animateDp({
@@ -278,7 +268,7 @@ fun ExpandableContent(
         exit = exitCollapse + exitFadeOut
     ) {
         if(type == 1) {
-        EditPersonalData(model)
+            EditPersonalData(model)
         }else if (type == 2) {
             EditPassword(model)
         }
@@ -286,49 +276,31 @@ fun ExpandableContent(
 }
 
 @Composable
-fun EditPersonalData(model:UserViewModel)
-{
+fun EditPersonalData(
+    model:UserViewModel
+) {
     val myPreferences = MyPreferences(LocalContext.current)
-    var login_id = myPreferences.getId()
-
+    val login_id = myPreferences.getId()
 
     var name by rememberSaveable { mutableStateOf("") }
     var surname by rememberSaveable { mutableStateOf("")}
-    Column(modifier = Modifier.padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.heightIn(10.dp))
-        TextField(
+    Column(
+        modifier = Modifier.padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(5.dp)
+    ) {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = name,
-            textStyle = TextStyle(fontSize = 20.sp),
-            onValueChange = {
-                name = it
-            }, label = {Text(text ="Nome",
-                Modifier.padding(3.dp))},
-            shape = RoundedCornerShape(8.dp),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = androidx.compose.ui.graphics.Color.White,
-                focusedIndicatorColor =  androidx.compose.ui.graphics.Color.Transparent,
-                unfocusedIndicatorColor =  androidx.compose.ui.graphics.Color.Transparent
-            )
+            onValueChange = { name = it },
+            label = { Text("Nome") }
         )
-        Spacer(modifier = Modifier.heightIn(8.dp))
-        TextField(
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = surname,
-            textStyle = TextStyle(fontSize = 20.sp),
-            shape = RoundedCornerShape(8.dp),
-            onValueChange = {
-                surname = it
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = androidx.compose.ui.graphics.Color.White,
-                focusedIndicatorColor =  androidx.compose.ui.graphics.Color.Transparent,
-                unfocusedIndicatorColor =androidx.compose.ui.graphics.Color.Transparent
-            ),
-            label = {Text(
-                text = "Cognome",
-                Modifier.padding(top = 5.dp, bottom = 5.dp))}
+            onValueChange = { surname = it },
+            label = { Text("Cognome") }
         )
-        Spacer(modifier = Modifier.heightIn(8.dp))
         Button(onClick = {
             model.updateFirstNameOfUser(login_id,name)
             model.updateLastNameOfUser(login_id,surname)}) {

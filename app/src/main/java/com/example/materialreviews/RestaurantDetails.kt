@@ -23,23 +23,40 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.example.materialreviews.db.RestaurantEntity
 
+/**
+ * Card riassuntiva di un ristorante
+ */
 @ExperimentalMaterial3Api
 @Composable
-fun RestaurantDetails(restaurant: RestaurantEntity, imageUri: String, onCheckedChange: (Boolean) -> Unit, getAverageRating:()-> LiveData<Float>,
-                      addReviewButtonOnClick: () -> Unit
+fun RestaurantDetails(
+    restaurant: RestaurantEntity,
+    imageUri: String,
+    onCheckedChange: (Boolean) -> Unit,
+    getAverageRating: () -> LiveData<Float>,
+    addReviewButtonOnClick: () -> Unit
 ) {
     val context = LocalContext.current
 
+    // Immagine di sfondo del ristorante
     val imageData = getImageBitmap(imageUri, context)
+
+    // Media delle recensioni
     val averageRating by getAverageRating().observeAsState()
+
     Surface() {
-        Column(modifier = Modifier.padding(5.dp)) {
+        Column(
+            modifier = Modifier.padding(5.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            // Fa vedere l'immagine di sfondo del ristorante
             Image(
                 bitmap = imageData!!.asImageBitmap(),
-                contentDescription = null,
+                contentDescription = "Restaurant image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
             )
+
+            // Informazioni del ristorante
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column {
                     // Nome del ristorante
@@ -74,51 +91,70 @@ fun RestaurantDetails(restaurant: RestaurantEntity, imageUri: String, onCheckedC
 
                 }
             }
-            Text(
-                text = restaurant.address?.citta ?: "citta",
-                Modifier.padding(top = 3.dp)
-            )
-            Text(
-                text = "Via " + restaurant.address?.via!! + " " + restaurant.address?.num_civico!!.toString(),
-                Modifier.padding(top = 3.dp)
-            )
-            Row(modifier = Modifier.padding(top = 3.dp)) {
-                IconButton(
-                    modifier = Modifier.padding(end = 12.dp),
+
+            // Indirizzo
+            Column() {
+                Text(
+                    text = restaurant.address?.citta ?: "citta",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Via " + restaurant.address?.via!! + " " + restaurant.address?.num_civico!!.toString(),
+                )
+            }
+
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+
+                // Telefona => apre il dialer
+                FilledTonalButton(
                     onClick = {
                         val intent = Intent(Intent.ACTION_DIAL)
                         intent.data = Uri.parse("tel:<${restaurant.nTelefono}")
                         context.startActivity(intent)
                     }
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.Call,
-                        contentDescription = "Chiama",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(25.dp)
-                    )
-
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Call,
+                            contentDescription = "Chiama",
+                            //tint = Color.Gray,
+                            //modifier = Modifier.size(25.dp)
+                        )
+                        Text("Telefona")
+                    }
                 }
-                IconButton(
+
+                // Visita il sito => apre il browser
+                FilledTonalButton(
                     onClick = {
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse("https://" + restaurant.sito)
                         context.startActivity(intent)
                     }
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_baseline_language_24),
-                        contentDescription = "Vai al sito",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(25.dp)
-                    )
-
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_language_24),
+                            contentDescription = "Vai al sito",
+                        )
+                        Text("Visita il sito")
+                    }
                 }
 
             }
 
             // Pulsante per aggiungere una recensione al ristorante
-            AddReviewButton(onClick = addReviewButtonOnClick)
+            // AddReviewButton(onClick = addReviewButtonOnClick)
         }
     }
 }

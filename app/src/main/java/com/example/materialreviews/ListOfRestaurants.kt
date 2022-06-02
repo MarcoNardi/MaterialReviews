@@ -2,6 +2,7 @@ package com.example.materialreviews
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,6 +17,9 @@ import com.example.materialreviews.db.AppDatabase
 import com.example.materialreviews.db.RestaurantViewModel
 import com.example.materialreviews.db.RestaurantViewModelFactory
 
+/**
+ * Data un RestaurantModel produce una lista di RestaurantCard, eventualmente filtrando solo i preferiti
+ */
 @ExperimentalMaterial3Api
 @Composable
 fun ListOfRestaurants(
@@ -24,53 +28,37 @@ fun ListOfRestaurants(
             restaurantDao = AppDatabase.getDatabase(LocalContext.current).restaurantDao()
         )
     ),
-    onClickSeeAll: (Int) -> Unit = {}, onlyFavorites:Boolean=false
+    onClickSeeAll: (Int) -> Unit = {},
+    onlyFavorites:Boolean = false
 ) {
-    //val data = getInitialRestaurantsData()
+    // Estraggo la lista dei ristoranti
     val data by model.getRestaurantsWithImage().observeAsState(emptyList())
-    /*
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        //modifier = Modifier.padding(horizontal = 10.dp)
-    ) {
-        items(data) { tuple ->
-            RestaurantCard( tuple.restaurant, onClickSeeAll = onClickSeeAll , onCheckedChange = {it->
-                model.changeFavoriteState(tuple.restaurant.rid, it)
-            }, imageUri=tuple.images[0].uri,
-                getAverageRating={model.getAverageRatingOfRestaurant(tuple.restaurant.rid)})
-        }
-    }*/
 
-
+    // Creo una colonna di RestaurantCard
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState()),
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 10.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         data.forEach { restaurantWithImages ->
-            if(onlyFavorites ){
-                if(restaurantWithImages.restaurant.preferito){
-                    RestaurantCard(
-                        restaurantWithImages.restaurant,
-                        onClickSeeAll = onClickSeeAll,
-                        onCheckedChange = { it ->
-                            model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
-                        },
-                        imageUri = restaurantWithImages.images[0].uri,
-                        getAverageRating={model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid)}
-                    )
 
-                }
-            }else{
-                RestaurantCard(
-                    restaurantWithImages.restaurant,
-                    onClickSeeAll = onClickSeeAll,
-                    onCheckedChange = { it ->
-                        model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
-                    },
-                    imageUri = restaurantWithImages.images[0].uri,
-                    getAverageRating={model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid)}
-                )
+            // Se sto considerando solo i preferiti, salto questo ristorante
+            if (onlyFavorites && !restaurantWithImages.restaurant.preferito) {
+                return@forEach  //https://stackoverflow.com/questions/32540947/break-and-continue-in-foreach-in-kotlin
             }
+
+            // Card con alcune informazioni del ristorante
+            // Se cliccata apre la RestaurantDetailsAndReviews corrispondente
+            RestaurantCard(
+                restaurantWithImages.restaurant,
+                onClickSeeAll = onClickSeeAll,
+                onCheckedChange = { it ->
+                    model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
+                },
+                imageUri = restaurantWithImages.images[0].uri,
+                getAverageRating={model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid)}
+            )
         }
     }
 }

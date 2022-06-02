@@ -1,7 +1,5 @@
 package com.example.materialreviews
 
-import android.app.Dialog
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,12 +7,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -25,20 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
-import com.example.materialreviews.navigation.MaterialReviewsScreen
-
-// Variabili che in teoria dovrebbero andare nel db
-
-val profilePicture = null
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
@@ -177,9 +167,9 @@ fun ProfileScreen(
                         if (profile_image == "" || profile_image == "null")
                             ProfilePicture(size = 150.dp)
                         else {
-                            val imageBitmat = getImageBitmap(profile_image!!, context)
+                            val imageBitmap = getImageBitmap(profile_image!!, context)
                             Image(
-                                bitmap = imageBitmat!!.asImageBitmap(),
+                                bitmap = imageBitmap!!.asImageBitmap(),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.size(150.dp)
@@ -203,15 +193,44 @@ fun ProfileScreen(
                         thickness = 1.dp
                     )
 
-                    Text(text = AnnotatedString(" Modifica Tema"),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .clickable {
-                                openData = "Tema"
-                                openDialog = true
-                                visible = false}
-                    )
+                    // Pulsante per modificare il tema
+                    FilledTonalButton(
+                        onClick = {
+                            openData = "Tema"
+                            openDialog = true
+                            visible = false
+                        }
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_baseline_color_lens_24),
+                                contentDescription = "Modifica Tema"
+                            )
+                            Text("Modifica Tema")
+                        }
+                    }
+
+                    // Pulsante per modificare il profilo
+                    FilledTonalButton(
+                        onClick = {
+                            onClickEdit()
+                        }
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Person,
+                                contentDescription = "Modifica Profilo"
+                            )
+                            Text("Modifica Profilo")
+                        }
+                    }
+
                     Text(text = AnnotatedString(" Le mie recensioni"),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier
@@ -222,15 +241,6 @@ fun ProfileScreen(
                                 visible = false},
 
                     )
-                    Text(text = AnnotatedString(" Modifica profilo"),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .clickable {
-                                onClickEdit()
-                                       }
-
-                        )
                     Text(text = AnnotatedString("Esci dall'account"),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier

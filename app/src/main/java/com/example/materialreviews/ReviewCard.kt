@@ -19,13 +19,14 @@ import com.example.materialreviews.db.UserEntity
 @Composable
 fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>) {
     val user by getUserInfo(review.uid).observeAsState()
-    val userName = (user?.firstName ?:"help" ) +" "+ (user?.lastName ?:"halp" )
+    val userName = (user?.firstName ?:"defaultName" ) +" "+ (user?.lastName ?:"defaultSurname" )
     val stars = review.rating
     val comment = review.review
     val date = review.date
 
     ElevatedCard(
-        shape = RoundedCornerShape(15.dp)
+        shape = RoundedCornerShape(15.dp),
+        modifier = Modifier.padding(bottom = 1.dp)
     ) {
         Column(
             modifier = Modifier
