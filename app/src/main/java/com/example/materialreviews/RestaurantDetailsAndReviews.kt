@@ -61,8 +61,8 @@ fun RestaurantDetailsAndReviews(
 
     // Controlla se esiste gia` una review
     var existReview = false
-    var existingRating = 1
-    var existingComment = "Ciao Marco"
+    var existingRating = 3
+    var existingComment = ""
 
     if (restaurantWithReviews != null) {
         val restaurantReviews = restaurantWithReviews!!.reviews
@@ -126,8 +126,8 @@ fun RestaurantDetailsAndReviews(
                     )
                 },
                 onClick = { showAddReviewDialog = true },
-                containerColor = currentColorScheme.tertiaryContainer,
-                contentColor = currentColorScheme.onTertiaryContainer
+                containerColor = currentColorScheme.primary,
+                contentColor = currentColorScheme.onPrimary
             )
         },
 

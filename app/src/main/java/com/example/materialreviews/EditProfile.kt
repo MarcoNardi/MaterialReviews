@@ -1,18 +1,15 @@
 package com.example.materialreviews
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -29,25 +26,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.edit
-import com.example.materialreviews.db.UserEntity
 import com.example.materialreviews.db.UserViewModel
 
 
@@ -65,7 +54,7 @@ fun EditProfile(model: UserViewModel) {
     val user by model.getUser(login_id).observeAsState()
     val name = (user?.firstName ?: "Not")
     val surname = (user?.lastName ?: "Loaded")
-    val profile_image = user?.imageUri
+    val profilePictureUri = user?.imageUri ?: ""
 
     var openDialog by remember {mutableStateOf(false)}
     var openData by remember { mutableStateOf("")}
@@ -155,23 +144,7 @@ fun EditProfile(model: UserViewModel) {
 
         Row(modifier = Modifier.padding(start = 47.dp)) {
 
-            if(profile_image==null){
-                ProfilePicture(size = 150.dp)
-            }else{
-                if(profile_image=="" || profile_image=="null")
-                    ProfilePicture(size = 150.dp)
-                else{
-                   val imageBitmap = getImageBitmap(profile_image, context)
-                   Image(
-                       bitmap = imageBitmap!!.asImageBitmap(),
-                       contentDescription = null,
-                       contentScale = ContentScale.Crop,
-                       modifier = Modifier
-                           .size(150.dp)
-                           .clip(CircleShape)
-                   )
-                }
-            }
+            ProfilePicture(size = 150.dp, pictureUri = profilePictureUri)
 
             val input = arrayOf("image/*")
             IconButton(onClick = { launcher.launch(input) },

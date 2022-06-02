@@ -147,8 +147,8 @@ fun RowOfStars(
 fun AddReviewDialog(
     closeDialog: ()->Unit,
     onConfirmClick: (Int, String)->Unit,
-    existingRating: Int = 1,
-    existingComment: String = "Prova",
+    existingRating: Int = 3,
+    existingComment: String = "",
 ) {
     // Variabili della recensione
     var rating by remember{mutableStateOf(existingRating)}
