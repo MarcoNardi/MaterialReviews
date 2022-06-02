@@ -40,6 +40,7 @@ fun  RestaurantCard(
     val restImage = R.drawable.ic_launcher_background
     val context = LocalContext.current
 
+    // Dimensioni dello schermo
     val displayMetrics = context.resources.displayMetrics
     val dpWidth = displayMetrics.widthPixels / displayMetrics.density
 

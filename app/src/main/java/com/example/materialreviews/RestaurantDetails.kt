@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -42,6 +43,10 @@ fun RestaurantDetails(
     // Immagine di sfondo del ristorante
     val imageData = getImageBitmap(imageUri, context)
 
+    // Dimensioni dello schermo
+    val displayMetrics = context.resources.displayMetrics
+    val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+
     // Media delle recensioni
     val averageRating by getAverageRating().observeAsState()
 
@@ -53,15 +58,14 @@ fun RestaurantDetails(
             // "Foto profilo" del ristorante
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .fillMaxWidth()
-                    .height(250.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 Image(
                     bitmap = imageData!!.asImageBitmap(),
                     contentDescription = "Restaurant image",
-                    contentScale = ContentScale.FillWidth,
-                    //modifier = Modifier.fillMaxWidth()
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .requiredSize(dpWidth.dp, (dpWidth/4*3).dp)
                 )
             }
 
