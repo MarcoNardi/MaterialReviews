@@ -42,39 +42,25 @@ fun  RestaurantCard(
 
     val displayMetrics = context.resources.displayMetrics
     val dpWidth = displayMetrics.widthPixels / displayMetrics.density
-    //LocalContext.current.resources.getResourcePackageName(R.drawable.restaurantphoto1)
-    //Resources.getResourcePackageName(R.drawable.restaurantphoto1)
-    //val imageUri=Uri.parse("android.resource://com.example.materialreviews/drawable/restaurantphoto1")
-    //val imageData: Bitmap = getImageBitmap(imageUri, LocalContext.current)
 
-    val restaurantModel: RestaurantViewModel = viewModel(
-        factory = RestaurantViewModelFactory(
-            AppDatabase.getDatabase(
-                LocalContext.current
-            ).restaurantDao()
-        )
-    )
     val imageData = getImageBitmap(imageUri , context)
     val averageRating by getAverageRating().observeAsState()
+
+    // Card con le informazioni
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.elevatedCardElevation(2.dp),
         modifier = Modifier.clickable { onClickSeeAll(restId) }
     ) {
         Column(modifier = Modifier ){
+
+            // "Foto profilo" del ristorante
             Image(
                 bitmap = imageData!!.asImageBitmap(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
             )
-            // "Foto profilo" del ristorante
-            /*Image(
-                //painter = painterResource(id = R.drawable.ic_launcher_background)
-                bitmap = imageData.asImageBitmap(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
-            )*/
 
             // Altri elementi
             Row(
@@ -99,16 +85,12 @@ fun  RestaurantCard(
                         //Spacer(Modifier.weight(1f))
                     }
 
-                    Text(
-                        text = restCity,
-                        Modifier.padding(start = 3.dp, bottom = 3.dp),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Text(
-                        text = "Via $restRoad, $restCivic",
-                        Modifier.padding(start = 3.dp, bottom = 3.dp),
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                    // Indirizzo
+                    Column() {
+                        Text(
+                            text = restCity + ", Via $restRoad $restCivic",
+                        )
+                    }
 
                 }
                 Spacer(Modifier.weight(1f))

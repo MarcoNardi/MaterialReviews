@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.example.materialreviews.db.ReviewEntity
 import com.example.materialreviews.db.UserEntity
+import com.example.materialreviews.ui.theme.currentColorScheme
 
 @ExperimentalMaterial3Api
 @Composable
@@ -26,6 +27,7 @@ fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>)
 
     ElevatedCard(
         shape = RoundedCornerShape(15.dp),
+        elevation = CardDefaults.elevatedCardElevation(1.dp),
         modifier = Modifier.padding(bottom = 1.dp)
     ) {
         Column(

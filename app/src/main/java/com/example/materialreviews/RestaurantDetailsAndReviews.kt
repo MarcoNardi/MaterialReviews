@@ -1,13 +1,16 @@
 package com.example.materialreviews
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
+import com.example.materialreviews.ui.theme.currentColorScheme
 
 /**
  * Schermata dove ci sono tutte le informazioni di un singolo ristorante
@@ -109,40 +113,78 @@ fun RestaurantDetailsAndReviews(
         )
     }
 
-    // Mostra i dettagli del ristorante e tutte le sue recensioni
-    if(restaurantWithReviews!=null && restaurantWithImages!=null){
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(vertical = 10.dp)
-        ) {
-            item() {
-                RestaurantDetails(
-                    restaurant = restaurantWithReviews!!.restaurant,
-                    restaurantWithImages!!.images[0].uri,
-                    { it ->
-                        restaurantModel.changeFavoriteState(
-                            restaurantWithImages!!.restaurant.rid,
-                            it
-                        )
-                    },
-                    getAverageRating = {
-                        restaurantModel.getAverageRatingOfRestaurant(restaurantWithImages!!.restaurant.rid)
-                    },
-                    // Passo la lambda per mostrare il dialog per aggiungere le recensioni
-                    addReviewButtonOnClick = {
-                        showAddReviewDialog = true
-                    }
-                )
+    Scaffold(
+
+        // FAB per aprire AddReviewDialog
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = { showAddReviewDialog = true },
+                containerColor = currentColorScheme.tertiaryContainer,
+                contentColor = currentColorScheme.onTertiaryContainer
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Edit,
+                        contentDescription = "Scrivi recensione",
+                    )
+                    Text("Scrivi una recensione")
+                }
             }
-            if (restaurantWithReviews != null) {
-                items(restaurantWithReviews!!.reviews) { review ->
-                    //val user by userModel.getUser(review.uid).observeAsState()
-                    //il passaggio di user è diventata una lambda
-                    ReviewCard(review) {
-                        userModel.getUser(it)
+        },
+
+        // Dettagli del ristorante
+        content = { paddingValues ->
+            Box(
+                modifier = Modifier.padding(paddingValues)
+            ) {
+
+                // Mostra i dettagli del ristorante e tutte le sue recensioni
+                if(restaurantWithReviews!=null && restaurantWithImages!=null){
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        //modifier = Modifier.padding(vertical = 10.dp)
+                    ) {
+                        item() {
+
+                            // Dettagli
+                            RestaurantDetails(
+                                restaurant = restaurantWithReviews!!.restaurant,
+                                restaurantWithImages!!.images[0].uri,
+                                { it ->
+                                    restaurantModel.changeFavoriteState(
+                                        restaurantWithImages!!.restaurant.rid,
+                                        it
+                                    )
+                                },
+                                getAverageRating = {
+                                    restaurantModel.getAverageRatingOfRestaurant(restaurantWithImages!!.restaurant.rid)
+                                },
+                                // Passo la lambda per mostrare il dialog per aggiungere le recensioni
+                                addReviewButtonOnClick = {
+                                    showAddReviewDialog = true
+                                }
+                            )
+                        }
+
+                        // Lista delle review del ristorante
+                        if (restaurantWithReviews != null) {
+                            items(restaurantWithReviews!!.reviews) { review ->
+                                ReviewCard(review) {
+                                    userModel.getUser(it)
+                                }
+                            }
+                        }
+
+                        // Spacer per aggiungere un piccolo spazio estetico alla fine
+                        item{
+                            Spacer(modifier = Modifier.height(1.dp))
+                        }
                     }
                 }
             }
         }
-    }
+    )
 }

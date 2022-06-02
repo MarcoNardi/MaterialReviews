@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Favorite
@@ -14,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -45,16 +47,23 @@ fun RestaurantDetails(
 
     Surface() {
         Column(
-            modifier = Modifier.padding(5.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            // Fa vedere l'immagine di sfondo del ristorante
-            Image(
-                bitmap = imageData!!.asImageBitmap(),
-                contentDescription = "Restaurant image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
-            )
+
+            // "Foto profilo" del ristorante
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .fillMaxWidth()
+                    .height(250.dp)
+            ) {
+                Image(
+                    bitmap = imageData!!.asImageBitmap(),
+                    contentDescription = "Restaurant image",
+                    contentScale = ContentScale.FillWidth,
+                    //modifier = Modifier.fillMaxWidth()
+                )
+            }
 
             // Informazioni del ristorante
             Row(verticalAlignment = Alignment.CenterVertically) {
