@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -26,6 +27,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -34,16 +36,24 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.edit
+import com.example.materialreviews.db.UserEntity
 import com.example.materialreviews.db.UserViewModel
 
 
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
 
 @Composable
@@ -53,10 +63,74 @@ fun EditProfile(model: UserViewModel) {
     val myPreferences = MyPreferences(context)
     var login_id = myPreferences.getId()
     val user by model.getUser(login_id).observeAsState()
-    val name = (user?.firstName ?: "help")
-    val surname = (user?.lastName ?: "halp")
+    val name = (user?.firstName ?: "Not")
+    val surname = (user?.lastName ?: "Loaded")
     val profile_image = user?.imageUri
 
+    var openDialog by remember {mutableStateOf(false)}
+    var openData by remember { mutableStateOf("")}
+
+    var confirmText: String
+    when(openData) {
+
+        "Cambia" -> confirmText = "CAMBIA ACCOUNT"
+        "Elimina" -> confirmText = "ELIMINA"
+        else -> {
+            confirmText ="Errore"
+        }
+    }
+
+
+    if (openDialog) {
+
+        AlertDialog(
+            // Chiude il Dialog se viene cliccato nella parte oscurata
+            onDismissRequest = {
+                openDialog = false
+            },
+            modifier = Modifier.fillMaxWidth(0.90f),
+            title = {
+                when(openData) {
+                    "Cambia" -> Text(text = "Cambiare l'account?")
+                    "Elimina" -> Text(text = "Eliminare l'account?")
+                    else -> {
+                        Text(text ="Errore")
+                    }
+                }
+            },
+            // Posso mettere dentro qualsiasi composable
+            text = {
+                when(openData) {
+                    "Cambia" -> Text(text = "Sei sicuro di voler cambiare account?")
+                    "Elimina" -> Text(text = "Verranno eliminate tutte le recensioni e i dati, non sarà più possibile accedervi")
+                } } ,
+
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if(openData == "Elimina") {
+                            //TODO
+                        }
+                        openDialog = false
+                    }
+                ) {
+                    Text(confirmText,
+                        textAlign = TextAlign.Center)
+                }
+
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                            openDialog = false
+                    }
+                ) {
+                    Text(text = "ANNULLA")
+                }
+            },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        )
+    }
 
     Column(modifier = Modifier
         .verticalScroll(rememberScrollState())
@@ -68,14 +142,9 @@ fun EditProfile(model: UserViewModel) {
 
         var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "image/*"
-        }
 
         val launcher = rememberLauncherForActivityResult(contract =
         ActivityResultContracts.OpenDocument(), ) { uri: Uri? ->
-
             if(uri.toString()!="null"){
                 imageUri = uri
                 model.updateImageOfUser(login_id, imageUri.toString())
@@ -131,6 +200,30 @@ fun EditProfile(model: UserViewModel) {
         )
         ExpandableCard(onCardArrowClick = {expandPersonalData = !(expandPersonalData) }, expanded = expandPersonalData, "Modifica dati anagrafici", 1, model)
         ExpandableCard(onCardArrowClick = {expandPassword = !(expandPassword) }, expanded = expandPassword, "Modifica password", 2, model)
+
+        Spacer(modifier = Modifier.heightIn(15.dp))
+        Text(text = AnnotatedString("Cambia account"),
+            color = Color.DarkGray,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier
+                .padding(top = 10.dp)
+                .clickable {
+                    openData = "Cambia"
+                    openDialog = true
+                }
+
+        )
+        Spacer(modifier = Modifier.heightIn(7.dp))
+
+        Text(text = AnnotatedString(" Elimina account"),
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier
+                .padding(top = 20.dp)
+                .clickable {
+                    openData = "Elimina"
+                    openDialog = true
+                }
+        )
     }
 }
 const val EXPAND_ANIMATION_DURATION = 300
@@ -303,7 +396,10 @@ fun EditPersonalData(
         )
         Button(onClick = {
             model.updateFirstNameOfUser(login_id,name)
-            model.updateLastNameOfUser(login_id,surname)}) {
+            model.updateLastNameOfUser(login_id,surname)
+            name = ""
+            surname = ""
+        }) {
             Text(text = "Salva")
         }
     }
