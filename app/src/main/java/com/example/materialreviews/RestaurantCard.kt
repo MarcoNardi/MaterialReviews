@@ -36,8 +36,6 @@ fun  RestaurantCard(
     val restCity = restaurant.address!!.citta
     val restRoad = restaurant.address.via
     val restCivic = restaurant.address.num_civico
-
-    val restImage = R.drawable.ic_launcher_background
     val context = LocalContext.current
 
     // Dimensioni dello schermo

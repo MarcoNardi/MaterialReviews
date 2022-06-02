@@ -46,7 +46,7 @@ fun ReviewCard(review: Review) {
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 //Immagine del profilo
-                ProfilePicture(size = 40.dp, null, 1.dp)
+                ProfilePicture(size = 40.dp, "null", 1.dp)
 
                 //Nome utente
                 Text(

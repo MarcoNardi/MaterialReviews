@@ -1,15 +1,29 @@
 package com.example.materialreviews
 
+import android.graphics.Picture
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.example.materialreviews.db.ReviewEntity
@@ -18,9 +32,14 @@ import com.example.materialreviews.ui.theme.currentColorScheme
 
 @ExperimentalMaterial3Api
 @Composable
-fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>) {
+fun ReviewCard(
+    review: ReviewEntity,
+    getUserInfo: (Int) -> LiveData<UserEntity>
+) {
+    // Ottengo i dati dell'utente e della review dal DB
     val user by getUserInfo(review.uid).observeAsState()
     val userName = (user?.firstName ?:"defaultName" ) +" "+ (user?.lastName ?:"defaultSurname" )
+    val profilePictureUri = user?.imageUri ?: ""
     val stars = review.rating
     val comment = review.review
     val date = review.date
@@ -40,7 +59,7 @@ fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>)
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 //Immagine del profilo
-                ProfilePicture(size = 40.dp, null, 1.dp)
+                ProfilePicture(size = 40.dp, profilePictureUri, 1.dp)
 
                 //Nome utente
                 Text(
@@ -70,6 +89,34 @@ fun ReviewCard(review: ReviewEntity, getUserInfo: (Int) -> LiveData<UserEntity>)
 
             // Testo della recensione
             Text(text = comment)
+        }
+    }
+}
+
+@Composable
+fun ProfilePicture(size: Dp, pictureUri: String = "", borderWidth: Dp = 1.dp) {
+    Box(
+        modifier = Modifier
+            .size(size)
+            .clip(shape = CircleShape)
+            .border(width = borderWidth, color = currentColorScheme.onBackground, shape = CircleShape),
+        contentAlignment = Alignment.Center
+    ) {
+        if (pictureUri == "") {
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = "Default image",
+                contentScale = ContentScale.Crop,
+            )
+        }
+        else {
+            // Immagine del profilo
+            val profilePicture = getImageBitmap(pictureUri, LocalContext.current).asImageBitmap()
+            Image(
+                bitmap = profilePicture,
+                contentDescription = "Profile picture",
+                contentScale = ContentScale.Crop,
+            )
         }
     }
 }

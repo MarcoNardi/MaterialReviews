@@ -213,9 +213,11 @@ fun ListOfReviews2(model: RestaurantViewModel,
 @OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
 @Composable
-fun ReviewCard2(review: ReviewEntity,
-                model: RestaurantViewModel,
-                onClickSeeRestaurant: (Int) -> Unit) {
+fun ReviewCard2(
+    review: ReviewEntity,
+    model: RestaurantViewModel,
+    onClickSeeRestaurant: (Int) -> Unit
+) {
 
     val stars = review.rating
     val comment = review.review
@@ -323,11 +325,4 @@ fun ReviewCard2(review: ReviewEntity,
     }
         }
     }
-}
-
-
-@Preview
-@Composable
-fun EditProfileDialog() {
-
 }

@@ -34,24 +34,3 @@ fun TestComposable(n: Int = 1) {
         }
     }
 }
-
-@Composable
-fun ProfilePicture(size: Dp, picture: Picture? = null, borderWidth: Dp = 1.dp) {
-    Box(
-        modifier = Modifier
-            .size(size)
-            .clip(shape = CircleShape)
-            .border(width = borderWidth, color = Color.Black, shape = CircleShape),
-        contentAlignment = Alignment.Center
-    ) {
-        if (picture == null) {
-            Icon(
-                imageVector = Icons.Filled.Person,
-                contentDescription = "Localized description"
-            )
-        }
-        else {
-            // Immagine del profilo
-        }
-    }
-}
