@@ -38,6 +38,7 @@ import androidx.navigation.navArgument
 import com.example.materialreviews.*
 import com.example.materialreviews.R
 import com.example.materialreviews.db.*
+import com.example.materialreviews.ui.theme.currentColorScheme
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
 @ExperimentalMaterial3Api
@@ -168,41 +169,23 @@ fun TopBar(navController: NavHostController, topBarTitle: String) {
 
         // Button per tornare indietro
         navigationIcon = {
-            IconButton(
-                onClick = {
-                    // Controllo che ci sia almeno un altro elemento nella backStack
-                    if (navController.previousBackStackEntry != null) {
+            // Controllo che ci sia almeno un altro elemento nella backStack
+            if (navController.previousBackStackEntry != null) {
+                IconButton(
+                    onClick = {
                         navController.popBackStack()
                     }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back"
-                )
             }
         },
 
         // Altre azioni in alto a destra
-        actions = {
-            // Qui e` come se fossi in una Row()
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Localized description"
-                )
-            }
-            IconButton(
-                onClick = {
-                    navController.navigate(MaterialReviewsScreen.Settings.name)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Settings,
-                    contentDescription = "Localized description"
-                )
-            }
-        }
+        actions = {},
     )
 }
 

@@ -118,21 +118,17 @@ fun RestaurantDetailsAndReviews(
         // FAB per aprire AddReviewDialog
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { showAddReviewDialog = true },
-                containerColor = currentColorScheme.tertiaryContainer,
-                contentColor = currentColorScheme.onTertiaryContainer
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                text = {Text("Scrivi una recensione")},
+                icon = {
                     Icon(
                         imageVector = Icons.Filled.Edit,
                         contentDescription = "Scrivi recensione",
                     )
-                    Text("Scrivi una recensione")
-                }
-            }
+                },
+                onClick = { showAddReviewDialog = true },
+                containerColor = currentColorScheme.tertiaryContainer,
+                contentColor = currentColorScheme.onTertiaryContainer
+            )
         },
 
         // Dettagli del ristorante
