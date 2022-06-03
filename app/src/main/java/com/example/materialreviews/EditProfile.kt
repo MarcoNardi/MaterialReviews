@@ -1,10 +1,8 @@
 package com.example.materialreviews
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -37,20 +35,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.edit
-import com.example.materialreviews.db.UserEntity
 import com.example.materialreviews.db.UserViewModel
-
-
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -144,7 +135,7 @@ fun EditProfile(model: UserViewModel) {
 
 
         val launcher = rememberLauncherForActivityResult(contract =
-        ActivityResultContracts.OpenDocument(), ) { uri: Uri? ->
+        OpenDocumentWithPermissions(), ) { uri: Uri? ->
             if(uri.toString()!="null"){
                 imageUri = uri
                 model.updateImageOfUser(login_id, imageUri.toString())
