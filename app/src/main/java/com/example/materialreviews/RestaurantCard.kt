@@ -1,5 +1,6 @@
 package com.example.materialreviews
 
+import android.graphics.Bitmap
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
+import kotlinx.coroutines.delay
 
 @ExperimentalMaterial3Api
 @Composable
@@ -42,7 +44,17 @@ fun  RestaurantCard(
     val displayMetrics = context.resources.displayMetrics
     val dpWidth = displayMetrics.widthPixels / displayMetrics.density
 
-    val imageData = getImageBitmap(imageUri , context)
+    //necessario il remember per rendere il imagedata uno stato del composable così che quando si carica il composable viene rieseguito
+    var imageData: Bitmap? by remember {
+        mutableStateOf(null)
+    }
+
+    //coroutine per caricare le immagini
+    LaunchedEffect(key1 = imageUri){
+        delay(500)
+        imageData = getImageBitmap(imageUri , context)
+    }
+
     val averageRating by getAverageRating().observeAsState()
 
     // Card con le informazioni
@@ -54,12 +66,20 @@ fun  RestaurantCard(
         Column(modifier = Modifier ){
 
             // "Foto profilo" del ristorante
-            Image(
-                bitmap = imageData!!.asImageBitmap(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
-            )
+            //se non è stata caricata la mostro senn+ mostro un indicatore circolare di progresso
+            if(imageData!=null){
+                Image(
+                    bitmap = imageData!!.asImageBitmap(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
+                )
+            }else{
+                Box(modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp),contentAlignment = Alignment.Center){
+                    CircularProgressIndicator()
+                }
+            }
+
 
             // Altri elementi
             Row(
