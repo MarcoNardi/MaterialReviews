@@ -7,9 +7,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -119,7 +121,8 @@ fun ProfileScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 10.dp, bottom = 10.dp),
+                        .padding(top = 10.dp, bottom = 10.dp)
+                        .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     if(profile_image==null){
@@ -204,7 +207,7 @@ fun ListOfReviews2(model: RestaurantViewModel,
     ) {
         if(reviews !=null) {
             items(reviews!!.reviews) { review ->
-                ReviewCard2(review, model, onClickSeeRestaurant = onClickSeeRestaurant)
+                UserReviewCard(review, model, onClickSeeRestaurant = onClickSeeRestaurant)
             }
         }
     }

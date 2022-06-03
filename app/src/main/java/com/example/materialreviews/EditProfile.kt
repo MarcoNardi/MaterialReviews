@@ -2,6 +2,7 @@ package com.example.materialreviews
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 
 import androidx.compose.animation.*
@@ -50,7 +51,7 @@ fun EditProfile(model: UserViewModel) {
     var login_id = myPreferences.getId()
     val user by model.getUser(login_id).observeAsState()
     val name = (user?.firstName ?: "Not")
-    val surname = (user?.lastName ?: "Loaded")
+    val surname = (user?.lastName ?: "Logged")
     val profilePictureUri = user?.imageUri ?: ""
 
     var openDialog by remember {mutableStateOf(false)}
@@ -342,11 +343,15 @@ fun ExpandableContent(
 fun EditPersonalData(
     model:UserViewModel
 ) {
-    val myPreferences = MyPreferences(LocalContext.current)
+    val context = LocalContext.current
+    val myPreferences = MyPreferences(context)
     val login_id = myPreferences.getId()
+    val user by model.getUser(login_id).observeAsState()
+    val oldName = (user?.firstName ?: "")
+    val oldSurname = (user?.lastName ?: "")
 
-    var name by rememberSaveable { mutableStateOf("") }
-    var surname by rememberSaveable { mutableStateOf("")}
+    var name by rememberSaveable { mutableStateOf(oldName) }
+    var surname by rememberSaveable { mutableStateOf(oldSurname)}
     Column(
         modifier = Modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -355,18 +360,62 @@ fun EditPersonalData(
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = name,
-            onValueChange = { name = it },
+            singleLine = true,
+            onValueChange = {
+                val maxLength = 20
+                if (it.length <= maxLength) name = it
+                else Toast.makeText(context, "Non  può essere più lungo di $maxLength caratteri", Toast.LENGTH_SHORT).show()
+                            },
             label = { Text("Nome") }
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
             value = surname,
-            onValueChange = { surname = it },
+            onValueChange = {
+                val maxLength = 20
+                if (it.length <= maxLength) surname = it
+            else Toast.makeText(context, "Non  può essere più lungo di $maxLength caratteri", Toast.LENGTH_SHORT).show()
+                            },
             label = { Text("Cognome") }
         )
         Button(onClick = {
-            model.updateFirstNameOfUser(login_id,name)
-            model.updateLastNameOfUser(login_id,surname)
+
+            val toast = Toast.makeText(
+                context,
+                "I campi Nome e Cognome non possono essere vuoti",
+                Toast.LENGTH_LONG
+            )
+
+            //Controllo che nome e cognome non siano vuoti
+            if(name != "" || surname != "" )
+            {
+                //Controllo che nome e cognome non contengano solo spazi
+                var nameEmpty = true
+                var surnameEmpty = true
+
+                name.forEach {
+                    if (!it.equals(' ')) {
+                        nameEmpty = false
+                    }
+                }
+                surname.forEach {
+                    if (!it.equals(' ')) {
+                        surnameEmpty = false
+                    }
+                }
+
+                //Inserimento dati nel db
+                if( nameEmpty == false && surnameEmpty == false) {
+                    model.updateFirstNameOfUser(login_id, name)
+                    model.updateLastNameOfUser(login_id, surname)
+                }else{
+                    toast.show()
+                }
+            }else{
+                toast.show()
+            }
+
             name = ""
             surname = ""
         }) {
