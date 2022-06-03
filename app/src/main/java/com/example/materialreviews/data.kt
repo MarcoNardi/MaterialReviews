@@ -22,7 +22,7 @@ fun getInitialRestaurantsData() : List<RestaurantEntity>{
     return listOf<RestaurantEntity>(ristorante1, ristorante2, ristorante3, ristorante4, ristorante5)
 }
 
-val utente1= UserEntity(1, "Marco", "Nardi", profileImage+"1")
+val utente1= UserEntity(1, "Marco", "Nardi", profileImage+"4")
 val utente2= utente1.copy(2, lastName = "Trincanato", imageUri = profileImage+"2")
 val utente3= UserEntity(3, "Eli", "Ferin", imageUri = profileImage+"3")
 
