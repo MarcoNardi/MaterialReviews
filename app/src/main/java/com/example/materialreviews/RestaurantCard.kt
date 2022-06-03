@@ -61,7 +61,7 @@ fun  RestaurantCard(
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.elevatedCardElevation(2.dp),
-        modifier = Modifier.clickable { onClickSeeAll(restId) }
+        modifier = Modifier.clickable { onClickSeeAll(restId) }.padding(8.dp)
     ) {
         Column(modifier = Modifier ){
 
