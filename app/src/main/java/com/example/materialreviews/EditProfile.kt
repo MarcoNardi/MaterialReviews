@@ -3,7 +3,6 @@ package com.example.materialreviews
 import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -38,8 +37,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.example.materialreviews.db.UserViewModel
-
-
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -133,7 +130,7 @@ fun EditProfile(model: UserViewModel) {
 
 
         val launcher = rememberLauncherForActivityResult(contract =
-        ActivityResultContracts.OpenDocument(), ) { uri: Uri? ->
+        OpenDocumentWithPermissions(), ) { uri: Uri? ->
             if(uri.toString()!="null"){
                 imageUri = uri
                 model.updateImageOfUser(login_id, imageUri.toString())
