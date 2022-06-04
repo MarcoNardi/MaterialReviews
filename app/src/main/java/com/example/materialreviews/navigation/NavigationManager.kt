@@ -70,6 +70,19 @@ fun NavigationManager() {
                     navController = navController,
                     startDestination = MaterialReviewsScreen.Explore.name,
                 ) {
+                    //Le mie recensioni
+                    composable(MaterialReviewsScreen.MyReviews.name) {
+                       ListOfReviews2(
+                           model = restaurantViewModel,
+                           modelReview = userViewModel,
+                           { restId
+                               ->
+                               navigateToSingleRestaurant(navController, restId)
+                           },
+                           login_id = MyPreferences(context).getId()
+                       )
+                    }
+                    //Esplora
                     composable(MaterialReviewsScreen.Explore.name) {
                         ListOfRestaurants(
                             restaurantViewModel,
@@ -79,20 +92,12 @@ fun NavigationManager() {
                             onlyFavorites = onlyFavorites
                         )
                     }
+                    /*
                     composable(MaterialReviewsScreen.Favourites.name) {
-                        ListOfReviews2(
-                            model = restaurantViewModel,
-                            modelReview = userViewModel,
-                            { restId
-                                ->
-                                navigateToSingleRestaurant(navController, restId)
-                            },
-                            login_id = MyPreferences(context).getId()
-                        )
-                    }
-                    composable(MaterialReviewsScreen.Reviews.name) {
                         ProfileScreen(userViewModel, restaurantViewModel)
                     }
+                     */
+                    //Profilo
                     composable(MaterialReviewsScreen.Profile.name) {
                         /*ProfileScreen(
                             userViewModel,
@@ -105,14 +110,17 @@ fun NavigationManager() {
                         )*/
                         ProfileScreen()
                     }
+                    //TODO Impostazioni da eliminare
                     composable(MaterialReviewsScreen.Settings.name) {
                         SettingsScreen()
                     }
+                    //Modifica profilo
                     composable(MaterialReviewsScreen.EditProfile.name){
                         EditProfile(userViewModel)
                     }
 
-                    val restId = MaterialReviewsScreen.Reviews.name
+                    //Dettagli del ristorante e recensioni
+                    val restId = MaterialReviewsScreen.RestaurantDetails.name
                     composable(
                         route = "$restId/{name}",
                         arguments = listOf(
@@ -137,14 +145,14 @@ fun NavigationManager() {
     }
 }
 
-//TODO CAMBIARE NOME ROUTE PREFERITI CHIEDERE COME SI FA
+//TODO Verificare
 fun getTitleByRoute(context: Context, route:String?): String {
     return when (route) {
         MaterialReviewsScreen.Profile.name -> context.getString(R.string.profile)
         MaterialReviewsScreen.Settings.name -> context.getString(R.string.settings)
         MaterialReviewsScreen.Explore.name -> context.getString(R.string.explore)
-        MaterialReviewsScreen.Favourites.name -> context.getString(R.string.favourites)
-        MaterialReviewsScreen.Reviews.name -> context.getString(R.string.reviews)
+        MaterialReviewsScreen.RestaurantDetails.name -> context.getString(R.string.details)
+        MaterialReviewsScreen.MyReviews.name -> context.getString(R.string.myreviews)
         MaterialReviewsScreen.EditProfile.name -> context.getString(R.string.edit_profile)
         else -> context.getString(R.string.explore)
     }
@@ -226,17 +234,19 @@ fun BottomBar(navController: NavHostController) {
         )
 
         NavigationBarItem(
-            selected = (currentRoute == MaterialReviewsScreen.Favourites.name),
+            selected = (currentRoute == MaterialReviewsScreen.MyReviews.name),
             icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-            label = { Text(text = stringResource(R.string.favourites)) },
+            //Nome della pagina
+            label = { Text(text = stringResource(R.string.myreviews)) },
             onClick = {
-                navController.navigate(MaterialReviewsScreen.Favourites.name)
+                navController.navigate(MaterialReviewsScreen.MyReviews.name)
             }
         )
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.Profile.name),
             icon = { Icon(Icons.Filled.Person, contentDescription = null) },
+            //Nome della pagina
             label = { Text(text = stringResource(R.string.profile)) },
             onClick = {
                 navController.navigate(MaterialReviewsScreen.Profile.name)
@@ -246,6 +256,6 @@ fun BottomBar(navController: NavHostController) {
 }
 
 private fun navigateToSingleRestaurant(navController: NavHostController, restId: Int) {
-    navController.navigate("${MaterialReviewsScreen.Reviews.name}/$restId")
+    navController.navigate("${MaterialReviewsScreen.RestaurantDetails.name}/$restId")
 }
 

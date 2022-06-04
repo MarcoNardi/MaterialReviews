@@ -5,8 +5,8 @@ import androidx.compose.material.icons.filled.Home
 
 enum class MaterialReviewsScreen ( ) {
     Explore(  ),
-    Reviews( ),
-    Favourites(),
+    MyReviews( ),
+    RestaurantDetails(),
     Profile(),
     Settings(),
     EditProfile();
@@ -15,8 +15,8 @@ enum class MaterialReviewsScreen ( ) {
         fun fromRoute(route: String?): MaterialReviewsScreen =
             when (route?.substringBefore("/")) {
                 Explore.name -> Explore
-                Reviews.name -> Reviews
-                Favourites.name -> Favourites
+                MyReviews.name -> MyReviews
+                RestaurantDetails.name -> RestaurantDetails
                 Profile.name -> Profile
                 Settings.name -> Settings
                 EditProfile.name -> EditProfile

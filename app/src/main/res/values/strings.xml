@@ -7,7 +7,8 @@
     <string name="profile">Profilo</string>
     <string name="explore">Esplora</string>
     <string name="favourites">Preferiti</string>
-    <string name="reviews">Recensioni</string>
+    <string name="myreviews">Le mie recensioni</string>
+    <string name="details">Dettagli</string>
     <string name="edit_profile">Modifica profilo</string>
 
     <string-array name="navigationDestinations">
