@@ -1,4 +1,4 @@
-package com.example.materialreviews
+package com.example.materialreviews.util
 
 import android.content.Context
 import android.content.Intent

@@ -1,21 +1,10 @@
 package com.example.materialreviews.navigation
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.provider.ContactsContract
-import android.service.autofill.UserData
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.compose.animation.*
-import androidx.compose.animation.core.Animation
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -24,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,7 +28,7 @@ import androidx.navigation.navArgument
 import com.example.materialreviews.*
 import com.example.materialreviews.R
 import com.example.materialreviews.db.*
-import com.example.materialreviews.ui.theme.currentColorScheme
+import com.example.materialreviews.util.MyPreferences
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
 @ExperimentalMaterial3Api
@@ -90,7 +78,7 @@ fun NavigationManager() {
                                ->
                                navigateToSingleRestaurant(navController, restId)
                            },
-                           login_id =MyPreferences(context).getId()
+                           login_id = MyPreferences(context).getId()
                        )
                     }
                     composable(MaterialReviewsScreen.Explore.name) {

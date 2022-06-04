@@ -1,4 +1,4 @@
-package com.example.materialreviews
+package com.example.materialreviews.util
 
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder

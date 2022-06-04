@@ -38,6 +38,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.example.materialreviews.db.UserViewModel
+import com.example.materialreviews.util.MyPreferences
+import com.example.materialreviews.util.OpenDocumentWithPermissions
 
 
 @OptIn(ExperimentalComposeUiApi::class)

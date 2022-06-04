@@ -1,4 +1,4 @@
-package com.example.materialreviews
+package com.example.materialreviews.util
 
 import android.content.Context
 import androidx.compose.material3.ColorScheme
