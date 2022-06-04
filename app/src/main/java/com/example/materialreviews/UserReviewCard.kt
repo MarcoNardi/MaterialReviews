@@ -27,7 +27,6 @@ fun UserReviewCard(review: ReviewEntity,
     val comment = review.review
     val date = review.date
 
-    var openDialog by remember { mutableStateOf(false) }
     val reviewViewModel: ReviewViewModel = viewModel(
         factory = ReviewViewModelFactory(
             AppDatabase.getDatabase(LocalContext.current).reviewDao()
@@ -37,10 +36,14 @@ fun UserReviewCard(review: ReviewEntity,
     val restId = review.rid
     val restaurant by model.getRestaurant(restId).observeAsState()
     if (restaurant != null) {
+
         val restName = restaurant!!.name
         val restCity = restaurant!!.address!!.citta
         val restCivic = restaurant!!.address!!.num_civico
         val restRoute = restaurant!!.address!!.via
+
+        // Dialog per eliminare la review
+        var openDialog by remember { mutableStateOf(false) }
         if (openDialog) {
 
             AlertDialog(
@@ -56,7 +59,7 @@ fun UserReviewCard(review: ReviewEntity,
                     }
                 },
                 confirmButton = {
-                    TextButton(
+                    Button(
                         onClick = {
                             openDialog = false
                             reviewViewModel.deleteReview(review)
@@ -86,7 +89,9 @@ fun UserReviewCard(review: ReviewEntity,
 
         ElevatedCard(
             shape = RoundedCornerShape(15.dp),
-            modifier = Modifier.clickable { onClickSeeRestaurant(restId) }
+            modifier = Modifier
+                .padding(5.dp)
+                .clickable { onClickSeeRestaurant(restId) }
         ) {
             Column(
                 modifier = Modifier
@@ -99,7 +104,7 @@ fun UserReviewCard(review: ReviewEntity,
                     Text(
                         text = restName,
                         Modifier.padding(start = 3.dp, bottom = 3.dp),
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleLarge
                     )
 
                     Spacer(Modifier.weight(1f))
@@ -116,14 +121,18 @@ fun UserReviewCard(review: ReviewEntity,
                 // Stelline
                 Row() {
                     RowOfStars(stars)
-
                     Spacer(Modifier.weight(1f))
-
                 }
 
                 // Testo della recensione
                 Text(text = comment)
-                Row(Modifier.fillMaxWidth()) {
+
+                // Pulsante per eliminare la recensione
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
                     Button(onClick = { openDialog = true }) {
                         Text(text = "ELIMINA")
                     }

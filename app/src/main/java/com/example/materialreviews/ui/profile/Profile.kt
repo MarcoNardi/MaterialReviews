@@ -126,7 +126,8 @@ fun ProfileScreen(
                                 bitmap = imageBitmap!!.asImageBitmap(),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier.size(150.dp)
+                                modifier = Modifier
+                                    .size(150.dp)
                                     .clip(CircleShape)
                             )
                         }
@@ -156,7 +157,7 @@ fun ProfileScreen(
                             .clickable {
                                 openData = "Tema"
                                 openDialog = true
-                                }
+                            }
                     )
                     Text(text = AnnotatedString(" Le mie recensioni"),
                         style = MaterialTheme.typography.titleMedium,
@@ -165,7 +166,7 @@ fun ProfileScreen(
                             .clickable {
                                 openData = "Recensioni"
                                 openDialog = true
-                                }
+                            }
 
                     )
                     Text(text = AnnotatedString(" Modifica profilo"),
@@ -174,7 +175,7 @@ fun ProfileScreen(
                             .padding(top = 10.dp)
                             .clickable {
                                 onClickEdit()
-                                       }
+                            }
 
                         )
 
@@ -199,6 +200,9 @@ fun ListOfReviews2(model: RestaurantViewModel,
             items(reviews!!.reviews) { review ->
                 UserReviewCard(review, model, onClickSeeRestaurant = onClickSeeRestaurant)
             }
+        }
+        item{
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }

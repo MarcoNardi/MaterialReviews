@@ -70,17 +70,6 @@ fun NavigationManager() {
                     navController = navController,
                     startDestination = MaterialReviewsScreen.Explore.name,
                 ) {
-                    composable(MaterialReviewsScreen.Favourites.name) {
-                       ListOfReviews2(
-                           model = restaurantViewModel,
-                           modelReview = userViewModel,
-                           { restId
-                               ->
-                               navigateToSingleRestaurant(navController, restId)
-                           },
-                           login_id = MyPreferences(context).getId()
-                       )
-                    }
                     composable(MaterialReviewsScreen.Explore.name) {
                         ListOfRestaurants(
                             restaurantViewModel,
@@ -88,6 +77,17 @@ fun NavigationManager() {
                                 navigateToSingleRestaurant(navController, restId)
                             },
                             onlyFavorites = onlyFavorites
+                        )
+                    }
+                    composable(MaterialReviewsScreen.Favourites.name) {
+                        ListOfReviews2(
+                            model = restaurantViewModel,
+                            modelReview = userViewModel,
+                            { restId
+                                ->
+                                navigateToSingleRestaurant(navController, restId)
+                            },
+                            login_id = MyPreferences(context).getId()
                         )
                     }
                     composable(MaterialReviewsScreen.Reviews.name) {

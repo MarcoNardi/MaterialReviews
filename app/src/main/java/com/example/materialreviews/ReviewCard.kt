@@ -68,14 +68,6 @@ fun ReviewCard(
                 )
 
                 Spacer(Modifier.weight(1f))
-
-                // Menu
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        imageVector = Icons.Filled.MoreVert,
-                        contentDescription = "Star",
-                    )
-                }
             }
 
             // Stelline e data
