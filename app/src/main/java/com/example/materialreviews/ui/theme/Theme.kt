@@ -178,7 +178,7 @@ fun ThemeSelector() {
     ) {
         Text(
             text = "Tema",
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleMedium
         )
         Row() {
             MultiToggleButtonItem(
@@ -268,7 +268,7 @@ fun MultiToggleButtonItem(
         Icon(
             painter = iconPainter,
             contentDescription = "theme",
-            modifier = Modifier.padding(end = 5.dp)
+            modifier = Modifier.padding(end = 3.dp)
         )
         Text(name)
     }

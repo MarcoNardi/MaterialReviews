@@ -83,7 +83,6 @@ fun SettingsScreen() {
         ThemeSelector()
         DynamicColorSelector()
 
-        Text(text = "Schema di colori in uso", style = MaterialTheme.typography.titleMedium)
         ColorSchemeVisualizer()
     }
 }
@@ -104,6 +103,7 @@ fun ColorSchemeVisualizer(colorBoxHeight: Dp = 35.dp) {
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(text = "Schema di colori in uso", style = MaterialTheme.typography.titleMedium)
 
         val currentColorSchemeWithName = getColorSchemeWithName(currentColorScheme)
 

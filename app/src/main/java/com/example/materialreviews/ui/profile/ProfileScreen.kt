@@ -2,10 +2,7 @@ package com.example.materialreviews
 
 import android.graphics.drawable.Icon
 import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -15,19 +12,24 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.AppDatabase
 import com.example.materialreviews.db.ImageViewModel
 import com.example.materialreviews.db.UserViewModel
 import com.example.materialreviews.db.UserViewModelFactory
+import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
 
+@ExperimentalComposeUiApi
+@ExperimentalMaterial3Api
 @Preview
 @Composable
 fun ProfileScreen() {
@@ -67,6 +69,11 @@ fun ProfileScreen() {
 
     // Dialog per modificare il tema
     var showEditThemeDialog by remember{ mutableStateOf(false) }
+    if (showEditThemeDialog) {
+        EditThemeDialog(
+            onDismiss = { showEditThemeDialog = false }
+        )
+    }
 
     // Corpo di ProfileScreen
     Column(
@@ -88,6 +95,14 @@ fun ProfileScreen() {
                 style = MaterialTheme.typography.displaySmall
             )
         }
+
+        // Divisore
+        Divider(
+            color = currentColorScheme.onSurface,
+            modifier = Modifier
+                .padding(vertical = 15.dp)
+                .fillMaxWidth(0.8f)
+        )
 
         // Pulsante per modificare il profilo
         Button(
@@ -120,26 +135,6 @@ fun ProfileScreen() {
 
 @Preview
 @Composable
-fun TextIconButton(
-    icon: @Composable (() -> Unit) = {},
-    text: String = "Prova",
-    onClick: () -> Unit = {}
-) {
-    Button(
-        onClick = onClick
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            icon
-            Text(text)
-        }
-    }
-}
-
-@Preview
-@Composable
 fun EditProfileDialog(
     currentName: String = "Default",
     currentSurname: String = "Default",
@@ -165,5 +160,30 @@ fun EditProfileDialog(
                 Text("Salva")
             }
         },
+    )
+}
+
+@ExperimentalComposeUiApi
+@ExperimentalMaterial3Api
+@Preview
+@Composable
+fun EditThemeDialog(
+    onDismiss: () -> Unit = {}
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Seleziona il tema") },
+        text = {
+            SettingsScreen()
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onDismiss
+            ) {
+                Text("Chiudi")
+            }
+        },
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+        modifier = Modifier.fillMaxSize(0.9f)
     )
 }
