@@ -64,6 +64,8 @@ fun NavigationManager() {
     val userViewModel: UserViewModel = viewModel(factory = UserViewModelFactory(
         AppDatabase.getDatabase(context ).userDao()
     ))
+
+
     // Scaffold = topBar + bottomBar + content
     Scaffold(
         topBar = { TopBar(navController, topBarTitle, onlyFavorites,
@@ -81,13 +83,15 @@ fun NavigationManager() {
                     startDestination = MaterialReviewsScreen.Explore.name,
                 ) {
                     composable(MaterialReviewsScreen.Favourites.name) {
-                        ListOfRestaurants(
-                            restaurantViewModel,
-                            onClickSeeAll = { restId ->
-                                navigateToSingleRestaurant(navController, restId)
-                            },
-                            onlyFavorites = onlyFavorites
-                        )
+                       ListOfReviews2(
+                           model = restaurantViewModel,
+                           modelReview = userViewModel,
+                           { restId
+                               ->
+                               navigateToSingleRestaurant(navController, restId)
+                           },
+                           login_id =MyPreferences(context).getId()
+                       )
                     }
                     composable(MaterialReviewsScreen.Explore.name) {
                         ListOfRestaurants(
@@ -144,6 +148,7 @@ fun NavigationManager() {
     }
 }
 
+//TODO CAMBIARE NOME ROUTE PREFERITI CHIEDERE COME SI FA
 fun getTitleByRoute(context: Context, route:String?): String {
     return when (route) {
         MaterialReviewsScreen.Profile.name -> context.getString(R.string.profile)
