@@ -94,7 +94,7 @@ fun NavigationManager() {
                         ProfileScreen(userViewModel, restaurantViewModel)
                     }
                     composable(MaterialReviewsScreen.Profile.name) {
-                        ProfileScreen(
+                        /*ProfileScreen(
                             userViewModel,
                             restaurantViewModel,
                             onClickSeeRestaurant = { restId
@@ -102,7 +102,8 @@ fun NavigationManager() {
                                 navigateToSingleRestaurant(navController, restId)
                             },
                             onClickEdit = { navController.navigate(MaterialReviewsScreen.EditProfile.name) }
-                        )
+                        )*/
+                        ProfileScreen()
                     }
                     composable(MaterialReviewsScreen.Settings.name) {
                         SettingsScreen()
@@ -187,11 +188,18 @@ fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorite
         actions = {
             val currentRoute=currentRoute(navController = navController)
             if(currentRoute=="Explore"){
-                Switch(checked = selectFavorites, onCheckedChange = onCheckedChange,thumbContent  = {Icon(
-                    imageVector = Icons.Filled.Favorite,
-                    contentDescription = "filtra per preferiti",
-                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                )})
+                Switch(
+                    checked = selectFavorites,
+                    onCheckedChange = onCheckedChange,
+                    thumbContent = {
+                        Icon(
+                            imageVector = Icons.Filled.Favorite,
+                            contentDescription = "filtra per preferiti",
+                            modifier = Modifier.size(SwitchDefaults.IconSize)
+                        )
+                    },
+                    modifier = Modifier.padding(end = 15.dp)
+                )
             }
 
         },
