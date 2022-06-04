@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.provider.ContactsContract
 import android.service.autofill.UserData
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Animation
@@ -13,6 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -51,7 +53,9 @@ fun NavigationManager() {
     var topBarTitle by rememberSaveable() { mutableStateOf("")    }
     val currentRoute = currentRoute(navController = navController)
 
-
+    var onlyFavorites by rememberSaveable() {
+        mutableStateOf(false)
+    }
 
     val restaurantViewModel: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(
         AppDatabase.getDatabase(context ).restaurantDao()
@@ -62,7 +66,8 @@ fun NavigationManager() {
     ))
     // Scaffold = topBar + bottomBar + content
     Scaffold(
-        topBar = { TopBar(navController, topBarTitle) },
+        topBar = { TopBar(navController, topBarTitle, onlyFavorites,
+            onCheckedChange={onlyFavorites=it}) },
         bottomBar = { BottomBar(navController) },
         content = { paddingValues ->
             Box(
@@ -81,7 +86,7 @@ fun NavigationManager() {
                             onClickSeeAll = { restId ->
                                 navigateToSingleRestaurant(navController, restId)
                             },
-                            onlyFavorites = true
+                            onlyFavorites = onlyFavorites
                         )
                     }
                     composable(MaterialReviewsScreen.Explore.name) {
@@ -90,7 +95,7 @@ fun NavigationManager() {
                             onClickSeeAll = { restId ->
                                 navigateToSingleRestaurant(navController, restId)
                             },
-                            onlyFavorites = false
+                            onlyFavorites = onlyFavorites
                         )
                     }
                     composable(MaterialReviewsScreen.Reviews.name) {
@@ -161,8 +166,9 @@ private fun currentRoute(navController: NavHostController): String? {
     return navBackStackEntry?.destination?.route
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(navController: NavHostController, topBarTitle: String) {
+fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorites:Boolean, onCheckedChange:(Boolean)->Unit) {
     SmallTopAppBar(
         // Titolo che appare nella barra in alto
         title = { Text(topBarTitle) },
@@ -185,7 +191,17 @@ fun TopBar(navController: NavHostController, topBarTitle: String) {
         },
 
         // Altre azioni in alto a destra
-        actions = {},
+        actions = {
+            val currentRoute=currentRoute(navController = navController)
+            if(currentRoute=="Explore"){
+                Switch(checked = selectFavorites, onCheckedChange = onCheckedChange,thumbContent  = {Icon(
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "filtra per preferiti",
+                    modifier = Modifier.size(SwitchDefaults.IconSize)
+                )})
+            }
+
+        },
     )
 }
 
