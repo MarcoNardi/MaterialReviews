@@ -1,11 +1,17 @@
 package com.example.materialreviews
 
 import android.graphics.drawable.Icon
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
@@ -14,6 +20,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -27,6 +35,7 @@ import com.example.materialreviews.db.UserViewModel
 import com.example.materialreviews.db.UserViewModelFactory
 import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
+import com.example.materialreviews.util.OpenDocumentWithPermissions
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
@@ -60,8 +69,11 @@ fun ProfileScreen() {
             currentSurname = userSurname,
             currentProfilePictureURI = profilePictureURI,
             onDismiss = { showEditProfileDialog = false },
-            onConfirm = {
-                /* TODO: Salva nel DB */
+            onConfirm = { newName, newSurname, newProfilePictureURI ->
+                // Salvo i dati nel DB
+                userModel.updateFirstNameOfUser(userID, newName)
+                userModel.updateLastNameOfUser(userID, newSurname)
+                userModel.updateImageOfUser(userID, newProfilePictureURI)
                 showEditProfileDialog = false
             }
         )
@@ -133,19 +145,72 @@ fun ProfileScreen() {
 
 }
 
-@Preview
 @Composable
 fun EditProfileDialog(
     currentName: String = "Default",
     currentSurname: String = "Default",
     currentProfilePictureURI: String = "",
     onDismiss: () -> Unit = {},
-    onConfirm: () -> Unit = {}
+    onConfirm: (newName: String, newSurname: String, newProfilePictureURI: String) -> Unit
 ) {
+    // Variabili per nome, cognome e URI
+    var name by remember { mutableStateOf(currentName)}
+    var surname by remember { mutableStateOf(currentSurname)}
+    var pictureURI by remember { mutableStateOf(currentProfilePictureURI)}
+
+    // Launcher per acquisire la nuova immagine profilo dall galleria
+    val launcher = rememberLauncherForActivityResult(
+        contract = OpenDocumentWithPermissions(),
+    ) { newPictureURI: Uri? ->
+        if(newPictureURI.toString()!="null") {
+            pictureURI = newPictureURI.toString()
+        }
+    }
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Modifica il profilo") },
-        text = { Text("Prova") },
+        text = {
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+
+                // Immagine del profilo con pulsante per modificarla
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.clickable { launcher.launch( arrayOf("image/*") ) }
+                ) {
+                    ProfilePicture(size = 140.dp, pictureURI)
+                    // Sfondo semitrasparente
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(currentColorScheme.background.copy(alpha = 0.9f))
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Edit,
+                            contentDescription = "Modifica immagine del profilo",
+                            modifier = Modifier.padding(10.dp)
+                        )
+                    }
+                }
+                
+                // Text Field per il nome
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Nome")}
+                )
+
+                // Text Field per il cognome
+                OutlinedTextField(
+                    value = surname,
+                    onValueChange = { surname = it },
+                    label = { Text("Cognome")}
+                )
+            }
+        },
         dismissButton = {
             TextButton(
                 onClick = onDismiss
@@ -155,7 +220,7 @@ fun EditProfileDialog(
         },
         confirmButton = {
             Button(
-                onClick = onConfirm
+                onClick = { onConfirm( name, surname, pictureURI ) }
             ) {
                 Text("Salva")
             }
