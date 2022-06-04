@@ -5,11 +5,13 @@ import android.net.Uri
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -105,15 +107,29 @@ fun RestaurantDetails(
                 }
             }
 
-            // Indirizzo
-            Column() {
-                Text(
-                    text = restaurant.address?.citta ?: "citta",
-                    style = MaterialTheme.typography.titleMedium
+            // Indirizzo -> collegamento google maps
+            Row(Modifier.clickable {
+                val gmmIntentUri = Uri.parse("geo:0,0?q=${restaurant.address!!.num_civico} ${restaurant.address!!.via}, ${restaurant.address!!.citta}")
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                context.startActivity(mapIntent)
+                }, 
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Place,
+                    contentDescription = "Collegamento maps",
                 )
-                Text(
-                    text = "Via " + restaurant.address?.via!! + " " + restaurant.address?.num_civico!!.toString(),
-                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Column() {
+                    Text(
+                        text = restaurant.address?.citta ?: "citta",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Text(
+                        text = "Via " + restaurant.address?.via!! + " " + restaurant.address?.num_civico!!.toString(),
+                    )
+                }
             }
 
 

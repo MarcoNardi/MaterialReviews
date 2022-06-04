@@ -107,8 +107,14 @@ fun  RestaurantCard(
                     // Indirizzo
                     Column() {
                         Text(
-                            text = restCity + ", Via $restRoad $restCivic",
+                            text = restCity,
+                            style = MaterialTheme.typography.titleMedium
                         )
+                        Text(
+                            text = "Via $restRoad, $restCivic",
+                            Modifier.padding(bottom = 10.dp)
+                        )
+
                     }
 
                 }
