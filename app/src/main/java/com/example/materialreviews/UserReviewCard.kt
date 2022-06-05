@@ -109,7 +109,11 @@ fun UserReviewCard(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ProfilePicture(size = 60.dp, restPictureURI!!)
+                    if(restPictureURI!=null){
+                        ProfilePicture(size = 60.dp, restPictureURI!!)
+                    }else{
+                        ProfilePicture(size =60.dp)
+                    }
                     Column() {
                         Text(
                             text = restName,
