@@ -11,10 +11,10 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -23,18 +23,23 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.LiveData
-import com.example.materialreviews.db.ReviewEntity
-import com.example.materialreviews.db.UserEntity
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.currentColorScheme
+import com.example.materialreviews.util.MyPreferences
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
 @Composable
 fun ReviewCard(
     review: ReviewEntity,
-    getUserInfo: (Int) -> LiveData<UserEntity>
+    getUserInfo: (Int) -> LiveData<UserEntity>,
+    modifier: Modifier
 ) {
     // Ottengo i dati dell'utente e della review dal DB
     val user by getUserInfo(review.uid).observeAsState()
@@ -44,10 +49,62 @@ fun ReviewCard(
     val comment = review.review
     val date = review.date
 
+    val reviewViewModel: ReviewViewModel = viewModel(
+        factory = ReviewViewModelFactory(
+            AppDatabase.getDatabase(LocalContext.current).reviewDao()
+        )
+    )
+
+
+    // Dialog per eliminare la review
+    var openDialog by remember { mutableStateOf(false) }
+    if (openDialog) {
+
+        AlertDialog(
+            onDismissRequest = { openDialog = false },
+            modifier = Modifier.fillMaxWidth(0.9f),
+            title = {
+                Text(text = "Sicuro di voler eliminare la tua recensione?")
+            },
+            // Posso mettere dentro qualsiasi composable
+            text = {
+                Row() {
+                    Text(text = "Nessuno potrà più vederla e non sarà più possibile recuperarla")
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        openDialog = false
+                        reviewViewModel.deleteReview(review)
+                    }
+                ) {
+                    Text(
+                        "Elimina",
+                    )
+                }
+
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        openDialog = false
+                    }
+                ) {
+                    Text(
+                        "Annulla",
+                        textAlign = TextAlign.Center
+                    )
+                }
+            },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        )
+    }
+
     ElevatedCard(
         shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.elevatedCardElevation(1.dp),
-        modifier = Modifier.padding(bottom = 1.dp)
+        modifier = modifier.padding(bottom = 1.dp)
     ) {
         Column(
             modifier = Modifier
@@ -68,6 +125,16 @@ fun ReviewCard(
                 )
 
                 Spacer(Modifier.weight(1f))
+                if(review.uid==MyPreferences(LocalContext.current).getId()){ Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Button(onClick = { openDialog = true }) {
+                        Text(text = "Elimina")
+                    }
+                }
+                }
             }
 
             // Stelline e data
@@ -81,6 +148,7 @@ fun ReviewCard(
 
             // Testo della recensione
             Text(text = comment)
+
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.materialreviews
 
 import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
@@ -34,6 +35,7 @@ import kotlin.math.roundToInt
 /**
  * Schermata dove ci sono tutte le informazioni di un singolo ristorante
  */
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
 @Preview
@@ -213,9 +215,9 @@ fun RestaurantDetailsAndReviews(
                         // Lista delle review del ristorante
                         if (restaurantWithReviews != null) {
                             items(restaurantWithReviews!!.reviews) { review ->
-                                ReviewCard(review) {
+                                ReviewCard(review= review, getUserInfo = {
                                     userModel.getUser(it)
-                                }
+                                }, modifier =  Modifier.animateItemPlacement())
                             }
                         }
 
