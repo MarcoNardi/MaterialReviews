@@ -45,11 +45,14 @@ fun RestaurantDetailsAndReviews(
     )
 ) {
     val restaurantWithReviews by restaurantModel.getReviewsOfRestaurant(restId).observeAsState()
-    val userEntity by userModel.getUser(1).observeAsState()
-    val restaurantWithImages by restaurantModel.getImageOfRestaurant(restId).observeAsState()
+    //val userEntity by userModel.getUser(1).observeAsState()
+    //val restaurantWithImages by restaurantModel.getImageOfRestaurant(restId).observeAsState()
     // Ottengo l'ID del ristorante e dell'utente
     val restaurantId = if (restaurantWithReviews != null) restaurantWithReviews!!.restaurant.rid else 1
-    val userId = 1 //shared preferences
+    val userId = 1 //TODO shared preferences
+
+    //ottengo uri con questa funzione (attenzione che ritorna un LiveData)
+    val imageUri by restaurantModel.getImageUriOfRestaurant(restId).observeAsState()
 
     val reviewViewModel: ReviewViewModel = viewModel(
         factory = ReviewViewModelFactory(
@@ -138,7 +141,7 @@ fun RestaurantDetailsAndReviews(
             ) {
 
                 // Mostra i dettagli del ristorante e tutte le sue recensioni
-                if(restaurantWithReviews!=null && restaurantWithImages!=null){
+                if(restaurantWithReviews!=null /*&& restaurantWithImages!=null*/ && imageUri!=null){
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         //modifier = Modifier.padding(vertical = 10.dp)
@@ -148,15 +151,16 @@ fun RestaurantDetailsAndReviews(
                             // Dettagli
                             RestaurantDetails(
                                 restaurant = restaurantWithReviews!!.restaurant,
-                                restaurantWithImages!!.images[0].uri,
+                                //restaurantWithImages!!.images[0].uri,
+                                imageUri = imageUri!!,
                                 { it ->
                                     restaurantModel.changeFavoriteState(
-                                        restaurantWithImages!!.restaurant.rid,
+                                        restaurantWithReviews!!.restaurant.rid,
                                         it
                                     )
                                 },
                                 getAverageRating = {
-                                    restaurantModel.getAverageRatingOfRestaurant(restaurantWithImages!!.restaurant.rid)
+                                    restaurantModel.getAverageRatingOfRestaurant(restaurantWithReviews!!.restaurant.rid)
                                 },
                                 // Passo la lambda per mostrare il dialog per aggiungere le recensioni
                                 addReviewButtonOnClick = {

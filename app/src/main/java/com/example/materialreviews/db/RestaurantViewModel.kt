@@ -22,36 +22,37 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     private fun createRestaurantEntry(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String, nTelefono:String): RestaurantEntity{
         return RestaurantEntity(id, name, sito, orario,categoria,preferito,nTelefono, Address(citta, via, num_civico ) )
     }
-    //add a restaurant
+
+    //aggiunge un ristorante
     fun addRestaurant(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String, nTelefono:String){
         insertRestaurant(createRestaurantEntry(id, name, sito, citta, via, num_civico, orario, preferito, categoria, nTelefono))
     }
 
-    //add a restaurant
+    //aggiunge un ristorante
     fun addRestaurant(restaurant: RestaurantEntity){
         insertRestaurant(restaurant)
     }
-
+    //ottiene info di un ristorante
     fun getRestaurant(restaurantId: Int): LiveData<RestaurantEntity>{
         return restaurantDao.findById(restaurantId)
     }
 
-    //get all favorite restaurants
+    //ottiene tutti i preferiti
     fun getALlFavorites(): LiveData<List<RestaurantEntity>>{
         return restaurantDao.getAllFavorites()
     }
-    //change the favorite state of a certain restaurant
+    //cambia lo stato di preferito in un ristorante
     fun changeFavoriteState(restaurantId: Int, isFavorite: Boolean){
         viewModelScope.launch{
             restaurantDao.updateFavorite(restaurantId, isFavorite)
         }
     }
 
-    //get list of all restaurants
+    //ottiene lista di tutti i ristoranti
     fun getAllRestaurants() :  LiveData<List<RestaurantEntity>>{
         return restaurantDao.getAll()
     }
-    //get images of a certain restaurant
+    //ottiene tutte le immagini di un ristorante
     fun getImageOfRestaurant(restaurantId: Int) : LiveData<RestaurantWithImages>{
         return restaurantDao.getImageOfRestaurant(restaurantId)
     }
@@ -59,20 +60,32 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     fun getRestaurantsWithImage() : LiveData<List<RestaurantWithImages>>{
         return restaurantDao.getRestaurantsAndImages()
     }
-    //get all pairs (restaurant, reviewsList)
+    //ottiene tutte le coppie (restaurant, reviewsList)
     fun getRestaurantsWithReviews() : LiveData<List<RestaurantWithReviews>>{
         return restaurantDao.getRestaurantsAndReviews()
     }
-    //get reviews of a certain restaurant
+    //ottiene le recensioni di un ristorante
     fun getReviewsOfRestaurant(restaurantId: Int): LiveData<RestaurantWithReviews>{
         return  restaurantDao.getReviewsOfRestaurant(restaurantId)
     }
+    //ottiene il rating medio
     fun getAverageRatingOfRestaurant(restaurantId: Int) :LiveData<Float>{
         return restaurantDao.getAverageRating(restaurantId)
     }
+    //ottiene l'uri della prima immagine di un ristorante
+    fun getImageUriOfRestaurant(restaurantId: Int):LiveData<String>{
+        val imageUri: MutableLiveData<String> by lazy {
+            MutableLiveData<String>()
+        }
+        viewModelScope.launch{
+            val restaurantImages=restaurantDao.getImageUriOfRestaurant(restaurantId)
+            imageUri.value=restaurantImages.images[0].uri
+        }
 
+        return imageUri
+    }
 
-
+    //serve per ottenere dati dell'immagine con coroutine ma trovato un metodo "migliore"
     fun getImageData(imageUri:String, context: Context): MutableLiveData<Bitmap> {
         val imageBitmap: MutableLiveData<Bitmap> by lazy {
             MutableLiveData<Bitmap>()
