@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -19,9 +20,11 @@ import com.example.materialreviews.db.*
 @OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
 @Composable
-fun UserReviewCard(review: ReviewEntity,
-                    model: RestaurantViewModel,
-                    onClickSeeRestaurant: (Int) -> Unit) {
+fun UserReviewCard(
+    review: ReviewEntity,
+    restaurantViewModel: RestaurantViewModel,
+    onClickSeeRestaurant: (Int) -> Unit
+) {
 
     val stars = review.rating
     val comment = review.review
@@ -34,7 +37,9 @@ fun UserReviewCard(review: ReviewEntity,
     )
 
     val restId = review.rid
-    val restaurant by model.getRestaurant(restId).observeAsState()
+    val restaurant by restaurantViewModel.getRestaurant(restId).observeAsState()
+    val restPictureURI by restaurantViewModel.getImageUriOfRestaurant(restId).observeAsState()
+
     if (restaurant != null) {
 
         val restName = restaurant!!.name
@@ -66,7 +71,7 @@ fun UserReviewCard(review: ReviewEntity,
                         }
                     ) {
                         Text(
-                            "ELIMINA",
+                            "Elimina",
                         )
                     }
 
@@ -78,7 +83,7 @@ fun UserReviewCard(review: ReviewEntity,
                         }
                     ) {
                         Text(
-                            "ANNULLA",
+                            "Annulla",
                             textAlign = TextAlign.Center
                         )
                     }
@@ -87,6 +92,7 @@ fun UserReviewCard(review: ReviewEntity,
             )
         }
 
+        // Card che mostra il nome del ristorante e tutte le infomazioni della review
         ElevatedCard(
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
@@ -99,29 +105,28 @@ fun UserReviewCard(review: ReviewEntity,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
 
-                //Nome ristorante e data
-                Row() {
-                    Text(
-                        text = restName,
-                        Modifier.padding(start = 3.dp, bottom = 3.dp),
-                        style = MaterialTheme.typography.titleLarge
-                    )
-
-                    Spacer(Modifier.weight(1f))
-
-                    Text(text = date)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ProfilePicture(size = 60.dp, restPictureURI!!)
+                    Column() {
+                        Text(
+                            text = restName,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Text(
+                            text = "$restCity, Via  $restRoute, $restCivic ",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                 }
 
-                Text(
-                    text = "$restCity, Via  $restRoute, $restCivic ",
-                    Modifier.padding(start = 3.dp, bottom = 3.dp),
-                    style = MaterialTheme.typography.titleSmall
-                )
-
-                // Stelline
+                // Stelline e data
                 Row() {
                     RowOfStars(stars)
                     Spacer(Modifier.weight(1f))
+                    Text(text = date)
                 }
 
                 // Testo della recensione
@@ -134,7 +139,7 @@ fun UserReviewCard(review: ReviewEntity,
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(onClick = { openDialog = true }) {
-                        Text(text = "ELIMINA")
+                        Text(text = "Elimina")
                     }
                 }
             }

@@ -181,7 +181,7 @@ fun AddReviewDialog(
             }
         },
         confirmButton = {
-            TextButton(
+            Button(
                 onClick = {
                     onConfirmClick(rating, comment)
                 }

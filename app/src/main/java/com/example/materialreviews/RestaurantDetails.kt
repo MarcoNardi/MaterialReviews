@@ -107,29 +107,15 @@ fun RestaurantDetails(
                 }
             }
 
-            // Indirizzo -> collegamento google maps
-            Row(Modifier.clickable {
-                val gmmIntentUri = Uri.parse("geo:0,0?q=${restaurant.address!!.num_civico} ${restaurant.address!!.via}, ${restaurant.address!!.citta}")
-                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                mapIntent.setPackage("com.google.android.apps.maps")
-                context.startActivity(mapIntent)
-                }, 
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Place,
-                    contentDescription = "Collegamento maps",
+            // Indirizzo
+            Column() {
+                Text(
+                    text = restaurant.address?.citta ?: "citta",
+                    style = MaterialTheme.typography.titleMedium
                 )
-                Spacer(modifier = Modifier.width(10.dp))
-                Column() {
-                    Text(
-                        text = restaurant.address?.citta ?: "citta",
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    Text(
-                        text = "Via " + restaurant.address?.via!! + " " + restaurant.address?.num_civico!!.toString(),
-                    )
-                }
+                Text(
+                    text = "Via " + restaurant.address?.via!! + " " + restaurant.address?.num_civico!!.toString(),
+                )
             }
 
 
@@ -156,7 +142,7 @@ fun RestaurantDetails(
                             //tint = Color.Gray,
                             //modifier = Modifier.size(25.dp)
                         )
-                        Text("Telefona")
+                        Text("Chiama")
                     }
                 }
 
@@ -176,7 +162,28 @@ fun RestaurantDetails(
                             painter = painterResource(id = R.drawable.ic_baseline_language_24),
                             contentDescription = "Vai al sito",
                         )
-                        Text("Visita il sito")
+                        Text("Sito")
+                    }
+                }
+
+                // Visualizza sulla mappa => Apre Maps
+                FilledTonalButton(
+                    onClick = {
+                        val gmmIntentUri = Uri.parse("geo:0,0?q=${restaurant.address!!.num_civico} ${restaurant.address!!.via}, ${restaurant.address!!.citta}")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        mapIntent.setPackage("com.google.android.apps.maps")
+                        context.startActivity(mapIntent)
+                    }
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(5.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Place,
+                            contentDescription = "Collegamento maps",
+                        )
+                        Text("Mappa")
                     }
                 }
 
