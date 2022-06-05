@@ -1,24 +1,35 @@
 package com.example.materialreviews
 
 import android.util.Log
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.currentColorScheme
+import kotlin.math.roundToInt
 
 /**
  * Schermata dove ci sono tutte le informazioni di un singolo ristorante
@@ -116,8 +127,35 @@ fun RestaurantDetailsAndReviews(
         )
     }
 
-    Scaffold(
 
+
+    //https://stackoverflow.com/questions/67737502/how-to-detect-up-down-scroll-for-a-column-with-vertical-scroll
+    val fabHeight = 72.dp //FabSize+Padding
+    //nel caso la scirttura sembra arcana
+    //https://stackoverflow.com/questions/65921799/how-to-convert-dp-to-pixels-in-android-jetpack-compose
+    val fabHeightPx = with(LocalDensity.current) { fabHeight.roundToPx().toFloat() }
+    //ricordo l'offset
+    val fabOffsetHeightPx = remember { mutableStateOf(0f) }
+    //serve a "ricevere gli eventi" di scroll
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                //available è di quanto ci si è spostati
+
+                val newOffset = fabOffsetHeightPx.value + available.y
+                //modifico l'offset del FAB
+                //coerce serve a restringere il risultato nel dominio (-fabHeightPx, 0f)
+                fabOffsetHeightPx.value = newOffset.coerceIn(-fabHeightPx, 0f)
+                //non abbiamo "consumato" nulla dello scroll quindi ritorniamo zero, noi osserviamo lo scroll
+                // e semplicemente muoviamo il FAB come si deve
+                return Offset.Zero
+            }
+        }
+    }
+
+
+    Scaffold(
+        modifier=Modifier.nestedScroll(nestedScrollConnection),
         // FAB per aprire AddReviewDialog
         floatingActionButton = {
             ExtendedFloatingActionButton(
@@ -130,7 +168,9 @@ fun RestaurantDetailsAndReviews(
                 },
                 onClick = { showAddReviewDialog = true },
                 containerColor = currentColorScheme.primary,
-                contentColor = currentColorScheme.onPrimary
+                contentColor = currentColorScheme.onPrimary,
+                //offset calcolato durante lo scroll
+                modifier = Modifier.offset{ IntOffset(x = 0, y = -fabOffsetHeightPx.value.roundToInt()) }
             )
         },
 
@@ -143,6 +183,7 @@ fun RestaurantDetailsAndReviews(
                 // Mostra i dettagli del ristorante e tutte le sue recensioni
                 if(restaurantWithReviews!=null /*&& restaurantWithImages!=null*/ && imageUri!=null){
                     LazyColumn(
+                        //modifier=Modifier.scrollable(rememberScrollState(), Orientation.Vertical),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         //modifier = Modifier.padding(vertical = 10.dp)
                     ) {
