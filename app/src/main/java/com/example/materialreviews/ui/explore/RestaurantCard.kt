@@ -20,9 +20,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import kotlinx.coroutines.delay
+
 
 @ExperimentalMaterial3Api
 @Composable
@@ -61,7 +61,9 @@ fun  RestaurantCard(
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.elevatedCardElevation(2.dp),
-        modifier = Modifier.clickable { onClickSeeAll(restId) }.padding(8.dp)
+        modifier = Modifier
+            .clickable { onClickSeeAll(restId) }
+            .padding(8.dp)
     ) {
         Column(modifier = Modifier ){
 
@@ -104,33 +106,40 @@ fun  RestaurantCard(
                         //Spacer(Modifier.weight(1f))
                     }
 
-                    // Indirizzo
-                    Column() {
-                        Text(
-                            text = restCity,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = "Via $restRoad, $restCivic",
-                            Modifier.padding(bottom = 10.dp)
-                        )
+                    // Indirizzo e cuoricino
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement  = Arrangement.SpaceBetween){
+                        Column() {
+                            Text(
+                                text = restCity,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                text = "Via $restRoad, $restCivic",
+                                Modifier.padding(bottom = 10.dp)
+                            )
+
+                        }
+                        // Pulsante per salvare il ristorante nei preferiti
+                        val icon = Icons.Filled.Favorite
+                        IconToggleButton( checked = restaurant.preferito, onCheckedChange = onCheckedChange) {
+                            val tint by animateColorAsState(if (restaurant.preferito) Color.Red else Color.LightGray)
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = "Aggiungi a elementi salvati",
+                                tint = tint,
+                                modifier = Modifier.size(35.dp)
+                            )
+                        }
 
                     }
+
 
                 }
                 Spacer(Modifier.weight(1f))
 
-                // Pulsante per salvare il ristorante nei preferiti
-                val icon = Icons.Filled.Favorite
-                IconToggleButton( checked = restaurant.preferito, onCheckedChange = onCheckedChange) {
-                    val tint by animateColorAsState(if (restaurant.preferito) Color.Red else Color.LightGray)
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = "Aggiungi a elementi salvati",
-                        tint = tint,
-                        modifier = Modifier.size(35.dp)
-                    )
-                }
+
             }
         }
     }
