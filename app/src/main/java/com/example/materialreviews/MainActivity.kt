@@ -26,8 +26,9 @@ class MainActivity : ComponentActivity() {
         TODO RELAZIONE: RIDURRE PARTE INIZIALE, PARTE MATERIAL 3 CON RIFERIMENTI ALLA NOSTRA APP
         TODO sistemare pulsante tema e sistemare data aggiunta recensione
         TODO lag mie recensioni
-        TODO GESTURES se possibile
         TODO Pulizia
+        TODO schermo orizzontale
+        TODO GESTURES se possibile
         */
         super.onCreate(savedInstanceState)
         setContent {
