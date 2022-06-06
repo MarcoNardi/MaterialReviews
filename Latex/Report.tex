@@ -243,11 +243,67 @@ tabsize=1
 		  \subsubsection{Density nei components}
 		  	 E' possibile cambiare anche la densità di componenti come buttons o simili, ma bisogna stare attenti in quanto sono già dei componenti piccoli e ridurne troppo la densità può \textit{romperli}.
 			Bisogna stare attenti anche al fatto che cambiando la densità di un componente le proprie dimensioni cambiano ma non padding e allineamento.
-			Inoltre se sono presenti più elementi all'interno di un componente è consigliato usare 4dp per separarli e centrarli all'interno del component
+			Inoltre se sono presenti più elementi all'interno di un componente è consigliato usare 4dp per separarli e centrarli all'interno del componenti.
 
-			
+	\subsection{Material design 3: Adaptive layout}
+	Il material design 3 introduce i layout adattivi. Questo tipo di layout reagisce all'input degli utenti, ai dispositivi egli elementi dello schermo. Si può quindi progettare il layout per dimensioni di schermo variabili, come telefoni, tablet e altro.
+	Per garantire che i layout di Material Design siano visivamente bilanciati, la maggior parte delle misurazioni si allinea a 8 dp, che corrisponde sia alla spaziatura che al layout generale. I componenti sono dimensionati con incrementi di 8 dp, garantendo un ritmo visivo coerente su ogni schermo.
+	Gli elementi più piccoli, come le icone, possono essere allineati a una griglia di 4 dp, mentre la tipografia può avere una griglia di base di 4 dp. Ciò consente alla linea di base tipografica di essere distanziata con incrementi di 4 dp da un testo vicino.
 
-		
+		\subsubsection{Regioni di layout}
+		Le regioni di layout sono alla base delle esperienze interattive. Sono costituite da elementi e componenti che condividono funzioni simili e possono raggruppare contenitori più piccoli, come schede o elenchi.
+
+		I layout a schermo grande includono 3 regioni principali:
+		\begin{itemize}
+			\item \textit{Navigazione}: contiene elementi di navigazione, come il riquadro di navigazione. Aiuta gli utenti a navigare tra le destinazioni in un'app o ad accedere ad azioni importanti.
+			Mantiene una larghezza costante di 256 dp quando espansa e 72 dp quando è compressa.Se il margine di un layout è inferiore a 48 dp (larghezza dello schermo 600-839 dp, ad esempio), la larghezza dell'area del corpo può diminuire per adattarsi all'area di navigazione.;
+			\item \textit{Barra dell'app};
+			\item \textit{Corpo}: utilizzata per visualizzare la maggior parte del contenuto in un'app. La regione del corpo utilizza valori di ridimensionamento per i tre parametri seguenti: \textbf{dimensioni verticali e orizzontali},
+			\textbf{numero di colonne}, \textbf{margini}. A breakpoint extra piccoli, i margini hanno un valore di 16 dp. All'aumentare delle dimensioni del layout, la sezione del corpo si espande rispetto alla larghezza dello schermo. Al raggiungimento del primo punto di interruzione (piccolo: 600 dp di larghezza) i margini aumentano a 32 dp.
+			Quando la larghezza del corpo raggiunge 840 dp, i margini aumentano fino a una larghezza massima di 200 dp. Dopo aver raggiunto questa larghezza massima, la regione del corpo torna ad essere reattiva, continuando a scalare orizzontalmente.
+		\end{itemize}
+
+		\subsubsection{Contenimento}
+		Il contenimento è un metodo per collegare elementi correlati che condividono un contesto, come un'immagine e una didascalia. È una forma di raggruppamento che mette in relazione visivamente gli elementi e stabilisce i confini per distinguere gli elementi non correlati.
+		I metodi di contenimento includono il raggruppamento implicito ed esplicito del contenuto. Quando si compongono elementi o componenti che contengono testo, bisogna assicurarsi che ogni contenitore utilizzi dimensioni reattive in modo che il testo possa ridimensionarsi facilmente e rimanere leggibile.
+		Il contenimento \textit{implicito} è un metodo per raggruppare elementi che potrebbero non avere bordi, ma si riesce comunque a distinguere un confine o un contenitore implicito. Si usa il contenimento implicito per raggruppare i contenuti e conferire sottile coesione a diversi elementi.
+		I metodi di contenimento \textit{espliciti} mostrano i confini del contenitore e chiariscono che un oggetto può essere toccato. Il contenimento esplicito può essere utilizzato anche per enfatizzare qualcosa. I metodi di contenimento espliciti includono l'aggiunta di un profilo o di un livello di
+		elevazione a un gruppo di elementi correlati. Ad esempio, la creazione di una scheda da un'immagine e dal relativo testo di supporto unisce i due elementi definendoli come un gruppo attraverso il confine delineato della scheda.
+		I contenitori e i relativi elementi possono essere allineati a sinistra, a destra o al centro mentre il contenitore principale viene ridimensionato. Possono anche avere una posizione fissa, come si vede con i FAB o i cassetti di navigazione.
+		Poiché un layout cambia a seconda delle dimensioni dello schermo, è possibile sostituire anche componenti con funzioni simili. Ciò consente di adattare un layout per modifiche su larga scala alle qualità ergonomiche e funzionali di un'interfaccia.
+		Ad esempio, una barra di navigazione in basso può essere sostituita con una guida di navigazione su tablet o un cassetto di navigazione su schermi più grandi.
+
+		\subsubsection{Layout Canonici}
+		I layout canonici sono composizioni pronte per l'uso che aiutano i layout ad adattarsi ai casi d'uso e alle dimensioni dello schermo comuni. I tre layout disponibili possono essere utilizzati per guidare l'organizzazione degli elementi comuni in un'app. Essi sono:
+		\begin{itemize}
+			\item \textit{Visualizzazione dei dettagli dell'elenco}: relazione tra un elenco e una vista di dettaglio. La relazione viene stabilita spazialmente con due colonne, anche asimmetriche, prendendo il lato sinistro dello schermo per visualizzare un elenco e il lato destro per mostrare i dettagli dell'elenco.
+			Questo può essere utilizzato solo con orientamento orizzontale. In modalità verticale, è necessaria una regolazione del layout. I casi d'uso chiave per i layout di visualizzazionedei dettagli dell'elenco includono coppie di informazioni quali: SMS + conversazione; Browser di file + cartella aperta; Artista musicale + dettaglio dell'album;
+			La visualizzazione dei dettagli dell'elenco è la migliore per sfogliare i contenuti e visualizzare rapidamente i dettagli, perchè supporta gerarchie di informazioni che possono adattarsi a dimensioni dello schermo più grandi.
+			\item \textit{Pannello di supporto}: è un metodo per estendere uno schermo. I layout dei pannelli di supporto sono diversi dai layout della visualizzazione elenco dettagli perché i punti focali primari e secondari sono considerati ugualmente importanti. I casi d'uso chiave includono: produttività, modifica e commento di documenti, navigazione di contenuti e media;
+			Lo schermo è diviso tra un pannello di messa a fuoco (a sinistra) e un pannello di supporto (a destra). La disposizione del pannello di supporto è più adatta per l'orientamento orizzontale.
+			\item \textit{Feed}: layout comune per notizie e contenuti social. I feed utilizzano una composizione a griglia per consentire la navigazione e l'individuazione dei contenuti. Un layout di feed può essere utilizzato per mostrare diversi contenuti tramite schede ed elenchi.
+			I feed spesso supportano esperienze basate sui contenuti, come notizie o foto. Una composizione del feed è sufficientemente flessibile da consentire contenuti con proporzioni e dimensioni variabili e funziona bene su tutti gli orientamenti del dispositivo.
+		\end{itemize}
+
+		\subsubsection{Dispositivi pieghevoli}
+		I dispositivi pieghevoli utilizzano schermi flessibili che possono essere piegati e aperti per espandere senza problemi lo spazio disponibile sullo schermo secondo necessità.  I dispositivi pieghevoli possono assumere diverse configurazioni dello schermo, offrendo diversi contesti di layout per un'app.
+		E' quindi necessario cambiare il layout  in base alla posizione che i dispositivi assumono. Ad esempio, quando è in posizione aperta, è probabile che il 25\% superiore dello schermo sia fuori portata per la maggior parte degli utenti. Quindi, si limita la quantità di interazioni che si trovano nel 25\% superiore dello schermo.
+		Il movimento viene utilizzato per dare continuità tra le posizioni. Ciò può essere dato dal movimento di un banner o una barra di ricerca che si estende orizzontalmente.
+		Un altro elemento da considerare è la cerniera al centro dello schermo pieghevole che provoca una differenza tattile. Si evita, quindi,  di posizionare informazioni e azioni importanti lungo i 48 dp centrali dello schermo.
+
+		I pieghevoli offrono una superficie più ampia ottimizzata per visualizzare più di un'app alla volta. Questo spazio aggiuntivo può essere particolarmente efficace per il multitasking. Le app possono essere dimensionate fino a riempire solo un terzo dello spazio disponibile della finestra. A causa della superficie ridotta e della compressione applicata al layout, bisogna assicurarsi che le app possano comunque fornire un'esperienza accettabile evitando operazioni complesse in questo rapporto.
+
+
+		\subsubsection{Interfaccia con altri dispositivi}
+		Le persone collegano una varietà di dispositivi al proprio telefono, tablet, pieghevole, TV e computer. Quando qualcuno collega dispositivi di input esterni, prevede che tali dispositivi seguiranno schemi stabiliti dall'informatica generale e consentiranno le stesse interazioni e vantaggi.
+		A seconda del dispositivo di input, progettisti e sviluppatori possono implementare comportamenti che soddisfano le convenzioni e le aspettative per quel dispositivo. Quando viene utilizzato un mouse esterno, dovrebbe essere visualizzato il cursore del mouse, indipendentemente dal form factor del dispositivo.
+		Un clic del mouse dovrebbe mostrare lo stesso feedback dell'input tattile. Il pulsante secondario dovrebbe attivare un menu contestuale che mostra opzioni aggiuntive per l'oggetto su cui si è fatto clic. Quando viene utilizzato un touchpad esterno, il gesto del trackpad consente più azioni e dovrebbe essere conforme alle aspettative esistenti per queste interazioni:
+		il gesto del touchpad con due dita dovrebbero consentire lo scorrimento verticale dell'elenco, al tocco e trascinamento del gesto, l'area di testo deve scorrere.
+		Quando una tastiera fisica è collegata a un dispositivo, esternamente o come tastiera incorporata per laptop, gli utenti dovrebbero essere in grado di eseguire qualsiasi azione fornita dalla tastiera virtuale e altro ancora. Una tastiera virtuale dovrebbe apparire o nascondersi in risposta alla presenza di una tastiera fisica.
+		Inoltre, il tasto Invio su una tastiera fisica dovrebbe essere abilitato dagli sviluppatori per consentire una funzione comune come l'invio di un messaggio.
+
+
+
 % --------------------------------------------------------------------------------------	
 		\section{Navigazione}
     	La maggior parte delle applicazioni è composta da più schermate che mostrano all’utente diversi contenuti. E', quindi, fondamentale che l’utente possa muoversi
