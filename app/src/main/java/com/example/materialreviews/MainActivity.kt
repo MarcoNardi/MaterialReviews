@@ -21,6 +21,15 @@ import com.example.materialreviews.ui.theme.MaterialReviewsTheme
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        /*
+        PRIORITA DA ALTO A BASSO
+        TODO RELAZIONE: RIDURRE PARTE INIZIALE, PARTE MATERIAL 3 CON RIFERIMENTI ALLA NOSTRA APP
+        TODO sistemare pulsante tema e sistemare data aggiunta recensione
+        TODO lag mie recensioni
+        TODO Pulizia
+        TODO schermo orizzontale
+        TODO GESTURES se possibile
+        */
         super.onCreate(savedInstanceState)
         setContent {
             M3App()
