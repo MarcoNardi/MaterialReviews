@@ -89,6 +89,21 @@ fun RestaurantDetails(
 
                 Spacer(Modifier.weight(1f))
 
+
+            }
+
+            // Indirizzo e cuoricino
+            Row(Modifier.fillMaxWidth(),
+                horizontalArrangement  = Arrangement.SpaceBetween){
+                Column() {
+                    Text(
+                        text = restaurant.address?.citta ?: "citta",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Text(
+                        text = "Via " + restaurant.address?.via!! + " " + restaurant.address?.num_civico!!.toString(),
+                    )
+                }
                 // Pulsante per salvarlo nei preferiti
                 val icon = Icons.Filled.Favorite
                 IconToggleButton(
@@ -105,17 +120,6 @@ fun RestaurantDetails(
                     )
 
                 }
-            }
-
-            // Indirizzo
-            Column() {
-                Text(
-                    text = restaurant.address?.citta ?: "citta",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = "Via " + restaurant.address?.via!! + " " + restaurant.address?.num_civico!!.toString(),
-                )
             }
 
 

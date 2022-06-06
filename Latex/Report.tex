@@ -158,214 +158,91 @@ tabsize=1
 
 % --------------------------------------------------------------------------------------
 	\section{Layout}
-	\subsection{Principi delle linee guida}
-		Il material Design fornisce delle linee guida per ottenere dai layout che sono intuitivi, consistenti, e responsive. Ciò viene ottenuto attraverso l'uso di griglie, metodi di spaziamento degli elementi, vincoli e altro.\cite{layout_start}
 		
+		\subsection{Anatomia del layout}
+		Il Material Design fornisce delle linee guida per ottenere layout che siano intuitivi, consistenti, e reattivi. Ciò è ottenuto attraverso l'uso di griglie, metodi di spaziamento degli elementi, vincoli e altro.\cite{layout_start}
+
 		Il layout è diviso in 3 zone:
 		\begin{itemize}
-			\item App bars
-			\item Navigation
-			\item Body
-		  \end{itemize}
-		\subsubsection{Body}
-		  Il body è la regione usata per mostrare la maggior parte dei contenuti in un'app.
-		  
-		  Esistono diversi layout per gestire i contenuti presenti nel body come per esempio:
-		  \begin{itemize}
-			\item Responsive column grid
-			\item Responsive layout grid
-		  \end{itemize}
-
-		  Per esempio per una dimensione dello schermo tra 0 e 599dp vengono consigliate 4 colonne per il layout e un margine di 16dp
-		\subsubsection{Navigation}
-		  La parte della navigazione aiuta l'utente a raggiungere azioni, componenti o impostazioni importanti utilizzando componenti come il navigation drawer 
-
-		  La regione di navigazione ha sempre una grandezza di 72dp quando chiusa (collapsed) e 256 dp quando aperta
-
-		  Esistono casi in cui su certe grandezze dello schermo per fare spazio si diminuisce la grandezza del body, o su schermi ancora più piccoli la barra di navigazione può apparire "sopra" il body oscurandolo quasi completamente
-		\subsubsection{App bar}
-		  L'app bar viene usata per mostrare o raggruppare azioni  e componenti che possono servire all'utente
-
-	\subsection{Organizzazione dei contenuti }
-		\subsubsection{Raggruppamento visivo}
-		  Il raggruppamento è uno dei passi fondamentali per creare ordine in un layout: elementi con contenuti o funzionalità simili devono essere raggruppati assieme e separati da altri elementi diversi utilizzando spazi, tipografia o divisori
-		\subsubsection{Contenimento}
-		  Oltre al raggruppamento visivo un altro metodo è contenere assieme elementi che condividono determinate features:
-		  per esempio una notizia avrà un'immagine, un titolo e magari un piccolo paragrafo introduttivo. Questi elementi possono essere contenuti assieme in diversi modi:
-			\subsubsection{Contenimento implicito}
-			Si ottiene riducendo lo spazio tra gli elementi e aumentando lo spazio verso gli elementi estranei
-			\subsubsection{Contenimento esplicito}
-			Si ottiene creando una divisione più marcata con gli elementi estranei come per esempio con una cornice, utilizzare delle cards o altri elementi che esplicitano la presenza di un gruppo
-			\cite{layout_organizzazione}
-	\subsection{Misure}
-		  Nel material design tutte le misure sono allineate ad incrementi di 8dp per mantenere consistenza visiva. Nel caso di elementi più piccoli come icone sono allineate invece a 4dp \cite{layout_misure}
-	\subsection{Responsive layout grid}
-		  Il responsive layout grid è un layout fatto per adattarsi a diverse grandezze schermo e orientamenti per garantire consistenza \cite{layout_grid}
-
-		  E' principalmente composto da:
-		  \begin{itemize}
-			  \item Columns
-			  \item Gutters
-			  \item Margins
-		  \end{itemize}
-		\subsubsection{Columns}
-		  Per un layout responsive la grandezza delle colonne viene espressa in percentuale al posto di valori fissi per permettere al contenuto di adattarsi e diverse grandezze schermo.
-		  Il numero di colonne è definito in base a dei range già preimpostati: per esempio su uno schermo mobile (360dp) ci possono essere fino a 4 colonne
-		\subsubsection{Gutters}
-		  Il gutter è lo spazio tra colonne ed è anche questo un valore predefinito in base alla grandezza dello schermo: per esempio su uno schermo mobile è da 16dp 
-		\subsubsection{Margins}
-		I Margins sono lo spazio dai bordi laterali dello schermo, possono essere definiti con valori fissi o percentuali
-	\subsection{Spacing methods}
-		Per manipolare lo spazio in modo più granulare del responsive layout grid esistono funzionalità come:
-		\subsubsection{Padding}
-		  Il padding è lo spazio tra elementi dell'interfaccia, sia verticale che orizzontale
-		\subsubsection{Alignment}
-		 E' l'allineamento di un elemento all'interno di un componente
-		 \subsubsection{Keylines}
-		  Keylines sono uno strumento per allineare in modo consistente elementi al di fuori dal layout grid. Sono delle linee verticali misurate dalla distanza dai lati dello schermo ad incrementi di 8dp\cite{layout_spacing}
-	\subsection{Containers e Aspect Ratios}
-		  Un container rappresenta un'area che contiene elementi di interfaccia utente.
-		  Possono essere rigidi e quindi tagliare il contenuto al suo interno nel caso vada oltre i limiti oppure flessibili e cambiare la propria dimensione in base al contenuto
-		  
-		  Per mantenere consistenza nel proprio layout è consigliato l'utilizzo di Aspect Ratios consistenti per elementi come immagini o superfici. Quelli consigliati sono: 16:9; 3:2; 4:3; 1:1; 3:4; 2:3\cite{layout_containers}
-	\subsection{Density}
-		  Ci sono casi dove aumentare la densità di informazioni mostrate a schermo può essere utile e rende migliore l'esperienza dell'utente.
-		  Se l'utente deve interaggire con molte informazioni, può essere utile rendere le informazioni più compatte diminuendo lo spazio tra di loro, rendendole più facili da "scannare" o confrontare.
-		  Vengono date delle indicazioni \cite{layout_density}su quando non usare l'aumento di densita:
-		  \subsubsection{Focused tasks}
-		  Componenti come un \textit{Date picker}, cioè compoonenti che si concentrano su svolgere un'azione (scegliere un giorno), soffrono di un aumento della densita in quando rende più difficile tappare la data corrente per l'utente
-		  \subsubsection{Alerts e messages}
-		  Componenti che si occupano di avvisare l'utente di errori, cambiamenti o altro devono essere facilmente visibili, e quindi renderli più compatti rischia di renderli meno leggibili per l'utente 
-
-		  \subsubsection{Density nel layout}
-		  Per bilanciare un layout che ha componenti ad alta densità è consigliato avere margins e gutters a bassa densità.
-		  Avere sia componenti che valori del layout a bassa densità, rende l'esperienza dell'utente confusa a causa della difficoltà nel distinguere raggruppamenti.
-		  \subsubsection{Density nei components}
-		  	 E' possibile cambiare anche la densità di componenti come buttons o simili, ma bisogna stare attenti in quanto sono già dei componenti piccoli e ridurne troppo la densità può \textit{romperli}.
-			Bisogna stare attenti anche al fatto che cambiando la densità di un componente le proprie dimensioni cambiano ma non padding e allineamento.
-			Inoltre se sono presenti più elementi all'interno di un componente è consigliato usare 4dp per separarli e centrarli all'interno del componenti.
-
-	\subsection{Material design 3: Adaptive layout}
-	Il material design 3 introduce i layout adattivi. Questo tipo di layout reagisce all'input degli utenti, ai dispositivi egli elementi dello schermo. Si può quindi progettare il layout per dimensioni di schermo variabili, come telefoni, tablet e altro.
-	Per garantire che i layout di Material Design siano visivamente bilanciati, la maggior parte delle misurazioni si allinea a 8 dp, che corrisponde sia alla spaziatura che al layout generale. I componenti sono dimensionati con incrementi di 8 dp, garantendo un ritmo visivo coerente su ogni schermo.
-	Gli elementi più piccoli, come le icone, possono essere allineati a una griglia di 4 dp, mentre la tipografia può avere una griglia di base di 4 dp. Ciò consente alla linea di base tipografica di essere distanziata con incrementi di 4 dp da un testo vicino.
-
-		\subsubsection{Regioni di layout}
-		Le regioni di layout sono alla base delle esperienze interattive. Sono costituite da elementi e componenti che condividono funzioni simili e possono raggruppare contenitori più piccoli, come schede o elenchi.
-
-		I layout a schermo grande includono 3 regioni principali:
-		\begin{itemize}
-			\item \textit{Navigazione}: contiene elementi di navigazione, come il riquadro di navigazione. Aiuta gli utenti a navigare tra le destinazioni in un'app o ad accedere ad azioni importanti.
-			Mantiene una larghezza costante di 256 dp quando espansa e 72 dp quando è compressa.Se il margine di un layout è inferiore a 48 dp (larghezza dello schermo 600-839 dp, ad esempio), la larghezza dell'area del corpo può diminuire per adattarsi all'area di navigazione.;
-			\item \textit{Barra dell'app};
-			\item \textit{Corpo}: utilizzata per visualizzare la maggior parte del contenuto in un'app. La regione del corpo utilizza valori di ridimensionamento per i tre parametri seguenti: \textbf{dimensioni verticali e orizzontali},
-			\textbf{numero di colonne}, \textbf{margini}. A breakpoint extra piccoli, i margini hanno un valore di 16 dp. All'aumentare delle dimensioni del layout, la sezione del corpo si espande rispetto alla larghezza dello schermo. Al raggiungimento del primo punto di interruzione (piccolo: 600 dp di larghezza) i margini aumentano a 32 dp.
-			Quando la larghezza del corpo raggiunge 840 dp, i margini aumentano fino a una larghezza massima di 200 dp. Dopo aver raggiunto questa larghezza massima, la regione del corpo torna ad essere reattiva, continuando a scalare orizzontalmente.
+			\item \textit{Body}: mostra la maggior parte del contenuto
+			\item \textit{Barra del titolo}: viene usata per mostrare e raggruppare azioni e componenti che
+		possono servire all’utente, in relazione al contenuto del \textit{body}
+			\item \textit{Barra di navigazione}: permette all'utente di spostarsi tra le varie schermate dell'app
 		\end{itemize}
 
-		\subsubsection{Contenimento}
-		Il contenimento è un metodo per collegare elementi correlati che condividono un contesto, come un'immagine e una didascalia. È una forma di raggruppamento che mette in relazione visivamente gli elementi e stabilisce i confini per distinguere gli elementi non correlati.
-		I metodi di contenimento includono il raggruppamento implicito ed esplicito del contenuto. Quando si compongono elementi o componenti che contengono testo, bisogna assicurarsi che ogni contenitore utilizzi dimensioni reattive in modo che il testo possa ridimensionarsi facilmente e rimanere leggibile.
-		Il contenimento \textit{implicito} è un metodo per raggruppare elementi che potrebbero non avere bordi, ma si riesce comunque a distinguere un confine o un contenitore implicito. Si usa il contenimento implicito per raggruppare i contenuti e conferire sottile coesione a diversi elementi.
-		I metodi di contenimento \textit{espliciti} mostrano i confini del contenitore e chiariscono che un oggetto può essere toccato. Il contenimento esplicito può essere utilizzato anche per enfatizzare qualcosa. I metodi di contenimento espliciti includono l'aggiunta di un profilo o di un livello di
-		elevazione a un gruppo di elementi correlati. Ad esempio, la creazione di una scheda da un'immagine e dal relativo testo di supporto unisce i due elementi definendoli come un gruppo attraverso il confine delineato della scheda.
-		I contenitori e i relativi elementi possono essere allineati a sinistra, a destra o al centro mentre il contenitore principale viene ridimensionato. Possono anche avere una posizione fissa, come si vede con i FAB o i cassetti di navigazione.
-		Poiché un layout cambia a seconda delle dimensioni dello schermo, è possibile sostituire anche componenti con funzioni simili. Ciò consente di adattare un layout per modifiche su larga scala alle qualità ergonomiche e funzionali di un'interfaccia.
-		Ad esempio, una barra di navigazione in basso può essere sostituita con una guida di navigazione su tablet o un cassetto di navigazione su schermi più grandi.
+		\subsection{Organizzazione dei contenuti}
+			\subsubsection{Raggruppamento visivo}
+			Il raggruppamento è uno dei passi fondamentali per creare ordine in un layout: elementi con contenuti o funzionalità simili devono essere raggruppati assieme e separati da altri elementi diversi utilizzando spazi, tipografia o divisori
 
-		\subsubsection{Layout Canonici}
-		I layout canonici sono composizioni pronte per l'uso che aiutano i layout ad adattarsi ai casi d'uso e alle dimensioni dello schermo comuni. I tre layout disponibili possono essere utilizzati per guidare l'organizzazione degli elementi comuni in un'app. Essi sono:
-		\begin{itemize}
-			\item \textit{Visualizzazione dei dettagli dell'elenco}: relazione tra un elenco e una vista di dettaglio. La relazione viene stabilita spazialmente con due colonne, anche asimmetriche, prendendo il lato sinistro dello schermo per visualizzare un elenco e il lato destro per mostrare i dettagli dell'elenco.
-			Questo può essere utilizzato solo con orientamento orizzontale. In modalità verticale, è necessaria una regolazione del layout. I casi d'uso chiave per i layout di visualizzazionedei dettagli dell'elenco includono coppie di informazioni quali: SMS + conversazione; Browser di file + cartella aperta; Artista musicale + dettaglio dell'album;
-			La visualizzazione dei dettagli dell'elenco è la migliore per sfogliare i contenuti e visualizzare rapidamente i dettagli, perchè supporta gerarchie di informazioni che possono adattarsi a dimensioni dello schermo più grandi.
-			\item \textit{Pannello di supporto}: è un metodo per estendere uno schermo. I layout dei pannelli di supporto sono diversi dai layout della visualizzazione elenco dettagli perché i punti focali primari e secondari sono considerati ugualmente importanti. I casi d'uso chiave includono: produttività, modifica e commento di documenti, navigazione di contenuti e media;
-			Lo schermo è diviso tra un pannello di messa a fuoco (a sinistra) e un pannello di supporto (a destra). La disposizione del pannello di supporto è più adatta per l'orientamento orizzontale.
-			\item \textit{Feed}: layout comune per notizie e contenuti social. I feed utilizzano una composizione a griglia per consentire la navigazione e l'individuazione dei contenuti. Un layout di feed può essere utilizzato per mostrare diversi contenuti tramite schede ed elenchi.
-			I feed spesso supportano esperienze basate sui contenuti, come notizie o foto. Una composizione del feed è sufficientemente flessibile da consentire contenuti con proporzioni e dimensioni variabili e funziona bene su tutti gli orientamenti del dispositivo.
-		\end{itemize}
+			\subsubsection{Contenimento}
+			Oltre al raggruppamento visivo un altro metodo è contenere assieme elementi che condividono determinate features			\cite{layout_organizzazione}:
+			per esempio una notizia avrà un'immagine, un titolo e magari un piccolo paragrafo introduttivo.
 
-		\subsubsection{Dispositivi pieghevoli}
-		I dispositivi pieghevoli utilizzano schermi flessibili che possono essere piegati e aperti per espandere senza problemi lo spazio disponibile sullo schermo secondo necessità.  I dispositivi pieghevoli possono assumere diverse configurazioni dello schermo, offrendo diversi contesti di layout per un'app.
-		E' quindi necessario cambiare il layout  in base alla posizione che i dispositivi assumono. Ad esempio, quando è in posizione aperta, è probabile che il 25\% superiore dello schermo sia fuori portata per la maggior parte degli utenti. Quindi, si limita la quantità di interazioni che si trovano nel 25\% superiore dello schermo.
-		Il movimento viene utilizzato per dare continuità tra le posizioni. Ciò può essere dato dal movimento di un banner o una barra di ricerca che si estende orizzontalmente.
-		Un altro elemento da considerare è la cerniera al centro dello schermo pieghevole che provoca una differenza tattile. Si evita, quindi,  di posizionare informazioni e azioni importanti lungo i 48 dp centrali dello schermo.
+			Il contenimento si può ottenere:
+			\begin{itemize}
+				\item \textit{implicitamente}: lo spazio tra elementi correlati viene ridotto
+    			\item \textit{esplicitamente}: gli elementi vengono racchiusi graficamente, ad esempio con una cornice
+			\end{itemize}
 
-		I pieghevoli offrono una superficie più ampia ottimizzata per visualizzare più di un'app alla volta. Questo spazio aggiuntivo può essere particolarmente efficace per il multitasking. Le app possono essere dimensionate fino a riempire solo un terzo dello spazio disponibile della finestra. A causa della superficie ridotta e della compressione applicata al layout, bisogna assicurarsi che le app possano comunque fornire un'esperienza accettabile evitando operazioni complesse in questo rapporto.
+		\subsection{Misure}
+		Le dimensioni degli elementi della UI possono essere misurate in molti modi.
 
+		L'unità di misura più utilizzata è il \textit{density-independent pixel} (\textit{dp}), che permette di mantenere le stesse dimensioni in schermi anche molto diversi tra loro.
 
-		\subsubsection{Interfaccia con altri dispositivi}
-		Le persone collegano una varietà di dispositivi al proprio telefono, tablet, pieghevole, TV e computer. Quando qualcuno collega dispositivi di input esterni, prevede che tali dispositivi seguiranno schemi stabiliti dall'informatica generale e consentiranno le stesse interazioni e vantaggi.
-		A seconda del dispositivo di input, progettisti e sviluppatori possono implementare comportamenti che soddisfano le convenzioni e le aspettative per quel dispositivo. Quando viene utilizzato un mouse esterno, dovrebbe essere visualizzato il cursore del mouse, indipendentemente dal form factor del dispositivo.
-		Un clic del mouse dovrebbe mostrare lo stesso feedback dell'input tattile. Il pulsante secondario dovrebbe attivare un menu contestuale che mostra opzioni aggiuntive per l'oggetto su cui si è fatto clic. Quando viene utilizzato un touchpad esterno, il gesto del trackpad consente più azioni e dovrebbe essere conforme alle aspettative esistenti per queste interazioni:
-		il gesto del touchpad con due dita dovrebbero consentire lo scorrimento verticale dell'elenco, al tocco e trascinamento del gesto, l'area di testo deve scorrere.
-		Quando una tastiera fisica è collegata a un dispositivo, esternamente o come tastiera incorporata per laptop, gli utenti dovrebbero essere in grado di eseguire qualsiasi azione fornita dalla tastiera virtuale e altro ancora. Una tastiera virtuale dovrebbe apparire o nascondersi in risposta alla presenza di una tastiera fisica.
-		Inoltre, il tasto Invio su una tastiera fisica dovrebbe essere abilitato dagli sviluppatori per consentire una funzione comune come l'invio di un messaggio.
+		Nel material design in genere si usano multipli di 8 dp per la maggior parte degli elementi della UI. Per elementi molto piccoli si può usare anche 4 dp come unità di base.
 
+		\subsection{Responsive layout grid}
+			Il responsive layout grid è un layout in grado di adattarsi a diverse grandezze schermo e orientamenti per garantire consistenza e armonia \cite{layout_grid}
 
+			È composto da:
+			\begin{itemize}
+				\item \textit{Colonne}: in un dispositivo mobile ce ne sono 4
+				\item \textit{Grondaie}: definisco lo spazio che sepra le colonne
+				\item \textit{Margini}: definiscono la distanza dal bordo dello schermo
+			\end{itemize}
 
+		\subsection{Metodi di spaziatura}
+			Per manipolare lo spazio in modo più granulare il layout possono essere utilizzati altri elementi grafici quali:
+			\begin{itemize}
+				\item \textit{padding}: spazio vuoto che descrive la distanza tra elementi
+				\item \textit{allineamenti}: come gli elementi sono allineati nelle righe/colonne
+			\end{itemize}
+
+		\subsection{Contenitori e Aspect Ratios}
+			Un container rappresenta un'area che contiene elementi di interfaccia utente.
+			Possono essere rigidi, che quindi tagliano il contenuto al loro interno nel caso vada oltre i limiti, oppure flessibili, che cambiano la propria dimensione in base al contenuto.
+
+			Per mantenere consistenza nel proprio layout è consigliato l'utilizzo di Aspect Ratios consistenti per elementi come immagini o superfici. Quelli consigliati sono: 16:9; 3:2; 4:3; 1:1; 3:4; 2:3 \cite{layout_containers}
+
+		\subsection{Densità}
+			Ci sono casi dove aumentare la densità di informazioni mostrate a schermo può essere utile e rende migliore l'esperienza dell'utente.
+			Se l'utente deve interaggire con molte informazioni, si possono rendere le informazioni più compatte diminuendo lo spazio tra loro, rendendole più facili da consultare e confrontare.
+
+			È invece sconsigliato usare una alta densità di contenuti nei componenti che si concentrano nello svolgere un a singola azione (\textit{focused task}) o nei messaggi d'errore
+
+		
 % --------------------------------------------------------------------------------------	
-		\section{Navigazione}
-    	La maggior parte delle applicazioni è composta da più schermate che mostrano all’utente diversi contenuti. E', quindi, fondamentale che l’utente possa muoversi
-        agevolmente tra queste schermate. Quest’operazione si chiama navigazione. Vista l’importanza dello spostamento tra schermate, nella documentazione Material Design
-        sono state devinite delle relazioni gerarchiche tra le diverse schermate. Quindi, sono state definite delle direzioni di navigazione.
+	\section{Navigazione}
+    	La maggior parte delle applicazioni è composta da più schermate che mostrano all’utente diversi contenuti. È quindi fondamentale che l’utente possa muoversi agevolmente tra queste schermate in maniera rapida e intuitiva.
 
-            \subsection{Direzioni di navigazione}
+    	Solitaente esiste una gerarchia tra le schermate di un'applicazione. Questa gerarchia si riflette nell'interfaccia che permette all'utente di navigare.
 
-                \subsubsection{Lateral Navigation}
-    			La lateral navigation (navigazione laterale) si usa per muoversi tra schermate allo stesso livello di gerarchia. Consente l'accesso a diverse destinazioni e funzionalità dell'app
-    			o il passaggio tra elementi correlati. Secondo le linee guida del material design, il componente di navigazione più importante di un'app dovrebbe fornire
-    			l'accesso a tutte le destinazioni al livello più alto della sua gerarchia. Per le app con due o più destinazioni di primo livello, si consiglia di fornire la
-    			navigazione laterale tramite:
+    		\subsection{Navigazione laterale}
+    		La navigazione laterale viene utilizzata per spostarsi tra pagine allo stesso livello nella gerarchia.
 
-    			\begin{itemize}
-    				\item \textit{Navigation drawers}, appropriati per cinque o più destinazioni di primo livello. Possono essere utilizzati su dispositivi di tutte le dimensioni
-    				per un'esperienza di navigazione coerente.
-    				\item \textit{Bottom navigation bars},  che forniscono l'accesso a 3-5 destinazioni di primo livello sui dispositivi mobili. La loro posizione, visibilità
-    				e persistenza sugli schermi consentono un rapido spostamento tra le destinazioni;
-    				\item \textit{Tabs}, che possono essere utilizzate a qualsiasi livello della gerarchia di un'app per presentare due o più set di dati di uguale importanza
-    				su tutte le dimensioni dello schermo.
-    			\end{itemize}
+    		Solitamente viene implementata con una \textit{bottom navigation bar} (preferita nei dispositivi mobili) o con un \textit{navigation drawer}.
+
+    		Per schermate di gerarchia più bassa possono essere utilizzate le \textit{tabs}.
+
+    		\subsection{Navigazione in avanti}
+    		La navigazione in avanti viene utilizzata quando l'utente si sposta tra schermate a livelli consecutivi di gerarchia. Si utilizza la navigazione in avanti ogni volta che si utilizzano pulsanti, collegamenti, ricerche.
+
+    		A differenza della navigazione laterale, quella in avanti non prevede elementi dell'interfaccia utente dedicati.
+
+    		Associata alla navigazione in avanti è la navigazione all'indietro, che permette all'utente di ritornare alla schermata cronologicamente precedente oppure ad un livello gerarchico superiore.
 
 
-    			\subsubsection{Forward Navigation}
-    			La forward navigation (navigazione in avanti) si riferisce allo spostamento tra le schermate a livelli consecutivi di gerarchia, passaggi in un flusso o
-    			attraverso un'app. La navigazione in avanti comprende il comportamento di navigazione in contenitori (come schede, elenchi o immagini), pulsanti, collegamenti
-    			o utilizzando la ricerca. Le linee guida specificano 3 tipi di movimento tra le schermate per completare un'attività:
-
-    			\begin{itemize}
-    				\item verso il basso nella gerarchia di un'app per accedere da un livello gerarchico superiore (padre) a un livello inferiore (figlio);
-    				\item in sequenza, attraverso un flusso o una sequenza ordinata di schermate. Ad esempio, un processo di iscrizione);
-    				\item direttamente da una schermata all'altra nell'app. Ad esempio, da una schermata iniziale a una schermata nella gerarchia dell'app.
-    			\end{itemize}
-
-    			Mentre la navigazione laterale utilizza componenti di navigazione dedicati, la navigazione in avanti è spesso incorporata nel contenuto di una schermata attraverso
-    			 diversi componenti. La navigazione in avanti può essere implementata utilizzando contenitori di contenuti come schede, elenchi o elenchi di immagini, pulsanti che avanzano
-    			 a un'altra schermata, ricerca in-app su una o più schermate, collegamenti all'interno del contenuto.
-
-
-    			\subsubsection{Reverse Navigation}
-    			La reverse navigation (navigazione all'indietro) si riferisce allo spostamento attraverso le schermate in ordine cronologico inverso. Le convenzioni della piattaforma
-    			determinano il comportamento esatto della navigazione inversa all'interno di un'app. Ci sono 2 tipi di reverse navigation:
-    			\begin{itemize}
-    				\item \textit{Reverse chronological navigation}, fornita dal sistema operativo o dalla piattaforma. Consentono all’utente di spostarsi tra le schermate all'interno di un'app
-    				o tra più app. Le singole piattaforme definiscono come si comporta e come gli utenti possono accedere a tale funzionalità.
-    				\item \textit{Upward navigation}, che consente agli utenti di spostarsi di un livello verso l'alto all'interno della gerarchia di una singola app, finché non viene raggiunta la
-    				schermata iniziale o la schermata di livello superiore dell'app. Ad esempio, la freccia in alto nella barra di un'app è una forma di navigazione inversa verso l'alto.
-    				La navigazione verso l'alto dovrebbe essere implementata per tutti gli schermi figli  in un'app e seguire le indicazioni della piattaforma. Le guidelines consigliano si utilizzare
-    				l'elemento Material Up.
-    			\end{itemize}
-
-    		    Il design e la funzionalità dell’app dovrebbero tenere conto di entrambi i tipi di navigazione inversa. Per ottimizzare l'esperienza di un utente durante la navigazione inversa, vengono
-    			date queste indicazioni:
-    			\begin{itemize}
-    				\item riportare gli utenti alla posizione e allo stato precedenti dello schermo, per accelerare il ricaricamento delle informazioni e la ripresa delle attività;
-    				\item fornire messaggi chiari se lo stato precedente di una schermata non è più disponibile;
-    				\item indicare chiaramente il rapporto delle schermate figlio con le schermate che le precedono nella gerarchia.
-    			\end{itemize}
-
-
-    		\subsection{Navigation transitions}
+    		\subsection{Navigation transitions - da tenere se implementiamo nell'app}
     		Le transizioni di navigazione si verificano quando gli utenti si spostano tra le schermate e utilizzano il movimento per guidare gli utenti tra due schermate nell'app. Aiutano gli utenti
     		a orientarsi esprimendo la gerarchia dell'app, usando il movimento per indicare in che modo gli elementi sono correlati tra loro. Il material design definisce 2 macro tipi di transizioni:
     		\begin{itemize}
@@ -382,25 +259,6 @@ tabsize=1
     				Queste schermate si aprono utilizzando uno schema di transizione di dissolvenza.
     			\end{itemize}
     		\end{itemize}
-
-
-    		\subsection{Ricerca}
-    		La ricerca consente agli utenti di trovare rapidamente un contenuto specifico presente nell'app. La ricerca di base consente agli utenti di inserire una query in un campo di testo di ricerca
-    		per visualizzare i risultati correlati. I metodi di input delle query di ricerca possono essere estesi per includere cronologia, completamento automatico delle query e input vocale.
-
-    		\subsubsection{Persistent Search}
-    		La Persistent search si usa quando la ricerca è l'obiettivo principale dell'app. Il campo di testo di ricerca viene presentato all'interno di una barra di ricerca, pronta per ricevere il
-    		\textit{focus} (il tocco da parte dell'utente che vuole utilizzarla). Quando è in fuocus, l'esperienza di ricerca si espande per riempire l'intero schermo. Eventualmente, la cronologia di
-    		ricerca può essere visualizzata sotto il campo di testo.Un utente può digitare una query o selezionare da un suggerimento (se disponibile). Premendo Invio, la ricerca viene eseguita.
-    		I risultati della ricerca vengono visualizzati sotto la barra di ricerca.
-            Per rimuovere lo stato attivo dalla casella di ricerca e ignorare i suggerimenti di ricerca, l'utente  deve toccare la freccia su.
-
-    		\subsubsection{Expandable search}
-    		L’ expandable search si usa quando la ricerca non è l'obiettivo principale dell’app. Si mostra un'icona di ricerca nella barra degli strumenti, invece di una casella di testo di ricerca aperta.
-    		Un utente può toccare l'icona di ricerca (nella barra degli strumenti) per trasformarla in una barra di ricerca mirata. Mentre l’utente sta digitando, la cronologia può essere visualizzata
-    		sotto la barra di ricerca. Dopo aver inserito una query o aver scelto un suggerimento, premendo Invio la ricerca viene eseguita. I risultati vengono visualizzati sotto la barra di ricerca e
-    		scorrere al di sotto di essa. Durante la visualizzazione dei risultati, il campo di testo della ricerca rimane visibile, ma non a fuoco. Toccando la freccia su si libera lo stato attivo dalla
-    		ricerca, si ignorano i suggerimenti e la tastiera su schermo e si riporta la barra degli strumenti al suo stato originale.
 	
 	
 % --------------------------------------------------------------------------------------

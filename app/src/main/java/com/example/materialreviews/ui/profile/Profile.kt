@@ -192,17 +192,25 @@ fun ListOfReviews2(model: RestaurantViewModel,
                    login_id: Int) {
     val reviews by modelReview.getReviewsOfUser(login_id).observeAsState()
 
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        //modifier = Modifier.padding(horizontal = 10.dp)
-    ) {
-        if(reviews !=null) {
-            items(reviews!!.reviews) { review ->
-                UserReviewCard(review, model, onClickSeeRestaurant = onClickSeeRestaurant)
+    if(reviews!=null){
+        Column(
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier=Modifier.verticalScroll(rememberScrollState())
+            //modifier = Modifier.padding(horizontal = 10.dp)
+        ) {
+            reviews!!.reviews.forEach(){
+                UserReviewCard(it, model, onClickSeeRestaurant = onClickSeeRestaurant)
             }
-        }
-        item{
             Spacer(modifier = Modifier.height(10.dp))
+            /* QUESTO ERA NELLA LAZYCOLUMN
+            if(reviews !=null) {
+                items(reviews!!.reviews) { review ->
+                    UserReviewCard(review, model, onClickSeeRestaurant = onClickSeeRestaurant)
+                }
+            }
+            item{
+                Spacer(modifier = Modifier.height(10.dp))
+            }*/
         }
     }
 }

@@ -79,7 +79,7 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
         }
         viewModelScope.launch{
             val restaurantImages=restaurantDao.getImageUriOfRestaurant(restaurantId)
-            imageUri.value=restaurantImages.images[0].uri
+            imageUri.value = restaurantImages.images[0].uri
         }
 
         return imageUri

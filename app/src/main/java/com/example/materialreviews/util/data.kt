@@ -16,10 +16,13 @@ val ristorante2 = ristorante1.copy(rid=2, name="Da Fabio")
 val ristorante3 = ristorante1.copy(rid=3, name="Da Ciccio")
 val ristorante4 = ristorante1.copy(rid=4, name="Da Francesco")
 val ristorante5 = ristorante1.copy(rid=5, name="Dal fratm")
+val ristorante6 = ristorante1.copy(rid=6, name="Ristorante Locanda girobanco", address = Address("Alte Ceccato", "Bivio S. Vitale", 16))
+val ristorante7 = ristorante1.copy(rid=7, name="Spaghetteria Wonderful", address = Address("Alte Ceccato", "Giacomo Chilesotti", 3))
+val ristorante8 = ristorante1.copy(rid=8, name="Ristorante da Golin", address = Address("Montecchio Maggiore", "Dell'artigianato", 2))
 
 
 fun getInitialRestaurantsData() : List<RestaurantEntity>{
-    return listOf<RestaurantEntity>(ristorante1, ristorante2, ristorante3, ristorante4, ristorante5)
+    return listOf<RestaurantEntity>(ristorante1, ristorante2, ristorante3, ristorante4, ristorante5, ristorante6, ristorante7, ristorante8)
 }
 
 val utente1= UserEntity(1, "Marco", "Nardi", profileImage+"4")
