@@ -19,7 +19,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import com.example.materialreviews.navigation.NavigationManager
 import com.example.materialreviews.ui.theme.MaterialReviewsTheme
-//commento
+
+@ExperimentalComposeUiApi
+@ExperimentalAnimationApi
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
