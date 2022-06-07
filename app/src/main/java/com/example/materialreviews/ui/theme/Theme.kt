@@ -2,12 +2,17 @@ package com.example.materialreviews.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
@@ -98,20 +103,31 @@ val canUseDynamicColors = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
  */
 var isUsingDynamicColor by mutableStateOf(false)
 
-var LightColorScheme = UnipdThemeLight
-var DarkColorScheme = UnipdThemeDark
-
 /**
  * Schema di colori attualmente in uso nell'app
  */
-var currentColorScheme: ColorScheme by mutableStateOf(LightColorScheme)
+var currentColorScheme: ColorScheme by mutableStateOf(UnipdThemeLight)
 
 /**
  * Imposta il tema scuro in funzione del parametro passato
  */
 fun setDarkTheme(darkTheme: Boolean = true) {
     isInDarkTheme = darkTheme
-    currentColorScheme = if(darkTheme) DarkColorScheme else LightColorScheme
+    Log.v("DynamicTheme", "Setting isInDarkTheme to $isInDarkTheme")
+}
+
+/**
+ * Aggiorna il colorScheme in uso
+ */
+@Composable
+fun updateColorScheme() {
+    currentColorScheme = if (isUsingDynamicColor) {
+        val context = LocalContext.current
+        if (isInDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    } else {
+        if (isInDarkTheme) UnipdThemeDark else UnipdThemeLight
+    }
+    Log.v("DynamicTheme", "Updating currentColorScheme")
 }
 
 /**
@@ -159,7 +175,7 @@ fun DarkThemeSwitch() {
 @Composable
 fun ThemeSelector() {
     // Indica quale tema e` attualmente in uso
-    val selectedTheme = if (isFollowingSystemDarkTheme) "Sist." else { if(isInDarkTheme) "Scuro" else "Chiaro" }
+    val selectedTheme = if (isFollowingSystemDarkTheme) "Sistema" else { if(isInDarkTheme) "Scuro" else "Chiaro" }
 
     // Forme per i pulsanti
     val leftShape = multiButtonShapes[0]
@@ -206,7 +222,7 @@ fun ThemeSelector() {
                 },
             )
             MultiToggleButtonItem(
-                name = "Sist.",
+                name = "Sistema",
                 iconPainter = systemIconPainter,
                 shape = rightShape,
                 index = 2,
@@ -263,12 +279,13 @@ fun MultiToggleButtonItem(
             else -> Modifier
                 .offset((-1 * index).dp, 0.dp)
                 .zIndex(if (selected) 1f else 0f)
-        }
+        },
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         Icon(
             painter = iconPainter,
             contentDescription = "theme",
-            modifier = Modifier.padding(end = 3.dp)
+            modifier = Modifier.padding(end = 4.dp)
         )
         Text(name)
     }
@@ -353,25 +370,13 @@ fun DynamicColorsSwitch() {
 fun MaterialReviewsTheme(
     content: @Composable () -> Unit
 ) {
-    if (isUsingDynamicColor) {
-        // Controlla che sia su Android 12
-        if (canUseDynamicColors) {
-            val context = LocalContext.current
-            LightColorScheme = dynamicLightColorScheme(context)
-            DarkColorScheme = dynamicDarkColorScheme(context)
-        }
-    }
-    else {
-        LightColorScheme = UnipdThemeLight
-        DarkColorScheme = UnipdThemeDark
-    }
-
+    // Se sto usando il tema di sistema aggiorno la variabile
     if (isFollowingSystemDarkTheme) {
         setDarkTheme(isSystemInDarkTheme())
     }
-    else {
-        setDarkTheme(isInDarkTheme)
-    }
+
+    // Imposto il colorScheme in funzione dei vari parametri di tema e colore
+    updateColorScheme()
 
     // Cambia il colore della status bar di sistema
     val view = LocalView.current

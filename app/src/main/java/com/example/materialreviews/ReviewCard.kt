@@ -147,7 +147,7 @@ fun ReviewCard(
             }
 
             // Testo della recensione
-            Text(text = comment)
+            if (comment != "") Text(text = comment)
 
         }
     }

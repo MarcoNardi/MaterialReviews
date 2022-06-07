@@ -28,9 +28,11 @@ import androidx.navigation.navArgument
 import com.example.materialreviews.*
 import com.example.materialreviews.R
 import com.example.materialreviews.db.*
+import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
+@ExperimentalComposeUiApi
+@ExperimentalAnimationApi
 @ExperimentalMaterial3Api
 @Preview
 @Composable
@@ -39,7 +41,6 @@ fun NavigationManager() {
     val navController = rememberNavController()
     val context = LocalContext.current
     var topBarTitle by rememberSaveable() { mutableStateOf("")    }
-    val currentRoute = currentRoute(navController = navController)
 
     var onlyFavorites by rememberSaveable() {
         mutableStateOf(false)
@@ -168,9 +169,12 @@ private fun currentRoute(navController: NavHostController): String? {
     return navBackStackEntry?.destination?.route
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 @Composable
 fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorites:Boolean, onCheckedChange:(Boolean)->Unit) {
+
+    val currentRoute = currentRoute(navController = navController)
+
     SmallTopAppBar(
         // Titolo che appare nella barra in alto
         title = { Text(topBarTitle) },
@@ -178,7 +182,12 @@ fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorite
         // Button per tornare indietro
         navigationIcon = {
             // Controllo che ci sia almeno un altro elemento nella backStack
-            if (navController.previousBackStackEntry != null) {
+            if (
+                navController.previousBackStackEntry != null &&
+                currentRoute != MaterialReviewsScreen.Explore.name &&
+                currentRoute != MaterialReviewsScreen.MyReviews.name &&
+                currentRoute != MaterialReviewsScreen.Profile.name
+            ) {
                 IconButton(
                     onClick = {
                         navController.popBackStack()
@@ -194,7 +203,6 @@ fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorite
 
         // Altre azioni in alto a destra
         actions = {
-            val currentRoute=currentRoute(navController = navController)
             if(currentRoute=="Explore"){
                 Switch(
                     checked = selectFavorites,
@@ -206,7 +214,17 @@ fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorite
                             modifier = Modifier.size(SwitchDefaults.IconSize)
                         )
                     },
-                    modifier = Modifier.padding(end = 15.dp)
+                    modifier = Modifier.padding(end = 16.dp),
+                    colors = SwitchDefaults.colors(
+                        uncheckedTrackColor = currentColorScheme.tertiaryContainer,
+                        uncheckedIconColor = currentColorScheme.tertiaryContainer,
+                        uncheckedBorderColor = currentColorScheme.onTertiaryContainer,
+                        uncheckedThumbColor = currentColorScheme.onTertiaryContainer,
+                        checkedTrackColor = currentColorScheme.tertiary,
+                        checkedIconColor = currentColorScheme.tertiary,
+                        checkedBorderColor = currentColorScheme.tertiary,
+                        checkedThumbColor = currentColorScheme.onTertiary,
+                    )
                 )
             }
 
@@ -214,43 +232,45 @@ fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorite
     )
 }
 
-
-var selectedScreen by mutableStateOf(MaterialReviewsScreen.Explore.name)
-
 @Composable
 fun BottomBar(navController: NavHostController) {
 
     val currentRoute = currentRoute(navController)
 
-    NavigationBar() {
+    NavigationBar(
+        tonalElevation = 10.dp
+    ) {
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.Explore.name),
-            icon = { Icon(Icons.Filled.Home, contentDescription = null) },
+            icon = { Icon(Icons.Filled.LocationOn, contentDescription = "Esplora") },
             label = { Text(text = stringResource(id = R.string.explore)) },
             onClick = {
                 navController.navigate(MaterialReviewsScreen.Explore.name)
             },
+            colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
         )
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.MyReviews.name),
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+            icon = { Icon(Icons.Filled.Favorite, contentDescription = "Le mie recensioni") },
             //Nome della pagina
             label = { Text(text = stringResource(R.string.myreviews)) },
             onClick = {
                 navController.navigate(MaterialReviewsScreen.MyReviews.name)
-            }
+            },
+            colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
         )
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.Profile.name),
-            icon = { Icon(Icons.Filled.Person, contentDescription = null) },
+            icon = { Icon(Icons.Filled.Person, contentDescription = "Profilo") },
             //Nome della pagina
             label = { Text(text = stringResource(R.string.profile)) },
             onClick = {
                 navController.navigate(MaterialReviewsScreen.Profile.name)
             },
+            colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
         )
     }
 }
