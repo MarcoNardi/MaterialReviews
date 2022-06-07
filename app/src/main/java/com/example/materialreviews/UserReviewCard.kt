@@ -134,7 +134,7 @@ fun UserReviewCard(
                 }
 
                 // Testo della recensione
-                Text(text = comment)
+                if (comment != "") Text(text = comment)
 
                 // Pulsante per eliminare la recensione
                 Row(
