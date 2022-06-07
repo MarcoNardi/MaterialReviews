@@ -109,7 +109,7 @@ fun RestaurantDetails(
                 IconToggleButton(
                     checked = restaurant.preferito,
                     onCheckedChange = onCheckedChange,
-                    modifier = Modifier.padding(end = 12.dp)
+                    modifier = Modifier.padding(end = 12.dp).requiredSize(48.dp)
                 ) {
                     val tint by animateColorAsState(if (restaurant.preferito) Color.Red else Color.LightGray)
                     Icon(
