@@ -123,7 +123,7 @@ fun  RestaurantCard(
                         }
                         // Pulsante per salvare il ristorante nei preferiti
                         val icon = Icons.Filled.Favorite
-                        IconToggleButton( checked = restaurant.preferito, onCheckedChange = onCheckedChange, modifier=Modifier.requiredSize(48.dp)) {
+                        IconToggleButton( checked = restaurant.preferito, onCheckedChange = onCheckedChange) {
                             val tint by animateColorAsState(if (restaurant.preferito) Color.Red else Color.LightGray)
                             Icon(
                                 imageVector = icon,
