@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.currentColorScheme
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -102,6 +104,11 @@ fun RestaurantDetailsAndReviews(
             onConfirmClick = { rating, comment ->
                 Log.v(null, "$rating, $comment")
 
+                //Data odierna
+                val locale: Locale = Locale.getDefault()
+                val sdf = SimpleDateFormat("dd/MM/yyyy", locale)
+                val currentDate = sdf.format(Date())
+
                 // Se esiste gia` la review la modifica, altrimenti la aggiunge
                 if (existReview) {
                     reviewViewModel.updateReview(
@@ -109,7 +116,7 @@ fun RestaurantDetailsAndReviews(
                         newComment = comment,
                         userId = userId,
                         restaurantId = restaurantId,
-                        newDate = "MyDate"
+                        newDate = currentDate
                     )
                 }
                 else {
@@ -118,7 +125,7 @@ fun RestaurantDetailsAndReviews(
                         review = comment,
                         userId = userId,
                         restaurantId = restaurantId,
-                        date = "MyDate"
+                        date = currentDate
                     )
                 }
 

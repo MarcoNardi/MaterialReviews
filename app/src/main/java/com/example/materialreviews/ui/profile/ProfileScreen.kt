@@ -2,6 +2,7 @@ package com.example.materialreviews
 
 import android.graphics.drawable.Icon
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -70,11 +71,38 @@ fun ProfileScreen() {
             currentProfilePictureURI = profilePictureURI,
             onDismiss = { showEditProfileDialog = false },
             onConfirm = { newName, newSurname, newProfilePictureURI ->
-                // Salvo i dati nel DB
-                userModel.updateFirstNameOfUser(userID, newName)
-                userModel.updateLastNameOfUser(userID, newSurname)
-                userModel.updateImageOfUser(userID, newProfilePictureURI)
-                showEditProfileDialog = false
+                //Controllo che nome e cognome non siano vuoti
+                val toast = Toast.makeText(context,"I campi Nome e Cognome non possono essere vuoti",Toast.LENGTH_LONG)
+                if(newName != "" || newSurname != "" )
+                {
+                    //Controllo che nome e cognome non contengano solo spazi
+                    var nameEmpty = true
+                    var surnameEmpty = true
+
+                    newName.forEach {
+                        if (!it.equals(' ')) {
+                            nameEmpty = false
+                        }
+                    }
+                    newSurname.forEach {
+                        if (!it.equals(' ')) {
+                            surnameEmpty = false
+                        }
+                    }
+
+                    //Inserimento dati nel db
+                    if( nameEmpty == false && surnameEmpty == false) {
+                        userModel.updateFirstNameOfUser(userID, newName)
+                        userModel.updateLastNameOfUser(userID, newSurname)
+                        userModel.updateImageOfUser(userID, newProfilePictureURI)
+                        showEditProfileDialog = false
+                    }else{
+                        toast.show()
+                    }
+                }else{
+                    toast.show()
+                }
+
             }
         )
     }
@@ -153,6 +181,7 @@ fun EditProfileDialog(
     onDismiss: () -> Unit = {},
     onConfirm: (newName: String, newSurname: String, newProfilePictureURI: String) -> Unit
 ) {
+    val context = LocalContext.current
     // Variabili per nome, cognome e URI
     var name by remember { mutableStateOf(currentName)}
     var surname by remember { mutableStateOf(currentSurname)}
@@ -166,6 +195,9 @@ fun EditProfileDialog(
             pictureURI = newPictureURI.toString()
         }
     }
+
+    //Numero massimo di caratteri per nome e cognome
+    val maxLength = 20
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -199,14 +231,20 @@ fun EditProfileDialog(
                 // Text Field per il nome
                 OutlinedTextField(
                     value = name,
-                    onValueChange = { name = it },
+                    onValueChange = {
+                        if (it.length <= maxLength) name = it
+                        else Toast.makeText(context, "Non  può essere più lungo di $maxLength caratteri", Toast.LENGTH_SHORT).show()
+                    },
                     label = { Text("Nome")}
                 )
 
                 // Text Field per il cognome
                 OutlinedTextField(
                     value = surname,
-                    onValueChange = { surname = it },
+                    onValueChange = {
+                        if (it.length <= maxLength) surname = it
+                        else Toast.makeText(context, "Non  può essere più lungo di $maxLength caratteri", Toast.LENGTH_SHORT).show()
+                    },
                     label = { Text("Cognome")}
                 )
             }
