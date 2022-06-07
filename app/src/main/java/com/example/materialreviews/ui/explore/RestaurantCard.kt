@@ -64,9 +64,9 @@ fun  RestaurantCard(
         elevation = CardDefaults.elevatedCardElevation(2.dp),
         modifier = Modifier
             .clickable { onClickSeeAll(restId) }
-            .padding(8.dp)
+            //.padding(8.dp)
     ) {
-        Column(modifier = Modifier ){
+        Column() {
 
             // "Foto profilo" del ristorante
             //se non è stata caricata la mostro senn+ mostro un indicatore circolare di progresso
@@ -86,14 +86,14 @@ fun  RestaurantCard(
 
             // Altri elementi
             Row(
-                Modifier.padding(start = 3.dp, end = 12.dp),
+                Modifier.padding(start = 4.dp, end = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(Modifier.padding(3.dp)) {
+                Column(Modifier.padding(4.dp)) {
                     // Nome del ristorante
                     Text(
                         text = restName,
-                        Modifier.padding(3.dp),
+                        Modifier.padding(4.dp),
                         style = MaterialTheme.typography.displaySmall
                     )
 
@@ -118,7 +118,7 @@ fun  RestaurantCard(
                             )
                             Text(
                                 text = "Via $restRoad, $restCivic",
-                                Modifier.padding(bottom = 10.dp)
+                                Modifier.padding(bottom = 8.dp)
                             )
 
                         }
@@ -130,7 +130,7 @@ fun  RestaurantCard(
                                 imageVector = icon,
                                 contentDescription = "Aggiungi a elementi salvati",
                                 tint = tint,
-                                modifier = Modifier.size(35.dp)
+                                modifier = Modifier.size(36.dp)
                             )
                         }
 
@@ -154,7 +154,7 @@ fun AddReviewButton(
 ) {
     FilledTonalButton(onClick = onClick) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(

@@ -194,14 +194,14 @@ fun ListOfReviews2(model: RestaurantViewModel,
 
     if(reviews!=null){
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier=Modifier.verticalScroll(rememberScrollState())
             //modifier = Modifier.padding(horizontal = 10.dp)
         ) {
             reviews!!.reviews.forEach(){
                 UserReviewCard(it, model, onClickSeeRestaurant = onClickSeeRestaurant)
             }
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(0.dp))
             /* QUESTO ERA NELLA LAZYCOLUMN
             if(reviews !=null) {
                 items(reviews!!.reviews) { review ->

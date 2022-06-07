@@ -58,13 +58,13 @@ fun NavigationManager() {
     // Scaffold = topBar + bottomBar + content
     Scaffold(
         topBar = { TopBar(navController, topBarTitle, onlyFavorites,
-            onCheckedChange={onlyFavorites=it}) },
+        onCheckedChange={ onlyFavorites=it }) },
         bottomBar = { BottomBar(navController) },
         content = { paddingValues ->
             Box(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .padding(horizontal = 10.dp)
+                    .padding(horizontal = 16.dp)
             ) {
                 // Associazioni stringa-composable
                 NavHost(

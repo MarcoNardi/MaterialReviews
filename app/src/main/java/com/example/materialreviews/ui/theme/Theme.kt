@@ -138,7 +138,7 @@ fun updateColorScheme() {
 fun SyncWithSystemSwitch() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Switch(
             checked = isFollowingSystemDarkTheme,
@@ -156,7 +156,7 @@ fun SyncWithSystemSwitch() {
 fun DarkThemeSwitch() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Switch(
             enabled = !isFollowingSystemDarkTheme,
@@ -352,7 +352,7 @@ fun DynamicColorSelector() {
 fun DynamicColorsSwitch() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Switch(
             enabled = canUseDynamicColors,

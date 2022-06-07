@@ -102,7 +102,7 @@ fun ReviewCard(
     }
 
     ElevatedCard(
-        shape = RoundedCornerShape(15.dp),
+        shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(1.dp),
         modifier = modifier.padding(bottom = 1.dp)
     ) {
@@ -113,7 +113,7 @@ fun ReviewCard(
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 //Immagine del profilo
                 ProfilePicture(size = 40.dp, profilePictureUri, 1.dp)

@@ -34,19 +34,19 @@ fun ReviewCard(review: Review) {
     val date = review.date
 
     ElevatedCard(
-        shape = RoundedCornerShape(15.dp)
+        shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             modifier = Modifier
-                .padding(10.dp),
+                .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 //Immagine del profilo
-                ProfilePicture(size = 40.dp, "null", 1.dp)
+                ProfilePicture(size = 48.dp, "null", 1.dp)
 
                 //Nome utente
                 Text(

@@ -78,7 +78,7 @@ fun getColorSchemeWithName(colorScheme: ColorScheme) : List<ColorWithName> {
 fun SettingsScreen() {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         ThemeSelector()
@@ -94,13 +94,13 @@ fun SettingsScreen() {
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun ColorSchemeVisualizer(colorBoxHeight: Dp = 35.dp) {
+fun ColorSchemeVisualizer(colorBoxHeight: Dp = 36.dp) {
     val currentColorScheme: ColorScheme = MaterialTheme.colorScheme
 
     Column(
         modifier = Modifier
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Schema di colori in uso", style = MaterialTheme.typography.titleMedium)
@@ -128,7 +128,7 @@ fun ColorBox(colorItem: ColorWithName, width: Dp, height: Dp) {
             .height(height)
             .width(width)
             .background(colorItem.color)
-            .padding(start = 5.dp)
+            .padding(start = 4.dp)
     ) {
         Text(
             text = colorItem.name,

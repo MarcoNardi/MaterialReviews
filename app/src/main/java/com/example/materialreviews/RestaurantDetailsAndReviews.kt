@@ -186,8 +186,8 @@ fun RestaurantDetailsAndReviews(
                 if(restaurantWithReviews!=null /*&& restaurantWithImages!=null*/ && imageUri!=null){
                     LazyColumn(
                         //modifier=Modifier.scrollable(rememberScrollState(), Orientation.Vertical),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                        //modifier = Modifier.padding(vertical = 10.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        //modifier = Modifier.padding(bottom = 16.dp)
                     ) {
                         item() {
 
@@ -221,9 +221,8 @@ fun RestaurantDetailsAndReviews(
                             }
                         }
 
-                        // Spacer per aggiungere un piccolo spazio estetico alla fine
-                        item{
-                            Spacer(modifier = Modifier.height(1.dp))
+                        item {
+                            Spacer(modifier = Modifier.height(0.dp))
                         }
                     }
                 }

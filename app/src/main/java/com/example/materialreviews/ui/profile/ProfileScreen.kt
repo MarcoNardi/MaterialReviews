@@ -99,9 +99,9 @@ fun ProfileScreen() {
         Row (
             modifier = Modifier.fillMaxWidth(0.9f),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(20.dp)
+            horizontalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            ProfilePicture(size = 150.dp, profilePictureURI)
+            ProfilePicture(size = 160.dp, profilePictureURI)
             Text(
                 text = "$userName $userSurname",
                 style = MaterialTheme.typography.displaySmall
@@ -112,7 +112,7 @@ fun ProfileScreen() {
         Divider(
             color = currentColorScheme.onSurface,
             modifier = Modifier
-                .padding(vertical = 15.dp)
+                .padding(vertical = 16.dp)
                 .fillMaxWidth(0.8f)
         )
 
@@ -173,7 +173,7 @@ fun EditProfileDialog(
         text = {
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
 
                 // Immagine del profilo con pulsante per modificarla

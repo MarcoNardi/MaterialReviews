@@ -54,13 +54,13 @@ fun RestaurantDetails(
 
     Surface() {
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
             // "Foto profilo" del ristorante
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(10.dp))
+                    .clip(RoundedCornerShape(8.dp))
             ) {
                 Image(
                     bitmap = imageData!!.asImageBitmap(),
@@ -109,14 +109,14 @@ fun RestaurantDetails(
                 IconToggleButton(
                     checked = restaurant.preferito,
                     onCheckedChange = onCheckedChange,
-                    modifier = Modifier.padding(end = 12.dp)
+                    modifier = Modifier.padding(end = 16.dp)
                 ) {
                     val tint by animateColorAsState(if (restaurant.preferito) Color.Red else Color.LightGray)
                     Icon(
                         imageVector = icon,
                         contentDescription = "Aggiungi a elementi salvati",
                         tint = tint,
-                        modifier = Modifier.size(35.dp)
+                        modifier = Modifier.size(36.dp)
                     )
 
                 }
@@ -137,7 +137,7 @@ fun RestaurantDetails(
                     }
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -159,7 +159,7 @@ fun RestaurantDetails(
                     }
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -180,7 +180,7 @@ fun RestaurantDetails(
                     }
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(5.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(

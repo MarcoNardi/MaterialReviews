@@ -94,25 +94,25 @@ fun UserReviewCard(
 
         // Card che mostra il nome del ristorante e tutte le infomazioni della review
         ElevatedCard(
-            shape = RoundedCornerShape(15.dp),
+            elevation = CardDefaults.elevatedCardElevation(2.dp),
+            shape = RoundedCornerShape(16.dp),
             modifier = Modifier
-                .padding(5.dp)
                 .clickable { onClickSeeRestaurant(restId) }
         ) {
             Column(
                 modifier = Modifier
-                    .padding(10.dp),
+                    .padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if(restPictureURI!=null){
-                        ProfilePicture(size = 60.dp, restPictureURI!!)
+                        ProfilePicture(size = 64.dp, restPictureURI!!)
                     }else{
-                        ProfilePicture(size =60.dp)
+                        ProfilePicture(size =64.dp)
                     }
                     Column() {
                         Text(

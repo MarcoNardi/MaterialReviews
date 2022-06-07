@@ -44,8 +44,8 @@ fun ListOfRestaurants(
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .padding(bottom = 10.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+            .padding(bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         
 
     ) {
@@ -102,8 +102,8 @@ fun LazyListOfRestaurants(
     // Creo una colonna di RestaurantCard
     LazyVerticalGrid(
         modifier = Modifier
-            .padding(bottom = 10.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+            .padding(bottom = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         columns = GridCells.Adaptive(300.dp)
 
 
