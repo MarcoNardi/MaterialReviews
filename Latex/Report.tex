@@ -176,16 +176,16 @@ tabsize=1
 
 			\subsubsection{Contenimento}
 			Oltre al raggruppamento visivo un altro metodo è contenere assieme elementi che condividono determinate features			\cite{layout_organizzazione}:
-			per esempio una notizia avrà un'immagine, un titolo e magari un piccolo paragrafo introduttivo. 
-			
+			per esempio una notizia avrà un'immagine, un titolo e magari un piccolo paragrafo introduttivo.
+
 			Il contenimento si può ottenere:
 			\begin{itemize}
-				\item \textit{implicitamente}: lo spazio tra elementi correlati viene ridotto 
+				\item \textit{implicitamente}: lo spazio tra elementi correlati viene ridotto
     			\item \textit{esplicitamente}: gli elementi vengono racchiusi graficamente, ad esempio con una cornice
 			\end{itemize}
-			
+
 		\subsection{Misure}
-		Le dimensioni degli elementi della UI possono essere misurate in molti modi. 
+		Le dimensioni degli elementi della UI possono essere misurate in molti modi.
 
 		L'unità di misura più utilizzata è il \textit{density-independent pixel} (\textit{dp}), che permette di mantenere le stesse dimensioni in schermi anche molto diversi tra loro.
 
@@ -200,45 +200,45 @@ tabsize=1
 				\item \textit{Grondaie}: definisco lo spazio che sepra le colonne
 				\item \textit{Margini}: definiscono la distanza dal bordo dello schermo
 			\end{itemize}
-			
+
 		\subsection{Metodi di spaziatura}
 			Per manipolare lo spazio in modo più granulare il layout possono essere utilizzati altri elementi grafici quali:
 			\begin{itemize}
 				\item \textit{padding}: spazio vuoto che descrive la distanza tra elementi
 				\item \textit{allineamenti}: come gli elementi sono allineati nelle righe/colonne
 			\end{itemize}
-			
+
 		\subsection{Contenitori e Aspect Ratios}
 			Un container rappresenta un'area che contiene elementi di interfaccia utente.
 			Possono essere rigidi, che quindi tagliano il contenuto al loro interno nel caso vada oltre i limiti, oppure flessibili, che cambiano la propria dimensione in base al contenuto.
-			
+
 			Per mantenere consistenza nel proprio layout è consigliato l'utilizzo di Aspect Ratios consistenti per elementi come immagini o superfici. Quelli consigliati sono: 16:9; 3:2; 4:3; 1:1; 3:4; 2:3 \cite{layout_containers}
-			
+
 		\subsection{Densità}
 			Ci sono casi dove aumentare la densità di informazioni mostrate a schermo può essere utile e rende migliore l'esperienza dell'utente.
 			Se l'utente deve interaggire con molte informazioni, si possono rendere le informazioni più compatte diminuendo lo spazio tra loro, rendendole più facili da consultare e confrontare.
-			
-			È invece sconsigliato usare una alta densità di contenuti nei componenti che si concentrano nello svolgere un a singola azione (\textit{focused task}) o nei messaggi d'errore			
+
+			È invece sconsigliato usare una alta densità di contenuti nei componenti che si concentrano nello svolgere un a singola azione (\textit{focused task}) o nei messaggi d'errore
 
 		
 % --------------------------------------------------------------------------------------	
 	\section{Navigazione}
     	La maggior parte delle applicazioni è composta da più schermate che mostrano all’utente diversi contenuti. È quindi fondamentale che l’utente possa muoversi agevolmente tra queste schermate in maniera rapida e intuitiva.
-    	
+
     	Solitaente esiste una gerarchia tra le schermate di un'applicazione. Questa gerarchia si riflette nell'interfaccia che permette all'utente di navigare.
-    	
+
     		\subsection{Navigazione laterale}
     		La navigazione laterale viene utilizzata per spostarsi tra pagine allo stesso livello nella gerarchia.
-    		
+
     		Solitamente viene implementata con una \textit{bottom navigation bar} (preferita nei dispositivi mobili) o con un \textit{navigation drawer}.
-    		
+
     		Per schermate di gerarchia più bassa possono essere utilizzate le \textit{tabs}.
-    		
+
     		\subsection{Navigazione in avanti}
     		La navigazione in avanti viene utilizzata quando l'utente si sposta tra schermate a livelli consecutivi di gerarchia. Si utilizza la navigazione in avanti ogni volta che si utilizzano pulsanti, collegamenti, ricerche.
-    		
+
     		A differenza della navigazione laterale, quella in avanti non prevede elementi dell'interfaccia utente dedicati.
-    		
+
     		Associata alla navigazione in avanti è la navigazione all'indietro, che permette all'utente di ritornare alla schermata cronologicamente precedente oppure ad un livello gerarchico superiore.
 
 
