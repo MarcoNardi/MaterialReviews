@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
@@ -97,7 +98,7 @@ fun  RestaurantCard(
                         style = MaterialTheme.typography.displaySmall
                     )
 
-                    // Stelle della recensione
+                    /* Stelle della recensione
                     Row {
                         if(averageRating!=null){
                             RowOfStars(averageRating!!.toInt())
@@ -107,11 +108,22 @@ fun  RestaurantCard(
                         //Spacer(Modifier.weight(1f))
                     }
 
-                    // Indirizzo e cuoricino
+                     */
+
                     Row(
                         Modifier.fillMaxWidth(),
-                        horizontalArrangement  = Arrangement.SpaceBetween){
+                        horizontalArrangement  = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically){
                         Column() {
+
+                            // Stelle della recensione
+                            if(averageRating!=null){
+                                RowOfStars(averageRating!!.toInt())
+                            }else{
+                                RowOfStars(0)
+                            }
+
+                            // Indirizzo
                             Text(
                                 text = restCity,
                                 style = MaterialTheme.typography.titleMedium

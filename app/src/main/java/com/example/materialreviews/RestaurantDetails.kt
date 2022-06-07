@@ -79,12 +79,7 @@ fun RestaurantDetails(
                         text = restaurant.name,
                         style = MaterialTheme.typography.displaySmall
                     )
-                    // Valutazione media
-                    if (averageRating != null) {
-                        RowOfStars(averageRating!!.toInt())
-                    } else {
-                        RowOfStars(0)
-                    }
+
                 }
 
                 Spacer(Modifier.weight(1f))
@@ -92,10 +87,19 @@ fun RestaurantDetails(
 
             }
 
-            // Indirizzo e cuoricino
+
             Row(Modifier.fillMaxWidth(),
-                horizontalArrangement  = Arrangement.SpaceBetween){
+                horizontalArrangement  = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically){
                 Column() {
+                    // Valutazione media
+                    if (averageRating != null) {
+                        RowOfStars(averageRating!!.toInt())
+                    } else {
+                        RowOfStars(0)
+                    }
+
+                    // Indirizzo
                     Text(
                         text = restaurant.address?.citta ?: "citta",
                         style = MaterialTheme.typography.titleMedium

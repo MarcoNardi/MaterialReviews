@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         /*
         PRIORITA DA ALTO A BASSO
         TODO RELAZIONE: RIDURRE PARTE INIZIALE, PARTE MATERIAL 3 CON RIFERIMENTI ALLA NOSTRA APP
-        TODO sistemare pulsante tema e sistemare data aggiunta recensione
+        TODO sistemare pulsante tema
         TODO lag mie recensioni
         TODO Pulizia
         TODO schermo orizzontale
