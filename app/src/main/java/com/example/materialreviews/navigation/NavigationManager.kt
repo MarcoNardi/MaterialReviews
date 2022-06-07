@@ -31,7 +31,8 @@ import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
+@ExperimentalComposeUiApi
+@ExperimentalAnimationApi
 @ExperimentalMaterial3Api
 @Preview
 @Composable
@@ -40,7 +41,6 @@ fun NavigationManager() {
     val navController = rememberNavController()
     val context = LocalContext.current
     var topBarTitle by rememberSaveable() { mutableStateOf("")    }
-    val currentRoute = currentRoute(navController = navController)
 
     var onlyFavorites by rememberSaveable() {
         mutableStateOf(false)
@@ -243,7 +243,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.Explore.name),
-            icon = { Icon(Icons.Filled.LocationOn, contentDescription = null) },
+            icon = { Icon(Icons.Filled.LocationOn, contentDescription = "Esplora") },
             label = { Text(text = stringResource(id = R.string.explore)) },
             onClick = {
                 navController.navigate(MaterialReviewsScreen.Explore.name)
@@ -253,7 +253,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.MyReviews.name),
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+            icon = { Icon(Icons.Filled.Favorite, contentDescription = "Le mie recensioni") },
             //Nome della pagina
             label = { Text(text = stringResource(R.string.myreviews)) },
             onClick = {
@@ -264,7 +264,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.Profile.name),
-            icon = { Icon(Icons.Filled.Person, contentDescription = null) },
+            icon = { Icon(Icons.Filled.Person, contentDescription = "Profilo") },
             //Nome della pagina
             label = { Text(text = stringResource(R.string.profile)) },
             onClick = {

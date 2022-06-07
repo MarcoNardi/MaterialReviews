@@ -78,7 +78,8 @@ fun getColorSchemeWithName(colorScheme: ColorScheme) : List<ColorWithName> {
 fun SettingsScreen() {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         ThemeSelector()
         DynamicColorSelector()
@@ -98,7 +99,6 @@ fun ColorSchemeVisualizer(colorBoxHeight: Dp = 35.dp) {
 
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -107,12 +107,12 @@ fun ColorSchemeVisualizer(colorBoxHeight: Dp = 35.dp) {
 
         val currentColorSchemeWithName = getColorSchemeWithName(currentColorScheme)
 
-        ColorSet(currentColorSchemeWithName.subList(0, 5), "Colori primari", colorBoxHeight)
-        ColorSet(currentColorSchemeWithName.subList(5, 9), "Colori secondari", colorBoxHeight)
-        ColorSet(currentColorSchemeWithName.subList(9, 13), "Colori terziari", colorBoxHeight)
-        ColorSet(currentColorSchemeWithName.subList(13, 16), "Colori per sfondi e outline", colorBoxHeight)
-        ColorSet(currentColorSchemeWithName.subList(16, 23), "Colori per superfici", colorBoxHeight)
-        ColorSet(currentColorSchemeWithName.subList(23, 27), "Colori per i messaggi d'errore", colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(0, 5), colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(5, 9), colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(9, 13), colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(13, 16), colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(16, 23), colorBoxHeight)
+        ColorSet(currentColorSchemeWithName.subList(23, 27), colorBoxHeight)
     }
 }
 
@@ -141,10 +141,7 @@ fun ColorBox(colorItem: ColorWithName, width: Dp, height: Dp) {
  * Data una lista di ColorAndName, raggruppa i colori in una unica Box
  */
 @Composable
-fun ColorSet(listOfColors: List<ColorWithName>, title: String, height: Dp) {
-    // Titolo del gruppo di colori
-    //val textSize: TextStyle = MaterialTheme.typography.titleMedium
-    //Text(text = title, style = textSize)
+fun ColorSet(listOfColors: List<ColorWithName>, height: Dp) {
 
     // Forma del wrapper
     val boxShape = RoundedCornerShape(8.dp)
