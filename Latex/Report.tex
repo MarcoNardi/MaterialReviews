@@ -1074,22 +1074,31 @@ tabsize=1
 	Per evitare di confondere l'utente, si evita di usare "io" o "mio" e "tu" o "tuo" nella stessa frase.
 \chapter{Novità del material design 3}
 	\section{Accessibilità}
-	Al giorno d'oggi la tecnologia aiuta incredibilmente le vite di persone con disabilità, rendendole più indipendendi grazie a certi strumenti tra cui tastiere o lettori di schermo
-	Si può rendere l'interfaccia utente più semplice e accessibile grazie a:
-	\begin{itemize}
-		\item elementi chiari e visibili
-  		\item contrasto elevato
-    	\item una gerarchia di importanza chiara
-	\end{itemize}
-	\section{Gerarchia}
-		Azioni, informazioni e pulsanti importanti dovrebbero stare nel lato superiore o inferiore dello schermo.
-		Elementi di importanza simile invece devono stare vicini. E' importante seguire convenzioni o regole logiche come l'ordine di lettura (da sinistra a destra e dall'alto al basso nel nostro caso) per stabilire e capire l'ordine di gerarchia che si sta formando
-	\section{Touch targets}
-		I touch targets sono parti dello schermo che rispondono ad eventi di tocco, vengono consigliate delle misure adatte a renderli facili da premere
-	\section{Pointer Targets}
-		I pointer targets sono l'equivalente dei touch targets ma che rispondono a puntatori che tracciano il movimento come mouse o penne
-	\section{Testo}
-		Uno dei modi migliori per aumentare la 
+		Al giorno d'oggi la tecnologia aiuta incredibilmente le vite di persone con disabilità, rendendole più indipendendi grazie a certi strumenti tra cui tastiere o lettori di schermo
+		Si può rendere l'interfaccia utente più semplice e accessibile grazie a:
+		\begin{itemize}
+			\item elementi chiari e visibili
+			\item contrasto elevato
+			\item una gerarchia di importanza chiara
+		\end{itemize}
+		\subsection{Gerarchia}
+			Azioni, informazioni e pulsanti importanti dovrebbero stare nel lato superiore o inferiore dello schermo.
+			Elementi di importanza simile invece devono stare vicini. E' importante seguire convenzioni o regole logiche come l'ordine di lettura (da sinistra a destra e dall'alto al basso nel nostro caso) per stabilire e capire l'ordine di gerarchia che si sta formando
+		\subsection{Touch targets}
+			I touch targets sono parti dello schermo che rispondono ad eventi di tocco, vengono consigliate delle misure adatte a renderli facili da premere. Nella nostra applicazione i touch targets automaticamente implementati da compose, come switches o IconButtons, sono già creati con una grandezza minima,
+			mentre i touch targets custom gli rendiamo conformi allo standard con il Modifier
+		\subsection{Pointer Targets}
+			I pointer targets sono l'equivalente dei touch targets ma che rispondono a puntatori che tracciano il movimento come mouse o penne
+		\subsection{Testo}
+			Uno dei modi migliori per aumentare l'accessibilità è l'aggiunta di didascalie, etichette e testo alternativo, in quanto sono facilmente leggibili da lettori di schermo, i quali possono avere delle difficoltà a "leggere" un'immagine.
+			
+			Il testo alternativo aiuta a tradurre un elementov visivo, come un'immagine, in un elemento testuale.
+		\subsection{Contrasto}
+			Per rendere gli elementi più accessibili nel proprio tema è consigliato di avere un rapporto 3:1 per testo grande rispetto al background, e di 4.5:1 per il testo piccolo. Come viene calcolato il contrasto verrà esplorato meglio nella sezione Colori più avanti
+
+		\subsection{Best practice}
+			La pratica migliore consiste però nell'utilizzo di elementi nativi, in quanto sono garantiti ad avere un certo livello di accessibilità, mentre elementi custom possono richiedere del testing per verificarne l'accessibilità
+		
 
 
 
