@@ -39,7 +39,7 @@ fun ListOfRestaurants(
 ) {
     // Estraggo la lista dei ristoranti
     val data by model.getRestaurantsWithImage().observeAsState(emptyList())
-    val density = LocalDensity.current
+
     // Creo una colonna di RestaurantCard
     Column(
         modifier = Modifier
