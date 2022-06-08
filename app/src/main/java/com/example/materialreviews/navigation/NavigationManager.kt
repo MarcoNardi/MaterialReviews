@@ -248,7 +248,7 @@ fun BottomBar(navController: NavHostController) {
             onClick = {
                 navController.navigate(MaterialReviewsScreen.Explore.name)
             },
-            colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
+            //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
         )
 
         NavigationBarItem(
@@ -259,7 +259,7 @@ fun BottomBar(navController: NavHostController) {
             onClick = {
                 navController.navigate(MaterialReviewsScreen.MyReviews.name)
             },
-            colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
+            //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
         )
 
         NavigationBarItem(
@@ -270,7 +270,7 @@ fun BottomBar(navController: NavHostController) {
             onClick = {
                 navController.navigate(MaterialReviewsScreen.Profile.name)
             },
-            colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
+            //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
         )
     }
 }
