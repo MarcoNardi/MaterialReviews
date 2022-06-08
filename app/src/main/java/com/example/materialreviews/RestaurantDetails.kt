@@ -60,7 +60,7 @@ fun RestaurantDetails(
             // "Foto profilo" del ristorante
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(MaterialTheme.shapes.medium)
             ) {
                 Image(
                     bitmap = imageData!!.asImageBitmap(),

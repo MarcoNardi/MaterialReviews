@@ -5,9 +5,9 @@
 
     <string name ="settings">Impostazioni</string>
     <string name="profile">Profilo</string>
-    <string name="explore">Esplora</string>
+    <string name="explore">Ristoranti</string>
     <string name="favourites">Preferiti</string>
-    <string name="myreviews">Le mie recensioni</string>
+    <string name="myreviews">Recensioni</string>
     <string name="details">Dettagli</string>
     <string name="edit_profile">Modifica profilo</string>
 

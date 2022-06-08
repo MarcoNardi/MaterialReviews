@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -243,7 +244,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.Explore.name),
-            icon = { Icon(Icons.Filled.LocationOn, contentDescription = "Esplora") },
+            icon = { Icon(painterResource(R.drawable.ic_baseline_restaurant_24), contentDescription = "Ristoranti") },
             label = { Text(text = stringResource(id = R.string.explore)) },
             onClick = {
                 navController.navigate(MaterialReviewsScreen.Explore.name)
@@ -253,7 +254,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.MyReviews.name),
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = "Le mie recensioni") },
+            icon = { Icon(Icons.Filled.Star, contentDescription = "Recensioni") },
             //Nome della pagina
             label = { Text(text = stringResource(R.string.myreviews)) },
             onClick = {

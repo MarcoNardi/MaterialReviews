@@ -102,7 +102,7 @@ fun ReviewCard(
     }
 
     ElevatedCard(
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.elevatedCardElevation(1.dp),
         modifier = modifier.padding(bottom = 1.dp)
     ) {
@@ -125,15 +125,14 @@ fun ReviewCard(
                 )
 
                 Spacer(Modifier.weight(1f))
-                if(review.uid==MyPreferences(LocalContext.current).getId()){ Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Button(onClick = { openDialog = true }) {
-                        Text(text = "Elimina")
+                if(review.uid==MyPreferences(LocalContext.current).getId()){
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        DeleteReviewButton() { openDialog = true }
                     }
-                }
                 }
             }
 
@@ -154,12 +153,28 @@ fun ReviewCard(
 }
 
 @Composable
+fun DeleteReviewButton(
+    onClick: ()->Unit = {}
+) {
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(containerColor = currentColorScheme.tertiary)
+    ) {
+        Text(text = "Elimina")
+    }
+}
+
+@Composable
 fun ProfilePicture(size: Dp, pictureUri: String = "", borderWidth: Dp = 1.dp) {
     Box(
         modifier = Modifier
             .size(size)
             .clip(shape = CircleShape)
-            .border(width = borderWidth, color = currentColorScheme.onBackground, shape = CircleShape),
+            .border(
+                width = borderWidth,
+                color = currentColorScheme.onBackground,
+                shape = CircleShape
+            ),
         contentAlignment = Alignment.Center
     ) {
         if (pictureUri == "") {

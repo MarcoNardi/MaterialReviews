@@ -280,7 +280,7 @@ fun MultiToggleButtonItem(
                 .offset((-1 * index).dp, 0.dp)
                 .zIndex(if (selected) 1f else 0f)
         },
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 12.dp)
     ) {
         Icon(
             painter = iconPainter,

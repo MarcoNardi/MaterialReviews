@@ -95,7 +95,7 @@ fun UserReviewCard(
         // Card che mostra il nome del ristorante e tutte le infomazioni della review
         ElevatedCard(
             elevation = CardDefaults.elevatedCardElevation(2.dp),
-            shape = RoundedCornerShape(16.dp),
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier
                 .clickable { onClickSeeRestaurant(restId) }
         ) {
@@ -142,9 +142,7 @@ fun UserReviewCard(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    Button(onClick = { openDialog = true }) {
-                        Text(text = "Elimina")
-                    }
+                    DeleteReviewButton() { openDialog = true }
                 }
             }
         }

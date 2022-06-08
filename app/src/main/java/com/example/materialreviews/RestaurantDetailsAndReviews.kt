@@ -179,7 +179,7 @@ fun RestaurantDetailsAndReviews(
                 containerColor = currentColorScheme.primary,
                 contentColor = currentColorScheme.onPrimary,
                 //offset calcolato durante lo scroll
-                modifier = Modifier.offset{ IntOffset(x = 0, y = -fabOffsetHeightPx.value.roundToInt()) }
+                modifier = Modifier.offset(x = 16.dp).offset{ IntOffset(x = 0, y = -fabOffsetHeightPx.value.roundToInt()) }
             )
         },
 
