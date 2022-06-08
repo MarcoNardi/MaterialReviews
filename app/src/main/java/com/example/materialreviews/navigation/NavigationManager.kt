@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -217,14 +218,14 @@ fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorite
                     },
                     modifier = Modifier.padding(end = 16.dp),
                     colors = SwitchDefaults.colors(
-                        uncheckedTrackColor = currentColorScheme.tertiaryContainer,
-                        uncheckedIconColor = currentColorScheme.tertiaryContainer,
-                        uncheckedBorderColor = currentColorScheme.onTertiaryContainer,
-                        uncheckedThumbColor = currentColorScheme.onTertiaryContainer,
-                        checkedTrackColor = currentColorScheme.tertiary,
-                        checkedIconColor = currentColorScheme.tertiary,
-                        checkedBorderColor = currentColorScheme.tertiary,
-                        checkedThumbColor = currentColorScheme.onTertiary,
+                        uncheckedTrackColor = currentColorScheme.secondaryContainer,
+                        uncheckedIconColor = currentColorScheme.secondaryContainer,
+                        uncheckedBorderColor = currentColorScheme.secondaryContainer,
+                        uncheckedThumbColor = currentColorScheme.onSecondaryContainer,
+                        checkedTrackColor = currentColorScheme.secondary,
+                        checkedIconColor = currentColorScheme.secondary,
+                        checkedBorderColor = currentColorScheme.secondary,
+                        checkedThumbColor = currentColorScheme.onSecondary,
                     )
                 )
             }

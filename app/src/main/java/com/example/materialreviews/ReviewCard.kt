@@ -155,9 +155,9 @@ fun ReviewCard(
 fun DeleteReviewButton(
     onClick: ()->Unit = {}
 ) {
-    OutlinedButton(
+    Button(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = currentColorScheme.tertiaryContainer, contentColor = currentColorScheme.onTertiaryContainer)
+        colors = ButtonDefaults.buttonColors(containerColor = currentColorScheme.tertiary, contentColor = currentColorScheme.onTertiary)
     ) {
         Text(text = "Elimina")
     }
