@@ -93,8 +93,7 @@ fun UserReviewCard(
         }
 
         // Card che mostra il nome del ristorante e tutte le infomazioni della review
-        ElevatedCard(
-            elevation = CardDefaults.elevatedCardElevation(2.dp),
+        Card(
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier
                 .clickable { onClickSeeRestaurant(restId) }

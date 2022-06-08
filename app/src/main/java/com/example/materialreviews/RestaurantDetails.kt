@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.example.materialreviews.db.RestaurantEntity
+import com.example.materialreviews.ui.theme.currentColorScheme
 
 /**
  * Card riassuntiva di un ristorante
@@ -133,12 +134,13 @@ fun RestaurantDetails(
             ) {
 
                 // Telefona => apre il dialer
-                FilledTonalButton(
+                Button(
                     onClick = {
                         val intent = Intent(Intent.ACTION_DIAL)
                         intent.data = Uri.parse("tel:<${restaurant.nTelefono}")
                         context.startActivity(intent)
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = currentColorScheme.secondary)
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -155,12 +157,13 @@ fun RestaurantDetails(
                 }
 
                 // Visita il sito => apre il browser
-                FilledTonalButton(
+                Button(
                     onClick = {
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse("https://" + restaurant.sito)
                         context.startActivity(intent)
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = currentColorScheme.secondary)
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -175,13 +178,14 @@ fun RestaurantDetails(
                 }
 
                 // Visualizza sulla mappa => Apre Maps
-                FilledTonalButton(
+                Button(
                     onClick = {
                         val gmmIntentUri = Uri.parse("geo:0,0?q=${restaurant.address!!.num_civico} ${restaurant.address!!.via}, ${restaurant.address!!.citta}")
                         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                         mapIntent.setPackage("com.google.android.apps.maps")
                         context.startActivity(mapIntent)
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = currentColorScheme.secondary)
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),

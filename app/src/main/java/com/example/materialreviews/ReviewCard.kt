@@ -101,9 +101,8 @@ fun ReviewCard(
         )
     }
 
-    ElevatedCard(
+    Card(
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.elevatedCardElevation(1.dp),
         modifier = modifier.padding(bottom = 1.dp)
     ) {
         Column(
@@ -156,9 +155,9 @@ fun ReviewCard(
 fun DeleteReviewButton(
     onClick: ()->Unit = {}
 ) {
-    Button(
+    OutlinedButton(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = currentColorScheme.tertiary)
+        colors = ButtonDefaults.buttonColors(containerColor = currentColorScheme.tertiaryContainer, contentColor = currentColorScheme.onTertiaryContainer)
     ) {
         Text(text = "Elimina")
     }

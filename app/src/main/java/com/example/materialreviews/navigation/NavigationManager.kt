@@ -238,9 +238,7 @@ fun BottomBar(navController: NavHostController) {
 
     val currentRoute = currentRoute(navController)
 
-    NavigationBar(
-        tonalElevation = 10.dp
-    ) {
+    NavigationBar() {
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.Explore.name),

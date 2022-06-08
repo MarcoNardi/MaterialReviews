@@ -60,9 +60,8 @@ fun  RestaurantCard(
     val averageRating by getAverageRating().observeAsState()
 
     // Card con le informazioni
-    ElevatedCard(
+    Card(
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.elevatedCardElevation(2.dp),
         modifier = Modifier
             .clickable { onClickSeeAll(restId) }
             //.padding(8.dp)
