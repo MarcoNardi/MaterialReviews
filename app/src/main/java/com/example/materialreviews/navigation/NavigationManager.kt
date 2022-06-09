@@ -148,7 +148,7 @@ fun NavigationManager() {
     }
 }
 
-//TODO Verificare
+//Titoli delle schermate
 fun getTitleByRoute(context: Context, route:String?): String {
     return when (route) {
         MaterialReviewsScreen.Profile.name -> context.getString(R.string.profile)

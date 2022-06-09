@@ -2,16 +2,11 @@ package com.example.materialreviews
 
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -19,11 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -179,7 +176,9 @@ fun RestaurantDetailsAndReviews(
                 containerColor = currentColorScheme.primary,
                 contentColor = currentColorScheme.onPrimary,
                 //offset calcolato durante lo scroll
-                modifier = Modifier.offset(x = 16.dp).offset{ IntOffset(x = 0, y = -fabOffsetHeightPx.value.roundToInt()) }
+                modifier = Modifier
+                    .offset(x = 16.dp)
+                    .offset { IntOffset(x = 0, y = -fabOffsetHeightPx.value.roundToInt()) }
             )
         },
 
@@ -221,6 +220,15 @@ fun RestaurantDetailsAndReviews(
 
                         // Lista delle review del ristorante
                         if (restaurantWithReviews != null) {
+
+                            //Placeholder nel caso non ci sia nessuna recensione
+                            if(restaurantWithReviews!!.reviews.isEmpty())
+                            {
+                                item {
+                                NoReviews()
+                                }
+                            }
+
                             items(restaurantWithReviews!!.reviews) { review ->
                                 ReviewCard(review= review, getUserInfo = {
                                     userModel.getUser(it)
@@ -236,4 +244,28 @@ fun RestaurantDetailsAndReviews(
             }
         }
     )
+}
+
+//Placeholder nel caso non ci sia nessuna recensione
+@Composable
+fun NoReviews(){
+    Surface( ) {
+        Column(
+            Modifier.padding(top = 24.dp, bottom = 16.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_baseline_no_reviews_24),
+                contentDescription = "Nessuna recensione",
+                modifier = Modifier.size(35.dp),
+                tint = Color.Gray
+            )
+            Text(text = "Ancora nessuna recensione",
+                color = Color.Gray,
+                style = MaterialTheme.typography.bodyMedium)
+        }
+    }
 }

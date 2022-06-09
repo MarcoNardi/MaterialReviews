@@ -38,7 +38,7 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
     }
 
     //ottiene tutti i preferiti
-    fun getALlFavorites(): LiveData<List<RestaurantEntity>>{
+    fun getALlFavorites(): LiveData<List<RestaurantWithImages>>{
         return restaurantDao.getAllFavorites()
     }
     //cambia lo stato di preferito in un ristorante

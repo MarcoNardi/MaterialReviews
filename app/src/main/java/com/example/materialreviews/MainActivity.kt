@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
         TODO Pulizia
         TODO CARD PER QUANDO NON CI SONO PREFERITI
         TODO schermo orizzontale
-        TODO GESTURES se possibile
         */
         super.onCreate(savedInstanceState)
         setContent {

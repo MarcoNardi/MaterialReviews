@@ -4,10 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Favorite
@@ -170,7 +167,7 @@ fun RestaurantDetails(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_language_24),
+                            painter = painterResource(id = R.drawable.ic_baseline_link_web_24),
                             contentDescription = "Vai al sito",
                         )
                         Text("Sito")
