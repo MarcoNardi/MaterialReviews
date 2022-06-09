@@ -28,9 +28,9 @@ class MainActivity : ComponentActivity() {
         /*
         PRIORITA DA ALTO A BASSO
         TODO RELAZIONE: RIDURRE PARTE INIZIALE, PARTE MATERIAL 3 CON RIFERIMENTI ALLA NOSTRA APP
-        TODO sistemare pulsante tema
         TODO lag mie recensioni
         TODO Pulizia
+        TODO CARD PER QUANDO NON CI SONO PREFERITI
         TODO schermo orizzontale
         TODO GESTURES se possibile
         */
@@ -54,7 +54,9 @@ fun M3App() {
             AppDatabase.getDatabase(context).imageDao()
             )
         )
-        imageModel.addImage(restaurantImageUri+"1", rid =1)
+        imageModel.addImage(restaurantImageUri+"6", rid =6)
+        imageModel.addImage(restaurantImageUri+"7", rid =7)
+        imageModel.addImage(restaurantImageUri+"8", rid =7)
         imageModel.addImage(restaurantImageUri+"2", rid =2)
         imageModel.addImage(restaurantImageUri+"3", rid =3)
         imageModel.addImage(restaurantImageUri+"4", rid =4)
