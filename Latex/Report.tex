@@ -1119,6 +1119,28 @@ tabsize=1
 		
 		Nella nostra applicazione non ne abbiamo fatto uso in quanto sono ancora in sviluppo, e i loro utilizzi non ci sono utili, come creare nuovi prodotti che usano lo stesso stile.
 	
+	\section{Iconografia material 3}
+		Nel material design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
+		Nel catalogo molte icone vecche sono state ridisegnate, dando ora un'impressione più moderna
+		Le linee guida nel design di icone nuove rimangono molto simili a quelle del material design 2.
+		Sono state aggiunte delle linee guida nell'utilizzo delle icone, e nelle caratteristiche da usare nella personalizzazione: per esempio nella decisione del weight (spessore dell'icona) è bene che non sia troppo fino (sconsigliati valori sotto al 200), e che non sia troppo grosso; soprattutto bisogna stare attenti ad usare lo stesso weight in modo consistente e non mischiare icone di weight diversi
+
+		Una caratteristica molto importante è la grandezza ottica, ci permette di cambiare la grandezza di un'icona da 24dp fino a 48dp aggiustando però il weight, infatti scalando un'icona scalerebbe anche il suo spessore il che può non essere desiderato a seconda del proprio stile.
+		Per quanto riguarda l'accessibilità è importante che icone che eseguono delle azioni abbiano un etichetta che descriva cosa facciano, nella nostra applicazione le icone che eseguono azioni come scrivere una recensione, oppure cambiare tab, hanno tutte un testo che indica il loro ruolo.
+	\section{Tipografia material 3}
+		Nel material design 3 sonos stati rinnovati i ruoli che avevano blocchi di testo, ora sono 5 e sono:
+		\begin{itemize}
+			\item display per le parti corti e importanti
+			\item headline per le parti corti e importanti in schermi piccoli
+			\item title	per parti che sono mediamente importanti ma comunque corte
+			\item body per le parti più lunghe
+			\item label per il testo che accompagna componenti come pulsanti o didascalie
+		\end{itemize}
+		Ciò è stato fatto per rendere più semplice applicare le linee guida e rendere i ruoli più facili da capire.
+		Sono stati introdotti i tokens per il testo per permettere facile modifica di valori come type scale o weight.
+		Il resto delle linee guida invece rimane simile a quelle del material design 2
+	
+
 
 % ==================================== Bibliografia ======================================
 \printbibliography
