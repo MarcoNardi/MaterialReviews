@@ -12,6 +12,7 @@
 \usepackage{graphicx}
 \graphicspath{ {./Immagini} }
 \usepackage{wrapfig}
+\usepackage{booktabs}
 
 \hypersetup{
     colorlinks,
@@ -123,35 +124,35 @@ tabsize=1
 	\end{lstlisting}
 
 	Se invece voglio semplicemente una parola in monospace: \texttt{monospace}
-	
+
 	\section{Immagini}
 	Per inserire immagini usare il template qui definito
-	
+
 		\begin{figure}[h]
    			\centering
    			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
  			\caption{Floating Action Button}
     			\label{fig:mesh1} % Se occorre fare un riferimento
 		\end{figure}
-		
+
 	Nel Material Design, gli elementi dell'interfaccia utente sono costituiti da \textit{superfici}, ossia delle forme geometriche piatte e dai contorni ben definiti.
-	
+
 		\begin{wrapfigure}{r}{0.3\textwidth}
    			\centering
    			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
 		\end{wrapfigure}
 
 		Una superficie può mostrare un contenuto (testo, immagini, icone, ...), che deve essere anch'esso piatto come la superficie su cui si appoggia. Il contenuto può essere indipendente dalla superficie e può cambiare, ma deve sempre rimanere entro i limiti geometrici imposti dalla superficie.
-		
+
 		\begin{wrapfigure}{l}{0.3\textwidth}
    			\centering
    			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
 		\end{wrapfigure}
 
-		
+
 		Le superfici si comportano come dei solidi, che possono cambiare forma e opacità, possono unirsi e dividersi, spostarsi e ruotare. Tutti gli elementi della UI del Material Design sono il risutato delle modifiche degli attributi di una superficie di base, che è bianca opaca, di spessore \texttt{1dp}, con un'ombra.
-		
-		
+
+
 
 
 
@@ -175,7 +176,7 @@ tabsize=1
 		L'elevazione rappresenta la distanza relativa delle superfici lungo l'asse z.
 
 		Lo sfondo ha elevazione 0. Tutte le superfici hanno una elevazione definita in \texttt{dp}. L'elevazione viene visualizzata mediante delle ombre, tanto più intense quanto più grande è il distacco tra la superficie in primo piano e la superficie in secondo piano. Altri modi per mostrare l'elevazione sono l'utilizzo di colori e opacità diversi.
-		
+
 		\begin{figure}[h]
    			\centering
    			\includegraphics[width=0.3\textwidth]{elevation}
@@ -222,7 +223,7 @@ tabsize=1
 				\item \textit{implicitamente}: lo spazio tra elementi correlati viene ridotto
     			\item \textit{esplicitamente}: gli elementi vengono racchiusi graficamente, ad esempio con una cornice
 			\end{itemize}
-			
+
 		\begin{figure}[h]
    			\centering
    			\includegraphics[width=0.4\textwidth]{contenimento}
@@ -279,7 +280,7 @@ tabsize=1
     		Solitamente viene implementata con una \textit{bottom navigation bar} (preferita nei dispositivi mobili) o con un \textit{navigation drawer}.
 
     		Per schermate di gerarchia più bassa possono essere utilizzate le \textit{tabs}.
-    		
+
     		\begin{figure}[h]
    			\centering
    			\includegraphics[width=0.5\textwidth]{navbar}
@@ -554,7 +555,7 @@ tabsize=1
 	\section{Tipografia}
 		Il material design fornisce molti strumenti per poter scegliere il font adatto con le misure giuste per ogni tipo di testo, forniscono pure un \href{https://material.io/design/typography/the-type-system.html#type-scale}{Type scale generator} che permette di creare il proprio type scale.
 		Vengono fornite misure e conversioni per Android, iOS e Web; e misure per titoli, sottotitoli e corpi di testo.
-		
+
 		\subsection{Dimensioni}
 		Le categorie di testo individuate dal Material Design sono
 		\begin{itemize}
@@ -564,14 +565,14 @@ tabsize=1
 			\item \textit{testo per i pulsanti}: in genere con sole lettere maiuscole, è dedicato ai pulsanti
 			\item \textit{didascalie e overline}: sono i type scale più piccoli. Didascalie spesso servono per annotare degli elementi mentre overlines a introdurre dei titoli.
 		\end{itemize}
-		
+
 	\subsection{Proprietà di un typeface}
 		Le proprietà che caratterizzano un typeface o permettono di modificarne le misure sono
 		\begin{itemize}
 			\item \textit{baseline}: è una linea invisibile che definisce come i songoli caratteri si allineano sulla griglia (ad esempio definisce quanto sono grandi le lettere maiuscole rispetto alle minuscole)
 			\item \textit{peso}: rappresenta lo spessore del tratto dei caratteri. Assume valori da 1 (\textit{light}) a 4 (\textit{bold})
 		\end{itemize}
-		
+
 	\subsection{Leggibilità}
 	La leggibilità di un testo è determinata da molteplici fattori quali
 	\begin{itemize}
@@ -588,51 +589,54 @@ tabsize=1
 		Il material design fornisce strumenti, griglie e specifiche per utilizzare e creare le proprie icone, con l'obbiettivo di mantenere un certo livello di semplicità.
 		\subsection{Design delle icone}
 			Nel Material Design, le icone sono realizzate per essere semplici e moderne, ridotte alla forma minima, esprimendo solo concetti essenziali, con forme geometriche semplici e consistenti. Questa semplicità permette alle icone di rimanere leggibili e distinguibili anche a dimensioni piccole.
-			
+
 			\subsubsection{Dimensioni}
 			Le icone sono normalmente 24dp x 24dp, nel caso di layout più densi come su un desktop possono essere scalate a 20dp x 20dp.
 			Per ogni icona vi è un perimetro di padding di 2dp,per prevenire sovrapposizioni o oscuramenti in layout densi o nel caso appaiano altri elementi a schermo.
 
 			Vengono fornite delle keylines e griglie per il design di icone: principalmente vengono usati quadrati, cerchi e rettangoli.
 			Il tratto che si usa quando si crea la propria icona deve essere sempre spesso 2dp, questo mantiene consistenti le icone, i tratti finali di un'icona, per esempio la punta di una freccia, sono sempre dritti e non tondi.
-			
+
 			\subsubsection{Orientamento}
 			Le icone devono sempre guardare avanti, non vanno girate o piegate, e devono sempre apparire piatte e non tridimensionali.
 			L'opacità di un'icona dipende dallo sfondo e dal suo stato: attiva o inattiva.
-			
+
 			\subsubsection{Transizioni}
 				Le transizioni sono effetti tra due icone, quando si preme un'icona viene eseguita l'animazione e l'altra icona diventa visibile o attiva, per esempio cliccando l'icona \textit{pausa} in un lettore di musica, la musica si ferma e l'icona diventa \textit{riprendi}.
 				Le animazioni possono essere semplici (una semplice rotazione), o complesse (trasformazioni e altri effetti), spesso se la funzionalità è più importante dell'aspetto visivo si scelgono animazioni semplici.
 				La durata di un'animazione semplice (come un pulsante on/off) è di 100ms, animazioni un po' più complesse 200ms (per esempio una rotazione), per animazioni che fanno uso di molte trasformazioni si usano 500ms così da poter vedere bene l'animazione.
-				
 
 % --------------------------------------------------------------------------------------
 	\section{Forme}
-	Le forme dirigono l'attenzione, identificano i componenti, mostrano come le superfici si relazionano tra loro ed esprimono il brand.
+	Gli elementi di un’applicazione possono essere visualizzati attraverso diverse forme. Le forme dirigono l'attenzione, identificano i componenti, mostrano come le superfici si relazionano tra loro ed esprimono il brand.
 
-	Le componenti hanno una forma rettangolare per impostazione predefinita, con angoli arrotondati di 4 dp. La loro forma può essere personalizzata regolando dimensione e forma degli angoli.
 
-	Si può decidere di modificare la forma dei componenti di un’applicazione per vari motivi. Le forme con un design unico (\textit{forme uniche}) differiscono dalle forme che le circondano, facendole risaltare.
+	Le componenti hanno una forma rettangolare per impostazione predefinita, con angoli arrotondati di 4 dp (density pixel). La loro forma può essere personalizzata regolando dimensione e forma degli angoli.
 
-	Inoltre, si può comunicare il cambiamento di stato di una componente utilizzando una forma diversa rispetto alle altre componenti di quel gruppo.
+	La forma di alcuni componenti di un’applicazione viene modificata per vari motivi: le forme con un design unico (\textit{forme uniche}) differiscono dalle forme che le circondano e dall'interfaccia utente nel suo insieme, aiutando a dirigere l'attenzione dell'utente.
+	Inoltre, una forma diversa rispetto alle altre componenti di quel gruppo può comunicare il cambiamento di stato di una componente utilizzando .
 
-	Ancora, per esprimere il proprio linguaggio visivo in un'app, si usa la forma insieme ad altre personalizzazioni, come colore e tipografia, in modo coerente. Lo stile di una famiglia di forme, come le forme organiche o geometriche, dovrebbe corrispondere
-	al marchio. Queste piccole modifiche alla forma, applicate strategicamente, contribuiscono all'impressione generale che un brand da all’utente.
-	
+	Ancora, per esprimere il linguaggio visivo di un \textbf{marchio} in un'app, si usano le forme insieme ad altre personalizzazioni, come colore e tipografia, in modo coerente.
+	Queste piccole modifiche alla forma, applicate strategicamente, contribuiscono all'impressione generale che un brand da all’utente.
+
+
 	\subsection{Gruppi di forme}
 	I componenti sono raggruppati in gruppi di forme in base alle loro dimensioni. In questo modo, si possono modificare contemporaneamente più valori di un gruppo di componenti. I gruppi di forme includono:
 	\begin{itemize}
-		\item \textit{Componenti piccoli}: pulsanti, chip, campi di testo, snackbar, ...
-		\item \textit{Componenti medi}: menu, card, dialog, ...
-		\item \textit{Componenti grandi}: sfondi, tabelle, drawer, ...
+		\item \textit{Componenti piccoli}, come pulsanti, chip, campi di testo, snackbar;
+		\item \textit{Componenti medi}, come menu, card, dialog;
+		\item \textit{Componenti grandi}, come sfondi, tabelle, drawer
 	\end{itemize}
-	
+
+
 	I gruppi di forme utilizzano degli attributi per definire la forma da assegnare agli angoli dei componenti. È possibile personalizzare i seguenti attributi:
 	\begin{itemize}
-		\item \textit{tipo di angolo}: appuntito, arrotondato, tagliato
-		\item \textit{dimensioni}: qual è il raggio dell'angolo. Può essere assoluto (in dp) oppure in funzione delle dimensioni dell aforma stessa
-		\item \textit{simmetria}: indica quli angoli vengono influenzati dalle modifiche
+		\item \textit{tipo di angolo}: appuntito, arrotondato, tagliato;
+		\item \textit{dimensioni}: il raggio dell'angolo. Può essere assoluto (in dp) oppure in funzione delle dimensioni della forma stessa;
+		\item \textit{simmetria}: è possibile applicare modifiche solo ad angoli specifici.
 	\end{itemize}
+
+	Per applicare una famiglia di forme e una dimensione a tutti i componenti di un gruppo, bisogna impostare i valori per il gruppo di forme. Quando vengono apportate modifiche a un gruppo, le modifiche influiscono su tutti i componenti in quel gruppo di forme, ad eccezione di quelli con una sostituzione.
 
 	\subsection{Uso efficace delle forme}
 	Le forme sono visibili quando i bordi della superficie hanno un contrasto sufficiente rispetto allo sfondo. Per impostazione predefinita, il Material Design rende visibili le forme utilizzando le ombre per visualizzare i bordi delle superfici.
@@ -643,36 +647,41 @@ tabsize=1
 	La forma può comunicare molte informazioni su un elemento, incluso il suo stato corrente, il risultato di un'interazione dell'utente o altre modifiche in un'app. Se utilizzata in questi modi, la forma dovrebbe essere presentata in modo coerente
 	nello stesso stato e nelle stesse interazioni, in modo che una forma specifica abbia lo stesso significato ogni volta che viene incontrata.
 
+	Se una forma non è interattiva, è necessario evitare l'utilizzo di forme con dimensioni sufficientemente grandi da apparire interattive. Ad esempio, una piccola forma triangolare su una card non dovrebbe essere abbastanza grande da essere scambiata per un elemento da toccare, se non lo è.
+
 	\subsubsection{Branding}
-	La combinazione di stili diversi e forme completamente diverse può rendere difficile l'associazione di forme particolari a un marchio. Quando si applica la forma in un'interfaccia utente, si sceglie la forma distintiva del marchio, ad esempio una forma organica o geometrica che riflette
-	gli attributi del marchio. Sulla base di questa forma,  viene poi sviluppata una serie di forme simili e correlate da applicare al prodotto che contribuiscono a unificare l'espressione del marchio in tutta l'applicazione. Tuttavia, l'uso eccessivo della forma per esprimere il marchio può portare
+	La combinazione di stili e forme diverse può rendere difficile l'associazione di forme particolari a un marchio. Per esprimere l'identità di un brand, si identifica la forma distintiva del marchio, ad esempio una forma organica o geometrica che riflette
+	gli attributi del logo. Sulla base di questa forma,  viene poi sviluppata una serie di forme simili da applicare al prodotto che contribuiscono a unificare l'espressione del marchio in tutta l'applicazione. Tuttavia, l'uso eccessivo della forma per esprimere il marchio può portare
 	alla diluizione dello stesso: la forma perde la sua connessione con il marchio e diventa un luogo comune. Inoltre, troppe forme uniche possono portare a nessuna forma particolarmente prominente, nonché a una mancanza di coesione visiva tra i componenti.
 
+	\subsubsection{Angoli}
+	E' necessario evitare di utilizzare valori percentuali per i componenti che modificano dinamicamente la propria altezza, altrimenti la forma potrebbe modificarsi in modi inaspettati.
+	Inoltre, gli angoli ancorati ai bordi dello schermo non possono essere personalizzati, altrimenti si creerebbero spazi vuoti che lasciano trasparire il contenuto dietro ad un componente.
+
 	\subsubsection{Modifiche ad altri sistemi}
-	Le personalizzazioni del sistema possono influire sull'uso della forma da parte di un componente. Ad esempio, l'aumento della dimensione del carattere potrebbe causare:
-	\begin{itemize}
-		\item Testo nel componente tagliato a causa della sua forma;
-		\item Modifica di altezza e forma del componente, se le dimensioni sono definite come percentuali;
-		\item Modifiche al contenuto.
-	\end{itemize}
+	Le personalizzazioni del sistema possono influire sull'uso della forma da parte di un componente. Ad esempio, l'aumento della dimensione del carattere potrebbe causare il taglio di parte di un testo e la modifica di altezza e forma del componente, se le dimensioni sono definite come percentuali.
 	Le modifiche al contenuto possono anche influire sulla forma di un componente. Ad esempio, se la lunghezza del testo aumenta, il testo potrebbe andare a capo su una riga aggiuntiva, aumentando l'altezza del componente e influenzando le forme definite come percentuale.
 
 	\subsubsection{Morphing}
 	Gli elementi possono cambiare forma in risposta alle modifiche al contenuto o all'interazione dell'utente. Questa trasformazione si chiama \textit{morphing}. Le forme possono trasformarsi per vari motivi: in risposta a cambiamenti di stato o contenuto o come risultato dell'interazione dell'utente. Ad esempio, quando si ruota un
-	dispositivo mobile da verticale a orizzontale, le superfici possono rispondere modificando le dimensioni, il che può causare la trasformazione delle forme. 
+	dispositivo mobile da verticale a orizzontale, le superfici possono rispondere modificando le dimensioni, il che può causare la trasformazione delle forme.
 
 	Il morphing di una forma dovrebbe preservare le proporzioni delle forme distintive, per evitare la distorsione.
 	Inoltre, tutto il contenuto su una superficie dovrebbe essere visibile mentre la superficie si trasforma, senza ritagliare il contenuto.
 
 	\subsection{Collegare superfici attraverso le forme}
 	Le forme possono aiutare gli utenti a capire in che modo le superfici sono correlate tra loro.
-	Forme simili possono indicare che le superfici sono dello stesso tipo, come le cards in una raccolta con dimensioni e angoli corrispondenti.
+	Forme simili possono indicare che le superfici sono dello stesso tipo, come le carte in una raccolta con dimensioni e angoli corrispondenti.
 
-	Le superfici correlate tra loro possono essere indicate utilizzando forme che ricordano le frecce, in modo tale da "puntare" verso altre superfici (ad esempio, un angolo a forma di freccia di un menu può puntare a una superficie correlata)
+	Le superfici correlate tra loro possono essere indicate utilizzando forme che ricordano le frecce, in modo tale da "puntare" verso altre superfici. Ad esempio, un angolo a forma di freccia di un menu può puntare a una superficie correlata.
+
 
 	Le forme possono enfatizzare le superfici separate l'una dall'altra. Ad esempio, quando una forma unica appare a un'altezza maggiore rispetto a un'altra superficie, si sottolinea che le due superfici sono separate.
-	
-	
+
+	\subsection{Forme nel material design 3}
+	Il material design tre intoduce un cambiamento ai gruppi di forme, sempre basati sulle dimensioni, ma con con sette stili degli angoli, assegnati in base alla quantità di arrotondamento desiderata. Le forme con angoli squadrati sono chiamate "none", le forme leggermente arrotondate sono "extra-small", mentre le forme completamente arrotondate sono "full".
+	Ciò consente di conferrire maggior espressività all'interfaccia utente. Viene, inoltre, mantenuta la possibilità avere forme degli angoli simmetriche o asimmetriche, con angoli tagliati o arrotondati. Inoltre, è sempre modificare lo stile di un' intera categoria di forme
+
 % --------------------------------------------------------------------------------------
 	\section{Interazione}
 
@@ -1019,10 +1028,10 @@ tabsize=1
 		\item Prima persona, "io"  o "mio": in alcuni casi, questa forma di indirizzo sottolinea la proprietà dell'utente di contenuti o azioni;
 	\end{itemize}
 	Per evitare di confondere l'utente, si evita di usare "io" o "mio" e "tu" o "tuo" nella stessa frase.
-	
-	
-	
-	
+
+
+
+
 % ========================================================================================================================
 \chapter{Novità del material design 3}
 	\section{Accessibilità}
