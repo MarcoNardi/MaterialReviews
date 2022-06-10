@@ -25,7 +25,13 @@ interface RestaurantDao {
     suspend fun delete(restaurant: RestaurantEntity)
     //query che ottiene tutti i ristoranti marcati come preferiti
     @Query("SELECT * FROM restaurants WHERE preferito = 1" )
-    fun getAllFavorites(): LiveData<List<RestaurantWithImages>>
+    fun getAllFavorites(): LiveData<List<RestaurantEntity>>
+
+
+    //query che ottiene tutti i ristoranti marcati come preferiti
+    @Transaction
+    @Query("SELECT * FROM restaurants WHERE preferito = 1" )
+    fun getAllFavoritesWithImages(): LiveData<List<RestaurantWithImages>>
 
     //query che ottiene tutti i ristoranti con tutte le immagini
     @Transaction
