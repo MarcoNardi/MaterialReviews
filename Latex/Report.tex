@@ -1079,7 +1079,13 @@ tabsize=1
 		Al momento sono disponibili solo i design per colore e tipografia, con il supporto di tokens per componenti e misure in sviluppo. Si può scaricare il dsp del material design da \href{https://github.com/material-foundation/material-tokens}{qua}, modificarlo con dei tools, e poi esportarli per android.
 		
 		Nella nostra applicazione non ne abbiamo fatto uso in quanto sono ancora in sviluppo, e i loro utilizzi non ci sono utili, come creare nuovi prodotti che usano lo stesso stile.
-	
+
+	\section{Interaction states}
+	Gli interaction states sono indicatori visivi utilizzati per comunicare lo stato di un componente o di un elemento interattivo. Si dividono in livelli che si presentano come una  copertura semitrasparente su un elemento che rende quest'ultimo più o meno opaco, mantenendo lo stesso colore del contenuto.
+	Ciò non accade ai componenti che utilizzano gli stati "attivo" o "selezionato" che, invece, cambiano il contenitore e il colore del contenuto .
+	Per impostazione predefinita, il colore del livello di stato di un componente deriva dal suo contenuto, dal colore di un'icona o dal testo dell'etichetta se non è presente alcuna icona.
+	Un livello può essere applicato a un intero elemento o in una forma circolare e può essere applicato solo un livello alla volta.
+
 	\section{Iconografia material 3}
 		Nel material design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
 		Nel catalogo molte icone vecche sono state ridisegnate, dando ora un'impressione più moderna
