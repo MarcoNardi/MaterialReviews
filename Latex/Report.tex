@@ -638,105 +638,31 @@ tabsize=1
 % --------------------------------------------------------------------------------------
 	\section{Comunicazione}
 	\subsection{Confirmation and acknowledgement}
-	Le comunicazioni di \textbf{conferma} e \textbf{acknowledgement} chiedono l’autorizzazione all’utente prima di intraprendere un'azione e gli confermano la riuscita delle stesse. Così, si può ridurre l'incertezza su un'azione che un utente ha intrapreso o sta per intraprendere e si evita di commettere errori.
+	Le comunicazioni di \textbf{conferma} e \textbf{acknowledgement} chiedono l’autorizzazione all’utente prima di intraprendere un'azione e gli confermano la riuscita delle stesse.
 
-	Le azioni di \textit{conferma}  chiedono all'utente se desidera procedere con l'azione appena eseguita. Possono essere associate a un avviso o ad informazioni critiche relative a tale azione. La conferma non è necessaria quando le conseguenze di un'azione sono reversibili o trascurabili. Ad esempio, se un segno
-	di spunta indica che un'immagine è stata selezionata, non sono necessarie ulteriori conferme. La richiesta di conferma viene rese al meglio utilizzando una finestra di avviso (alert dialog).
+	Le azioni di \textit{conferma}  chiedono all'utente se desidera procedere con l'azione appena eseguita. Possono essere associate a un avviso o ad informazioni critiche relative a tale azione. La conferma non è necessaria quando le conseguenze di un'azione sono reversibili o trascurabili.
+	La richiesta viene rese al meglio utilizzando una finestra di avviso (alert dialog).
 
-	Le azioni di \textit{acknowledgement} forniscono un testo per far sapere all'utente se un'azione che ha scelto è stata completata. Un acknowledgement notifica all'utente le azioni di sistema che si verificano in background. Viene visualizzato per un breve lasso di tempo e può includere un'opzione per annullare l'azione. Gli acknowledgement possono essere resi da una varietà di componenti. I criteri per la scelta del giusto componente includono:
-	\begin{itemize}
-		\item Livello di urgenza;
-		\item Inclusione di un'azione per correggere un problema;
-		\item Durata sullo schermo (transitoria, ignorabile o entrambi).
-	\end{itemize}
-	Gli acknowledgement temporanei indicano che il componente sparirà da solo entro pochi secondi dalla sua comparsa. Gli acknowledgement ignorabili possono essere eliminabili istantaneamente dall’utente.
-	Tipi di componenti che si possono usare:
+	Le azioni di \textit{acknowledgement} forniscono un testo per far sapere all'utente se un'azione che ha scelto è stata completata. Viene visualizzato per un breve lasso di tempo e può includere un'opzione per annullare l'azione. Gli acknowledgement possono essere resi da una varietà di componenti:
 	\begin{itemize}
 		\item \textit{Alert}. Utilizzare gli avvisi per inviare un messaggio in-app persistente che informa gli utenti di un particolare stato di modifica;
 		\item \textit{Snackbar}. Utilizzare uno snack bar per fornire un breve feedback su un'operazione;
-		\item \textit{Empty state}. Quando un'interfaccia utente è disponibile solo online e il contenuto non è stato caricato o sincronizzato, utilizzare uno stato vuoto. L'utente dovrebbe essere in grado di interagire con la maggior parte possibile del resto dell'app. È possibile presentare un collegamento per ricaricare il contenuto.
+		\item \textit{Stati vuoti}. Quando un'interfaccia utente è disponibile solo online e il contenuto non è stato caricato o sincronizzato, utilizzare uno stato vuoto.
 	\end{itemize}
 
 	\subsection{Visualizzazione dei dati}
-	La visualizzazione dei dati rappresenta le informazioni in forma grafica. E’ una forma di comunicazione che ritrae informazioni dense e complesse attraverso elementi visivi, per semplificare il confronto dei dati. La visualizzazione dei dati può esprimere dati di diversi tipi e dimensioni: da pochi data point a grandi set di dati. Principi della visualizzazione grafica:
+	La visualizzazione dei dati rappresenta le informazioni in forma grafica. E’ una forma di comunicazione che ritrae informazioni dense e complesse attraverso elementi visivi, per semplificare il confronto dei dati. Principi della visualizzazione grafica:
 	\begin{itemize}
 		\item \textit{Accuratezza}: priorità all'accuratezza, alla chiarezza e all'integrità dei dati, presentando le informazioni in modo da non distorcerle;
 		\item \textit{Utilità}: aiuta gli utenti a navigare tra i dati con contesto e convenienza che enfatizzano l'esplorazione e il confronto;
 		\item \textit{Scalabilità}: adatta le visualizzazioni per dispositivi di dimensioni diverse, anticipando le esigenze degli utenti in termini di profondità, complessità e modalità dei dati.
 	\end{itemize}
 	La visualizzazione dei dati può essere espressa in diverse forme. I grafici sono un modo comune di esprimere i dati, in quanto ne rappresentano diversi tipi e consentono il confronto tra essi. Il tipo di grafico che si usa dipende principalmente da due cose: i dati che si vogliono comunicare e ciò che si vuole trasmettere attraverso quei dati.
-	\subsubsection{Stile}
-	La visualizzazione dei dati utilizza stili e forme personalizzate per semplificare la comprensione dei dati a colpo d'occhio, in modi che si adattano alle esigenze e al contesto dell'utente. I grafici possono trarre vantaggio dalla personalizzazione di quanto segue:
-	\begin{itemize}
-		\item Elementi grafici;
-		\item Tipografia;
-		\item Iconografia;
-		\item Assi ed etichette;
-		\item Leggende e annotazioni.
-	\end{itemize}
-
-	\textit{Elementi e grafici.}
-
-	La codifica visiva è il processo di traduzione dei dati in forma visiva. È possibile applicare attributi grafici univoci sia a dati quantitativi (come temperatura, prezzo o velocità) sia a dati qualitativi (come categorie, aromi o espressioni). Questi attributi includono una grande varietà di elementi, tra cui forma, colore, volume, lunghezza, angolo, posizione, direzione e densità.
-
-	È possibile applicare più trattamenti visivi a più di un aspetto di un elemento dei dati. Ad esempio, il colore di una barra può rappresentare una categoria, mentre la lunghezza di una barra può esprimere un valore (come la dimensione della popolazione).
-
-	I grafici possono utilizzare le forme per visualizzare i dati in diversi modi. Una forma può essere disegnata come giocosa e curvilinea o precisa e ad alta fedeltà, o in modi ibridi tra questi due estremi. I dati destinati all'esplorazione ravvicinata dovrebbero essere rappresentati da forme adatte all'interazione (in termini di dimensioni del target touch
-	e relative affordances). Mentre i dati che hanno lo scopo di esprimere un'idea o una tendenza generale possono utilizzare forme con meno dettagli.
-
-	Le \textbf{linee} del grafico possono esprimere delle qualità dei dati, come gerarchia, evidenziazioni e confronti. Gli stili di linea possono essere stilizzati in diversi modi, ad esempio utilizzando trattini o opacità diverse
-
-	Il \textbf{colore} può essere utilizzato per differenziare i dati del grafico in quattro modi principali:
-	\begin{itemize}
-		\item Distinguere le categorie l'una dall'altra;
-		\item Rappresentare la quantità;
-		\item Evidenziare dati specifici;
-		\item Esprimere significato.
-	\end{itemize}
-	Per soddisfare gli utenti che non vedono differenze di colore, si possono utilizzare altri metodi per accentuare i dati, come l'ombreggiatura, la forma o la trama ad alto contrasto. L'applicazione di etichette di testo ai dati aiuta anche a chiarirne il significato, eliminando la necessità di una legenda.
-
-	\textit{Tipografia}
-
-	Il testo può essere utilizzato per etichettare diversi elementi del grafico, tra cui:
-	\begin{itemize}
-		\item Titoli dei grafici;
-		\item Etichette dei dati;
-		\item Etichette dell'asse;
-		\item Legenda.
-	\end{itemize}
-	Il testo con il livello di gerarchia più alto è solitamente il titolo del grafico. Le intestazioni e i diversi pesi dei caratteri possono comunicare quale contenuto è più (o meno) importante di altri contenuti nella gerarchia. Tuttavia, questi trattamenti dovrebbero essere usati con parsimonia, con un numero limitato di stili tipografici.
-
-	\textit{Iconografia}
-
-	L'iconografia può rappresentare diversi tipi di dati in un grafico e migliorarne l'usabilità complessiva. L'iconografia può essere utilizzata per:
-	\begin{itemize}
-		\item Dati categoriali per differenziare gruppi o categorie;
-		\item Controlli e azioni dell'interfaccia utente, come filtro, zoom, salvataggio e download;
-		\item Stati, come errori, assenza di dati, stati completati e pericolo.
-	\end{itemize}
-	Quando si posizionano le icone in un grafico, si consiglia di utilizzare simboli universalmente riconoscibili, in particolare quando si rappresentano azioni o stati, come: salvataggio, download, completamento, errore e pericolo.
-
-	\subsubsection{Comportamento}
-	I grafici forniscono modelli di interazione che danno agli utenti il controllo sui dati visualizzati. Questi modelli consentono agli utenti di concentrarsi su valori o intervalli specifici di un grafico. I seguenti modelli di interazione, stili ed effetti consigliati (come il feedback tattile) possono migliorare la comprensione da parte dell'utente dei dati del grafico:
-	\begin{itemize}
-		\item La \textit{divulgazione progressiva} fornisce un percorso chiaro per svelare i dettagli, accessibile su richiesta;
-		\item La \textit{manipolazione diretta} consente agli utenti di agire direttamente sugli elementi dell'interfaccia utente, riducendo al minimo il numero di azioni necessarie su uno schermo, tra cui: zoom e panoramica, impaginazione e controlli dei dati;
-		\item La \textit{modifica della prospettiva} consente a un progetto di funzionare per utenti e tipi di dati diversi, come controlli dati e movimento.
-	\end{itemize}
-
-	Lo \textbf{zoom} e la \textbf{panoramica} sono interazioni popolari tra i grafici che influiscono sulla precisione con cui gli utenti possono studiare i dati ed esplorare l'interfaccia utente del grafico.
-	Lo \textit{zoom} cambia se l'interfaccia utente viene mostrata da più vicino o da più lontano. Il tipo di dispositivo determina come viene eseguito lo zoom e, quando non è l'azione principale, può essere implementato facendo clic e trascinando (sul desktop) o toccando due volte (sul dispositivo mobile).
-	La \textit{panoramica} consente all'utente di esplorare l'interfaccia utente che si espande oltre lo schermo. Dovrebbe essere vincolata in modi che abbiano senso per i dati visualizzati. Ad esempio, se una dimensione di un grafico è più importante di un'altra, la direzione della panoramica può essere
-	limitata solo a quella direzione. L'atto della panoramica è spesso associato allo zoom. Sui dispositivi mobili, la panoramica viene spesso implementata tramite gesti, come lo scorrimento con un dito.
-
-	Il \textbf{movimento} può migliorare e rafforzare la relazione tra i dati e il modo in cui gli utenti interagiscono con essi. Il movimento dovrebbe essere usato intenzionalmente (non in modo decorativo), esprimendo la connessione tra stati e spazi diversi, dovrebbe risultare logico, fluido e reattivo, senza ostacolare il percorso dell'utente.
-
-	Nei \textbf{grafici vuoti} si possono visualizzare contenuti che suggeriscono cosa aspettarsi quando i dati sono disponibili. Ove applicabile, le animazioni possono essere mostrate per fornire gioia e intrattenimento.
 
 	\subsubsection{Dashboards}
-	La visualizzazione dei dati può essere visualizzata su una serie di più grafici, in interfacce utente denominate dashboard . Grafici multipli e separati a volte possono comunicare meglio una storia, rispetto ad un grafico complesso.
+	La visualizzazione dei dati può essere visualizzata su una serie di più grafici, in interfacce utente denominate dashboard.
 
-	Lo scopo di una dashboard dovrebbe riflettersi nel layout, nello stile e nei modelli di interazione. Il suo design dovrebbe adattarsi al modo in cui verrà utilizzato, sia che si tratti di uno strumento per fare una presentazione o di esplorare a fondo i dati. Una dashboard dovrebbe:
+	Il design di una dashboard dovrebbe adattarsi al modo in cui verrà utilizzata, sia che si tratti di uno strumento per fare una presentazione o di esplorare a fondo i dati. Una dashboard dovrebbe:
 	\begin{itemize}
 		\item Dare la priorità alle informazioni più importanti (usando il layout);
 		\item Visualizzare un punto focale che dia priorità alle informazioni in base alla gerarchia (utilizzando colore, posizione, dimensione e peso visivo);
@@ -745,7 +671,7 @@ tabsize=1
 	\begin{itemize}
 		\item \textit{Dashboard analitiche}
 
-		Le dashboard analitiche consentono agli utenti di esplorare più set di dati e scoprire le tendenze. Di solito queste dashboard includono grafici complessi che consentono l'individuazione di informazioni dettagliate sui dati. I casi d'uso includono:
+		Consentono agli utenti di esplorare più set di dati e scoprire le tendenze. Includono grafici complessi che consentono l'individuazione di informazioni dettagliate sui dati. I casi d'uso includono:
 		\begin{itemize}
 			\item Evidenziare le tendenze nel tempo;
 			\item Rispondere alle domande "perché" e "e se";
@@ -754,14 +680,14 @@ tabsize=1
 		\end{itemize}
 		\item \textit{Operation dashboard}
 
-		Le Operations dashboard sono progettati per rispondere a una serie predefinita di domande. In genere vengono utilizzati per completare attività relative al monitoraggio. Nella maggior parte dei casi, questi tipi di dashboard presentano informazioni aggiornate disposte in una serie di semplici grafici.I casi d'uso includono:
+		Sono progettate per rispondere a una serie predefinita di domande. In genere vengono utilizzati per completare attività relative al monitoraggio. Presentano informazioni aggiornate disposte in una serie di semplici grafici.I casi d'uso includono:
 		\begin{itemize}
 			\item Monitoraggio dei progressi attuali rispetto a un obiettivo;
 			\item Monitoraggio delle prestazioni del sistema in tempo reale.
 		\end{itemize}
 		\item \textit{Presentation dashboards}
 
-		Le Presentation dashboards forniscono un'istantanea curata su un argomento di interesse. Queste dashboard in genere includono alcuni piccoli grafici o una scorecard, con titoli dinamici che spiegano le tendenze e le informazioni dettagliate fornite in ciascun grafico di supporto. I casi d'uso includono:
+		Forniscono un'istantanea curata su un argomento di interesse. Includono alcuni piccoli grafici o una scorecard, con titoli dinamici che spiegano le tendenze e le informazioni dettagliate fornite in ciascun grafico di supporto. I casi d'uso includono:
 		\begin{itemize}
 			\item Fornire una panoramica degli indicatori chiave di prestazione;
 			\item Creazione di un sommario esecutivo di alto livello.
@@ -769,46 +695,30 @@ tabsize=1
 	\end{itemize}
 
 	\subsection{Stati vuoti}
-	Gli stati vuoti si verificano quando il contenuto di un elemento non può essere mostrato. Gli stati vuoti possono visualizzare un'ampia varietà di contenuti. Ad esempio, possono includere un elenco senza voci o una ricerca che non restituisce risultati. Sebbene questi stati non siano tipici, dovrebbero essere progettati per evitare confusione.
+	Gli stati vuoti si verificano quando il contenuto di un elemento non può essere mostrato.
 
 	Lo stato vuoto più elementare consiste in un'immagine non interattiva e uno slogan di testo. Si usa un'immagine che ha un tono neutro o umoristico ed è coerente con il marchio. Lo slogan dovrebbe, invece, avere un messaggio utile, essere coerente con il  marchio e trasmettere lo scopo dedell’app, senza apparire cliccabile.
 
 	\subsubsection{Alternative}
-	Per aiutare gli utenti che non conoscono un'app o una sezione, le schermate che altrimenti sarebbero vuote possono essere popolate con contenuti \textbf{iniziali}. Ciò consente agli utenti di iniziare a utilizzare un'app immediatamente, rendendo più facile per loro conoscere cosa un'app ha da offrire. Raccomandazioni:
-	\begin{itemize}
-		\item I contenuti iniziali sono ideali per le app che archiviano contenuti (come libri o musica) o creano contenuti basati su modelli (come note o documenti);
-		\item Usa contenuti che abbiano un ampio appeal e mostrino le caratteristiche principali;
-		\item Offri agli utenti la possibilità di eliminare e sostituire il contenuto iniziale;
-		\item Se possibile, fornisci contenuti personalizzati.
-	\end{itemize}
-	Se lo scopo dello schermo non è facilmente veicolato attraverso un'immagine e uno slogan, considera invece di mostrare \textbf{contenuti didattici}. I contenuti didattici aiutano gli utenti a capire cosa sarà in grado di fare un'app una volta che avrà dei contenuti. Raccomandazioni:
-	\begin{itemize}
-		\item Consenti di ignorare o saltare questo contenuto;
-		\item Sii breve;
-		\item Mantieni il contenuto contestuale allo schermo. Questo non dovrebbe essere un luogo in cui eseguire l'onboarding dell'utente nell'intera app.
-	\end{itemize}
+	Le schermate che altrimenti sarebbero vuote possono essere popolate con \textbf{contenuti iniziali}. Ciò consente agli utenti di iniziare a utilizzare un'app immediatamente, rendendo più facile per loro conoscere cosa un'app ha da offrire.
+
+	Se lo scopo dello schermo non è facilmente veicolato attraverso un'immagine e uno slogan, si mostrano \textbf{contenuti didattici}. I contenuti didattici aiutano gli utenti a capire cosa sarà in grado di fare un'app una volta che avrà dei contenuti.
+
 
 	\subsection{Aiuto e feedback}
 	Il contenuto della guida fornisce risposte alle domande e ai dubbi degli utenti. Gli utenti possono inviare commenti, segnalare bug e porre domande a cui non è già stata data risposta. La guida dovrebbe essere facile da trovare. Può essere posizionata in vari punti della navigazione.
-	Di solito appare in un drawer di navigazione o in un menu di overflow sotto l'etichetta "Aiuto" o "Invia feedback". È più facile trovare il contenuto della Guida se è sia nel drawer di navigazione che nella barra delle app o solo nella barra delle app. È meno facile trovare il contenuto della Guida quando è solo nel drawer di navigazione o nel menu di overflow.
-
-	Se l’app è complessa e dispone di un drawer, si inserisce un link alla "Guida" sia nel drawer di navigazione che nella barra dell'app.
-
-	Se l’app è complessa e non dispone di un drawer di navigazione, si  inserisce un link alla "Guida" nella barra dell'app.
-
-	Se l’app non è complessa, inserisci "Aiuto" in un drawer di navigazione o solo nel menu di overflow.
-
-	"Aiuto" dovrebbe essere l'ultimo elemento nel drawer di navigazione, con "Invia feedback" direttamente sopra di esso. Inoltre, ogni volta che viene visualizzato "Esci" in un drawer di navigazione, questo dovrebbe essere l'ultimo elemento nell'elenco.
+	Di solito appare in un drawer di navigazione o in un menu di overflow sotto l'etichetta "Aiuto" o "Invia feedback".
 
 	Per fornire assistenza per problemi urgenti, come pagamenti e rimborsi, posizionare un'icona della Guida nella barra dell'app. Le app desktop possono anche inserire un'icona della Guida nella barra delle app, poiché c'è più spazio nell'interfaccia utente del desktop.
 
 	\subsection{Immagini}
 	Le immagini comunicano e differenziano un prodotto. Possono sia migliorare l'esperienza dell'utente che esprimere il linguaggio visivo di un marchio. Aiutano a raccontare una storia, a chiarire messaggi complessi difficili da esprimere con le parole e a mostrare
-	agli utenti come eseguire un'azione. Le immagini devono essere selezionate in base alla loro capacità di esprimere il messaggio dell’app e riflettere lo stile del prodotto. Indipendentemente dal fatto che si utilizzino delle fotografie generate dagli utenti, delle
-	fotografie professionale o diversi stili di illustrazione, ogni modalità dovre conferire un aspetto che rifletta il  prodotto. Le immagini dovrebbero essere correlate tra loro condividendo una funzione, uno stile e un'intenzione comuni. Per garantire l'accessibilità, le immagini dovrebbero includere un testo alternativo (o una didascalia) che gli screen reader leggeranno agli utenti con disabilità visive.
+	agli utenti come eseguire un'azione.
 
-	Avere un punto focale iconico nelle immagini, è importante, poiché influisce sul modo in cui poi l’immagine viene tagliata per schermi con dimensioni diverse. Un punto focale può essere qualsiasi cosa, da una singola entità a una composizione complessiva. Per visualizzare al meglio immagini di diverse dimensioni e tipi, bisogna ridimensionare le immagini
-	in modo appropriato per diversi display e piattaforme. È fondamentale testare le dimensioni di risoluzione appropriate per rapporti e dispositivi specifici, assicurandosi che le risorse non appaiano pixelate. Tuttavia, la risoluzione è anche il fattore più importante per la velocità di caricamento delle immagini. Per preservare la larghezza di banda della rete, sarà necessario mantenere bassa la risoluzione ove possibile.
+	Per garantire l'accessibilità, le immagini dovrebbero includere un testo alternativo (o una didascalia) che gli screen reader leggeranno agli utenti con disabilità visive.
+
+	Avere un punto focale iconico nelle immagini, è importante, poiché influisce sul modo in cui poi l’immagine viene tagliata per schermi con dimensioni diverse.
+
 
 	\subsubsection{Miniature}
 	Le miniature sono piccole immagini che rappresentano informazioni in spazi ristretti. In genere fungono da target di tocco che portano al contenuto principale, apparendo all'interno di componenti come schede o elenchi. Le miniature vengono utilizzate per:
@@ -817,21 +727,17 @@ tabsize=1
 		\item Fornire un’anteprima di contenuti su altri schermi;
 		\item Assistere nella navigazione.
 	\end{itemize}
-	Le miniature possono essere ritagliate in diverse forme ed elementi, come testo o azioni, possono essere posizionati sopra di esse. Inoltre, la dimensione delle miniature riflette la loro importanza.
 
 	\subsection{Launch screen}
 	La schermata di avvio è la prima esperienza che un utente ha con l’app. Può essere visualizzata all'avvio, mentre l’app viene caricata, al posto di visualizzare una schermata vuota. Questo può ridurre
-	l’impressione di un lungo tempo di caricamento e ha il potenziale di migliorare l'esperienza dell'utente. Le schermate di avvio non dovrebbero essere visualizzate se un'app è in esecuzione. Esistono due tipi di schermate di avvio:
+	l’impressione di un lungo tempo di caricamento e ha il potenziale di migliorare l'esperienza dell'utente. Esistono due tipi di schermate di avvio:
 	\begin{itemize}
-		\item Schermate che mostrano un'anteprima non interattiva dell'interfaccia utente effettiva dell'app, chiamate interfacce segnaposto. Questa schermata di avvio è appropriata sia per l'avvio di app che per
-		le transizioni di attività all'interno di un'app. All'avvio, gli elementi strutturali principali, come la barra di stato, la barra dell'app e il foglio inferiore, vengono visualizzati senza contenuto fino
-		al caricamento dell'app. Gli elementi segnaposto, con un'animazione semplice, dovrebbero essere visualizzati nelle posizioni in cui verranno caricati i contenuti.
-		\item Schermate che forniscono un'esposizione momentanea del marchio, visualizzando un logo o altri elementi che migliorano il riconoscimento del marchio. In questa schermata, si evita di utilizzare il testo tranne quello del  logo e, se applicabile, uno slogan.
+		\item Schermate che mostrano un'anteprima non interattiva dell'interfaccia utente effettiva dell'app, chiamate interfacce segnaposto.
+		\item Schermate che forniscono un'esposizione momentanea del marchio, visualizzando un logo o altri elementi che migliorano il riconoscimento del marchio.
 	\end{itemize}
 
 	\subsection{Onboarding}
-	L'onboarding è un'esperienza di unboxing virtuale che aiuta gli utenti a iniziare con un'app. E’ un punto di un percorso più lungo che inizia nell'App Store e termina con l'esecuzione della prima vera azione da parte dell'utente sull’app.
-	Quando si progetta l’onboarding, bisogna considerare le schermate precedenti e quelle che verranno dopo. E’ fondamentale mostrare l'onboarding solo ai nuovi utenti, per evitare di peggiorare l’esperienza. Sono disponibili tre modelli di onboarding:
+	L'onboarding è un'esperienza di unboxing virtuale che aiuta gli utenti a iniziare con un'app. Sono disponibili tre modelli di onboarding:
 	\begin{itemize}
 		\item \textbf{selezione automatica}: consente agli utenti di personalizzare le proprie esperienze;
 		\item  \textbf{avvio rapido}: avvia l'utente direttamente nell'app;
@@ -844,17 +750,13 @@ tabsize=1
 		\item Può anche fornire un modo opzionale per saperne di più o chiedere aiuto.
 	\end{itemize}
 
-	\subsubsection{Stati offline}
-	Gli stati offline consentono agli utenti di interagire con un'app senza accesso a Internet. Si adatta il comportamento dell’app quando l'utente ha una connessione lenta, intermittente o assente. Quando la connessione è limitata, si carica ugualmente il contenuto disponibile,
-	anziché non caricare nulla. Per comunicare che una funzione dell’app sta funzionando offline, si mostra l’icona pin offline con l'etichetta di testo "offline". Quando le funzionalità non sono disponibili offline, si indicano utilizzando l’icona nuvola off, possibilmente utilizzando anche l'etichetta di testo "offline" insieme all'icona.
-
 	\subsection{Scrittura}
 	Il testo dovrebbe essere comprensibile da chiunque, ovunque, indipendentemente dalla cultura o lingua. Per facilitare la navigazione e l'individuazione, si usano brevi segmenti che si focalizzano su un numero limitato di concetti alla volta. E’ fondamentale comunicare solo
 	i dettagli essenziali in modo che gli utenti possano concentrarsi sulle proprie attività. A volte l'interfaccia utente più efficace non contiene alcun testo.  Inoltre, è bene evitare la terminologia specifica del settore o i nomi inventati per le funzionalità dell'interfaccia utente.
-	Se una frase descrive un obiettivo e l'azione necessaria per raggiungerlo, è opportuno iniziare la frase con l'obiettivo. Inoltre, non è necessario scrivere subito tutte le informazioni, ma risulta meno dispersivo rivelarle progressivamente e secondo necessità, man mano che l'utente le esplora e necessita di maggiori informazioni.
+	Se una frase descrive un obiettivo e l'azione necessaria per raggiungerlo, è opportuno iniziare la frase con l'obiettivo.
 
 
-	Per descrivere il comportamento dell’app, si utilizza il tempo presente, non il futuro. Se è necessario scrivere al passato o al futuro, è raccomandato usare forme verbali semplici. Per quanto riguarda i numeri,  per facilitare la lettura, vanno scritti in cifre ( "1, 2, 3", non "uno, due, tre") a meno di casi particolari, come "Inserisci due 3".
+	Per descrivere il comportamento dell’app, si utilizza il tempo presente, non il futuro. Se è necessario scrivere al passato o al futuro, è raccomandato usare forme verbali semplici. Per quanto riguarda i numeri,  per facilitare la lettura, vanno scritti in cifre.
 	La punteggiatura va evitata dove non è necessaria, per aiutare i lettori a scansionare il testo a colpo d'occhio. Si evita di usare punti su frasi singole in questi elementi dell'interfaccia utente:
 	\begin{itemize}
 		\item Etichette;
@@ -862,8 +764,9 @@ tabsize=1
 		\item Elenchi puntati;
 		\item Testo del corpo della finestra di dialogo.
 	\end{itemize}
-	Frasi più lunghe o complesse possono usare i punti se farlo si adatta meglio al contesto. Ad esempio, se il resto del flusso dell'app non usa i periodi, introdurli in alcuni punti potrebbe sembrare incoerente.
-	Inoltre, ci si rivolge agli utenti in seconda persona (tu o tuo) o in prima persona (io, io o mio), a seconda di quale sia adatto e più chiaro per la situazione:
+	Frasi più lunghe o complesse possono usare i punti se farlo si adatta meglio al contesto.
+
+	Per rivolgersi agli utenti si usa la prima o seconda persona (io, io o mio; tu o tuo), a seconda di quale sia adatta e più chiara per la situazione:
 	\begin{itemize}
 		\item Seconda persona, "tu" o "tuo": questo stile di conversazione è appropriato nella maggior parte delle situazioni; come se l'interfaccia utente parlasse direttamente all'utente;
 		\item Prima persona, "io"  o "mio": in alcuni casi, questa forma di indirizzo sottolinea la proprietà dell'utente di contenuti o azioni;
