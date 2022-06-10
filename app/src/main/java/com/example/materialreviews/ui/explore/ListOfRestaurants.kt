@@ -52,14 +52,15 @@ fun ListOfRestaurants(
         //HeartToggleButton checked
         if (onlyFavorites) {
             // Estraggo la lista dei ristoranti preferiti
-            val data by model.getALlFavorites().observeAsState(emptyList())
+            val data by model.getALlFavorites().observeAsState()
 
             //PlaceHolder in caso non ci siano preferiti
-            if (data.isEmpty()) {
+            if (data==null) {
+                CircularProgressIndicator()
+            }else if(data!!.isEmpty()) {
                 NoFavourites()
             }else{
-
-            data.forEach { restaurantWithImages ->
+            data!!.forEach { restaurantWithImages ->
                 // Se sto considerando solo i preferiti, quelli non preferiti appaiono invisibili, mentre i preferiti appaiono e hanno una exit animation
                 AnimatedVisibility(
                     restaurantWithImages.restaurant.preferito,

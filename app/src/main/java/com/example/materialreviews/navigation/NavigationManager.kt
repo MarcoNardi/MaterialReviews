@@ -253,7 +253,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBarItem(
             selected = (currentRoute == MaterialReviewsScreen.MyReviews.name),
-            icon = { Icon(Icons.Filled.Star, contentDescription = "Recensioni") },
+            icon = { Icon(Icons.Filled.RateReview, contentDescription = "Recensioni") },
             //Nome della pagina
             label = { Text(text = stringResource(R.string.myreviews)) },
             onClick = {
