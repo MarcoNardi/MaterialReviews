@@ -39,33 +39,49 @@ fun ListOfRestaurants(
     onlyFavorites:Boolean = false
 ) {
 
-
+    val data by model.getRestaurantsWithImage().observeAsState()
     // Creo una colonna di RestaurantCard
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .padding(bottom = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        
+    if(data!=null){
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
 
-    ) {
-        //HeartToggleButton checked
-        if (onlyFavorites) {
-            // Estraggo la lista dei ristoranti preferiti
-            val data by model.getALlFavorites().observeAsState()
 
-            //PlaceHolder in caso non ci siano preferiti
-            if (data==null) {
-                CircularProgressIndicator()
-            }else if(data!!.isEmpty()) {
-                NoFavourites()
+            ) {
+            //HeartToggleButton checked
+            if (onlyFavorites) {
+
+                //PlaceHolder in caso non ci siano preferiti
+                if(data!!.isEmpty()) {
+                    NoFavourites()
+                }else{
+                    data!!.forEach { restaurantWithImages ->
+                        // Se sto considerando solo i preferiti, quelli non preferiti appaiono invisibili, mentre i preferiti appaiono e hanno una exit animation
+                        AnimatedVisibility(
+                            restaurantWithImages.restaurant.preferito,
+                            exit = shrinkVertically() + fadeOut()
+                        ) {
+                            RestaurantCard(
+                                restaurantWithImages.restaurant,
+                                onClickSeeAll = onClickSeeAll,
+                                onCheckedChange = { it ->
+                                    model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
+                                },
+                                imageUri = restaurantWithImages.images[0].uri,
+                                getAverageRating = { model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid) }
+                            )
+                        }
+                        //credo questo ormai sia inutile ma lo lascio non si sa mai
+                        //return@forEach  //https://stackoverflow.com/questions/32540947/break-and-continue-in-foreach-in-kotlin
+                        //se non sto considerando una sublist particolare semplicementre mostro tutti
+                    }
+                }
             }else{
-            data!!.forEach { restaurantWithImages ->
-                // Se sto considerando solo i preferiti, quelli non preferiti appaiono invisibili, mentre i preferiti appaiono e hanno una exit animation
-                AnimatedVisibility(
-                    restaurantWithImages.restaurant.preferito,
-                    exit = shrinkVertically() + fadeOut()
-                ) {
+                // Estraggo la lista dei ristoranti
+
+                data!!.forEach { restaurantWithImages ->
                     RestaurantCard(
                         restaurantWithImages.restaurant,
                         onClickSeeAll = onClickSeeAll,
@@ -76,28 +92,13 @@ fun ListOfRestaurants(
                         getAverageRating = { model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid) }
                     )
                 }
-                //credo questo ormai sia inutile ma lo lascio non si sa mai
-                //return@forEach  //https://stackoverflow.com/questions/32540947/break-and-continue-in-foreach-in-kotlin
-                //se non sto considerando una sublist particolare semplicementre mostro tutti
-            }
-            }
-        }else{
-            // Estraggo la lista dei ristoranti
-            val data by model.getRestaurantsWithImage().observeAsState(emptyList())
-            data.forEach { restaurantWithImages ->
-                RestaurantCard(
-                    restaurantWithImages.restaurant,
-                    onClickSeeAll = onClickSeeAll,
-                    onCheckedChange = { it ->
-                        model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
-                    },
-                    imageUri = restaurantWithImages.images[0].uri,
-                    getAverageRating = { model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid) }
-                )
-            }
 
 
+            }
         }
+    }
+    else{
+        CircularProgressIndicator()
     }
 }
 @ExperimentalMaterial3Api
