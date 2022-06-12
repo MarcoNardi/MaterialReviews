@@ -795,7 +795,7 @@ tabsize=1
 			
 			Il testo alternativo aiuta a tradurre un elementov visivo, come un'immagine, in un elemento testuale.
 		\subsection{Contrasto}
-			Per rendere gli elementi più accessibili nel proprio tema è consigliato di avere un rapporto 3:1 per testo grande rispetto al background, e di 4.5:1 per il testo piccolo. Come viene calcolato il contrasto verrà esplorato meglio nella sezione Colori più avanti
+			Per rendere gli elementi più accessibili nel proprio tema è consigliato di avere un rapporto 3:1 per testo grande rispetto al background, e di 4.5:1 per il testo piccolo.
 
 		\subsection{Best practice}
 			La pratica migliore consiste però nell'utilizzo di elementi nativi, in quanto sono garantiti ad avere un certo livello di accessibilità, mentre elementi custom possono richiedere del testing per verificarne l'accessibilità
@@ -825,6 +825,62 @@ tabsize=1
 	Ciò non accade ai componenti che utilizzano gli stati "attivo" o "selezionato" che, invece, cambiano il contenitore e il colore del contenuto .
 	Per impostazione predefinita, il colore del livello di stato di un componente deriva dal suo contenuto, dal colore di un'icona o dal testo dell'etichetta se non è presente alcuna icona.
 	Un livello può essere applicato a un intero elemento o in una forma circolare e può essere applicato solo un livello alla volta.
+	
+	\section{Colori}
+	Una delle principali novità introdotte dal Material Design 3 è il nuovo sistema dei colori, in particolare il sistema di colori \textit{dinamici} (disponibile solo in Android 12).
+		
+		\subsection{Novità nel sistema di colori}
+		Mentre nel Material Design 2 la palette di colori era costituita da 12 valori, con due colori principali, nel Material Design 3 il numero di tinte è più che raddoppiato. Infatti una palette (in Jetpack Compose rappresentata dalla classe \texttt{ColorScheme}) è costituita da ben 25 elementi, suddivisi come segue:
+		\begin{itemize}
+			\item \textit{accent colors}: sono i tre colori principali dell'app e ne definiscono il tema
+			\item \textit{container colors}: sono delle varianti degli accent colors, da utilizzare per le superfici
+			\item \textit{background} e \textit{surface}: colori neutri, generalmente bianco o nero, da utilizzare per lo sfondo dell'app
+			\item \textit{colori neutrali}: ulteriori colori per elementi di contorno o di scarsa importanza
+			\item \textit{colori per gli errori}: vengono usati per i messaggi d'errore
+			\item \textit{colori on[...]}: garantiscono un contrasto adeguato tra il testo e il colore della superficie
+		\end{itemize}
+		
+		\begin{figure}[h]
+   			\centering
+   			\includegraphics[width=0.7\textwidth]{MD3colorscheme} %nome del file
+ 			\caption{Schema di colori della nostra app}
+		\end{figure}
+		
+		\subsection{Ottenere uno schema di colori}
+		Per ottenere uno schema di colori è messo a disposizione degli sviluppatori il \href{https://material-foundation.github.io/material-theme-builder/#/custom}{Material Theme Builder}, uno strumento che permette di scegliere gli \textit{accent colors} desiderati e che genera una palette che rispetta le linee guida del Material Design 3. La palette può essere esportata, sotto forma di codice, e implementata nell'app.
+		
+		L'utilizzo di questo strumento garantisce una certa armonia nei colori e un adeguato contrasto tra i colori di sfondo e i colori per il testo, assicurando la leggibilità sia nel tema chiaro che nel tema scuro.
+		
+		Per lo schema di colori della nostra app, abbiamo selezionato come \textit{primary color} il colore rosso scuro caratteristico dell'Università di Padova, lasciando che il sistema generasse automaticamente tutti gli altri colori.
+		
+		\subsection{Gerarchia}
+		All'interno dello schema di colori esiste una gerarchia, con lo scopo di guidare l'utente nell'interfaccia grafica dell'applicazione. 
+		
+		Il colore primario deve essere utilizzato per gli elementi più importanti, come pulsanti, o per indiacare che un certo elementi di UI è selezionato. In altre parole, il colore primario viene utilizzato per attirare l'attenzione dell'utente e suggerirgli le azioni da compiere.
+		
+		Il colore secondario viene utilizzato sulle componenti di priorità minore, come la barra di navigazione e altri elementi per svolgere azioni di bassa priorità.
+		
+		Il colore terziario viene utilizzato per bilanciare i primi due in tutte le componenti che non rientrano nelle categorie descritte precedentemente
+		
+		\begin{figure}[h]
+   			\centering
+   			\includegraphics[width=0.3\textwidth]{gerarchia_colori} %nome del file
+ 			\caption{Gerarchia di colori implementata nella nostra app}
+ 			\label{gerarchia_colori}
+		\end{figure}
+		
+		\subsection{Colori dinamici}
+		Se si dispone di Android 12, il sistema mette a disposizione una palette di colori determinata dallo sfondo selezionato dall'utente. È possibile utilizzare questa palette anche nelle app, così da ottenere una armonia di colori a livello di sistema e aumentare l'effetto di personalizzazione del dispositivo.
+		
+		In Jetpack Compose si può ottenere la palette dinamica con due funzioni dedicate, \texttt{dynamicLightColorScheme()} e \texttt{dynamicDarkColorScheme()}, rispettivamente per il tema chiaro e scuro.
+		
+		\begin{figure}[h]
+   			\centering
+   			\includegraphics[width=0.3\textwidth]{colori_default} %nome del file
+   			\includegraphics[width=0.3\textwidth]{colori_dinamici} %nome del file
+ 			\caption{Colori di default e colori dinamici}
+ 			\label{gerarchia_colori}
+		\end{figure}
 
 	\section{Iconografia material 3}
 		Nel material design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
