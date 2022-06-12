@@ -52,9 +52,9 @@ fun ListOfRestaurants(
             ) {
             //HeartToggleButton checked
             if (onlyFavorites) {
-
+                val favorites= data!!.filter { it.restaurant.preferito }
                 //PlaceHolder in caso non ci siano preferiti
-                if(data!!.isEmpty()) {
+                if(favorites.isEmpty()) {
                     NoFavourites()
                 }else{
                     data!!.forEach { restaurantWithImages ->
