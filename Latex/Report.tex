@@ -9,6 +9,10 @@
 \usepackage[dvipsnames]{xcolor}	% codice
 %gyperref setup
 \usepackage{hyperref}
+\usepackage{graphicx}
+\graphicspath{ {./Immagini} }
+\usepackage{wrapfig}
+\usepackage{booktabs}
 
 \hypersetup{
     colorlinks,
@@ -121,6 +125,35 @@ tabsize=1
 
 	Se invece voglio semplicemente una parola in monospace: \texttt{monospace}
 
+	\section{Immagini}
+	Per inserire immagini usare il template qui definito
+
+		\begin{figure}[h]
+   			\centering
+   			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
+ 			\caption{Floating Action Button}
+    			\label{fig:mesh1} % Se occorre fare un riferimento
+		\end{figure}
+
+	Nel Material Design, gli elementi dell'interfaccia utente sono costituiti da \textit{superfici}, ossia delle forme geometriche piatte e dai contorni ben definiti.
+
+		\begin{wrapfigure}{r}{0.3\textwidth}
+   			\centering
+   			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
+		\end{wrapfigure}
+
+		Una superficie può mostrare un contenuto (testo, immagini, icone, ...), che deve essere anch'esso piatto come la superficie su cui si appoggia. Il contenuto può essere indipendente dalla superficie e può cambiare, ma deve sempre rimanere entro i limiti geometrici imposti dalla superficie.
+
+		\begin{wrapfigure}{l}{0.3\textwidth}
+   			\centering
+   			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
+		\end{wrapfigure}
+
+
+		Le superfici si comportano come dei solidi, che possono cambiare forma e opacità, possono unirsi e dividersi, spostarsi e ruotare. Tutti gli elementi della UI del Material Design sono il risutato delle modifiche degli attributi di una superficie di base, che è bianca opaca, di spessore \texttt{1dp}, con un'ombra.
+
+
+
 
 
 % ======================================================================================
@@ -143,6 +176,13 @@ tabsize=1
 		L'elevazione rappresenta la distanza relativa delle superfici lungo l'asse z.
 
 		Lo sfondo ha elevazione 0. Tutte le superfici hanno una elevazione definita in \texttt{dp}. L'elevazione viene visualizzata mediante delle ombre, tanto più intense quanto più grande è il distacco tra la superficie in primo piano e la superficie in secondo piano. Altri modi per mostrare l'elevazione sono l'utilizzo di colori e opacità diversi.
+
+		\begin{figure}[h]
+   			\centering
+   			\includegraphics[width=0.3\textwidth]{elevation}
+ 			\caption{Elevazione in un Floating Action Button}
+    			\label{fig:mesh1}
+		\end{figure}
 
 		Quando l'utente interagisce con una superficie, la superficie aumenta la sua elevazione, per poi tornare al suo posto quando l'interazione termina. Tutti gli elementi standard hanno una elevazione di default.
 
@@ -183,6 +223,13 @@ tabsize=1
 				\item \textit{implicitamente}: lo spazio tra elementi correlati viene ridotto
     			\item \textit{esplicitamente}: gli elementi vengono racchiusi graficamente, ad esempio con una cornice
 			\end{itemize}
+
+		\begin{figure}[h]
+   			\centering
+   			\includegraphics[width=0.4\textwidth]{contenimento}
+ 			\caption{Le informazioni del ristorante sono racchiuse in una \textit{Card}}
+    			\label{fig:mesh1}
+		\end{figure}
 
 		\subsection{Misure}
 		Le dimensioni degli elementi della UI possono essere misurate in molti modi.
@@ -233,6 +280,13 @@ tabsize=1
     		Solitamente viene implementata con una \textit{bottom navigation bar} (preferita nei dispositivi mobili) o con un \textit{navigation drawer}.
 
     		Per schermate di gerarchia più bassa possono essere utilizzate le \textit{tabs}.
+
+    		\begin{figure}[h]
+   			\centering
+   			\includegraphics[width=0.5\textwidth]{navbar}
+ 			\caption{Barra di navigazione}
+    			\label{fig:mesh1}
+		\end{figure}
 
     		\subsection{Navigazione in avanti}
     		La navigazione in avanti viene utilizzata quando l'utente si sposta tra schermate a livelli consecutivi di gerarchia. Si utilizza la navigazione in avanti ogni volta che si utilizzano pulsanti, collegamenti, ricerche.
@@ -293,294 +347,97 @@ tabsize=1
 % --------------------------------------------------------------------------------------   
    \section{Suono}
    	    Il suono viene usato per migliorare l'esperienza dell'utente: comunica un feedback utile, assegnando personalità e
-   	    perfezionando l’estetica del prodotto. In quest’ottica, il suono all’interno dell’app deve essere:
-   	    \begin{itemize}
-   		    \item \textit{Informativo}: intuitivo, funzionale e comprensibile;
-   		    \item \textit{Pulito}: una rappresentazione autentica dell'identità e dell'estetica del marchio del prodotto;
-   		    \item \textit{Rassicurante}: dovrebbe creare un senso di comfort e sicurezza, invitando all'azione solo quando necessario.
-   	    \end{itemize}
+   	    perfezionando l’estetica del prodotto.
+
    	    In un'interfaccia utente, si distinguono tre tipologie di suono: \textbf{sound design}, \textbf{musica} e \textbf{voce}. Ogni tipologia comunica informazioni e \textit{brand identity} in modi diversi.
-   	    Differenti tipi di suono possono essere utilizzati per creare	un effetto 	particolare e più suoni possono presentarsi separatamente o insieme nell’interfaccia utente. Sebbene la musica e la voce
-   	    facciano parte dell’insieme di suoni di un prodotto, questo report si concentra sul suono UX. L'interfaccia utente è composta principalmente da elementi visivi. Il suono può contribuire ad esprimere le informazioni
-   	    , attirando il focus dell’utente, e fornire un altro modo per connettersi con esso.
 
-
-   	    Il \textbf{sound design} può essere utilizzato per:
-    	\begin{itemize}
-    		\item Associare un elemento dell'interfaccia utente a un suono specifico;
-    		\item Esprimere emozioni o personalità;
-    		\item Far capire qual è la struttura gerarchica, associando le interazioni con determinati suoni;
-    		\item Fornire feedback sensoriale.
-    	\end{itemize}
+   	    Il \textbf{sound design} viene utilizzato principalmente per associare un elemento dell'interfaccia utente a un suono specifico e far capire qual è la struttura gerarchica.
+		Tuttavia, si usa anche per esprimere personalità o fornire feedback.
 
 
         La \textbf{musica} viene utilizzata principalmente per la narrazione ed esprime uno "stato d'animo" dell'interfaccia utente.
         Se abbinata a immagini o transizioni, la musica può elevare la narrativa e le sensazioni generali di un prodotto.
-        La musica può essere utilizzata in un'interfaccia utente per:
-        \begin{itemize}
-    	    \item Contesti emotivamente risonanti;
-    	    \item Pubblicità;
-    	    \item Fornire momenti di gioia;
-    	    \item Raccontare una storia.
-        \end{itemize}
+
 
 
         La \textbf{voce} e la sintesi vocale utilizzano entrambe il linguaggio parlato per comunicare informazioni dove il sound
-        design e la musica non sono abbastanza. La voce può essere utilizzata in un'interfaccia utente per:
-        \begin{itemize}
-    		\item Comunicare informazioni complesse;
-       		\item Fornire conversazione e dialogo;
-       		\item Fornire momenti di gioia;
-       		\item Migliorare il tono e la personalità.
-        \end{itemize}
+        design e la musica non sono abbastanza.
+
+        \subsubsection{Quando non usare il suono}
+                	Il silenzio nel design dell'interfaccia utente è importante tanto quanto il suono. In molti casi, l’audio non è necessario e può,
+                    ridurre il comfort dell'utente. Il suono, di solito, non è adatto per UI che richiedono privacy e per azioni eseguite di frequente.
 
 
-              \subsection{Applicare il suono all'interfaccia utente}
-              	Il suono svolge il compito di dare espressione alle interazioni e rafforzare funzionalità specifiche.
-               	Il suono può fornire \textbf{feedback} o aggiungere \textbf{decorazioni} a un'esperienza utente quando applicato in momenti strategici.
+              \subsubsection{Tipi di suono}
+				\begin{itemize}
+					\item \textbf{Hero sound}: si verificano in interazioni fondamentali, evocando uno stato emotivo o celebrando un certo tipo di eventi;
+					\item \textbf{Notifiche}: aiutano a dirigere l'attenzione dell'utente, più brevi degli hero sound e realizzate affinché possano essere riprodotte più volte;
+					\item \textbf{Suoni di sistema}: divisi in:
+					\begin{itemize}
+						\item \textit{suoni UX primari}: generati da un sistema operativo (o dispositivo) per fornire feedback agli utenti;
+						\item \textit{suoni UX secondari}: riprodotti meno frequentemente e utilizzati principalmente per scopi	funzionali.
+					\end{itemize}
+					\item \textbf{Suoni ambientali}: creano atmosfera senza distogliere l'utente dall'attività, in genere basati su musica o suoni ambientali
+				\end{itemize}
 
+				\subsection{Formato dei file e ottimizzazione della memoria}
+				La riproduzione del file audio può variare a causa delle limitazioni hardware e software di un dispositivo. Per ridurre le dimensioni del file si usano diversi metodi,
+				come la compressione con perdita o la riduzione della frequenza di campionamento.
 
-               	I suoni sono collegati alle interazioni dell’utente con l’app sono chiamati \textit{earcon} e rappresentano informazioni, azioni o eventi. Rafforzano il significato di un'interazione,
-               	l'estetica, l'emozione e la personalità di un prodotto. Gli earcon possono essere ispirati al mondo reale (e vengono chiamati \textit{skeuomorphic}) oppure puossono essere inventati
-               	appositamente per esprimere un concetto astratto.
-
-
-               	I suoni utilizzati per la \textbf{decorazione} amplificano un momento espressivo o giocoso. Di solito sono usati per comunicare
-               	uno stato emotivo. Questo tipo di suoni dovrebbero essere usati con giudizio e riservati a momenti con alta risonanza emotiva.
-
-
-               	\subsubsection{Quando non usare il suono}
-                	Il silenzio nel design dell'interfaccia utente è importante tanto quanto il suono. In molti casi, l’audio non è necessario e può
-                	effettivamente abbassare l'attenzione e il comfort dell'utente. Il suono, di solito, non è adatto per:
-                	\begin{itemize}
-                		\item UI che richiedono privacy o discrezione;
-                		\item Utenti che non hanno richiesto interruzioni;
-                		\item Azioni eseguite di frequente.
-                	\end{itemize}
-                	In qualsiasi contesto, il suono dovrebbe elevare l'esperienza visiva piuttosto che sminuirla.
-
-
-              \subsection{Tipi di suono}
-              	\subsubsection{Hero sound}
-              	Gli hero sound sono audio che evidenziano un momento importante, evocano uno stato emotivo o vogliono celebrare un certo tipo di eventi.
-              	Si verificano in interazioni fondamentali, come quelle che:
-              	\begin{itemize}
-              		\item Festeggiano un'azione significativa intrapresa dall’utente;
-              		\item Accolgono agli utenti in una nuova app o esperienza;
-              		\item Confermano un momento chiave dell’esperienza di un prodotto.
-              	\end{itemize}
-              	Gli hero sound si verificano raramente e, data la loro importanza, dovrebbero essere applicati in modo coerente.
-
-
-                \subsubsection{Notifiche}
-                Il ruolo principale delle notifiche è aiutare a dirigere l'attenzione dell'utente. Esse offrono l'opportunità di dare un'identità sonora alle interazioni. Poiché si verificano più frequentemente in un'interfaccia
-                utente rispetto ad altri suoni, dovrebbero essere più brevi degli hero sound e realizzate affinché possano essere riprodotte più volte. Le notifiche dovrebbero essere progettate per essere udibili da distanze diverse e
-                in ambienti rumorosi. Il suono stesso può variare per attirare il focus, usando variazioni ritmiche, tonali e di frequenza. Si consiglia di fornire opzioni che consentano agli utenti di personalizzare le notifiche, con
-                opzioni che vanno dal suono di base, non decorativo, al suono ricco e decorativo.
-
-
-                \subsubsection{Suonerie, sveglie e timer}
-                Suonerie, sveglie e timer sono avvisi che spesso hanno uno stile giocoso. Possono essere personalizzati in base alle preferenze dell'utente e alla personalità del marchio.
-
-
-                \subsubsection{Suoni di sistema}
-                I suoni di sistema si dividono in \textbf{suoni UX primari} e \textbf{suoni UX secondari}.
-
-                I \textbf{suoni UX primari} sono generati da un sistema operativo (o dispositivo) per fornire feedback agli utenti. Possono aggiungere suoni a qualsiasi interazione, come ad esempio:
-                \begin{itemize}
-                    \item Navigazione nel menu;
-                    \item Conferma dell'azione diretta di un utente;
-                    \item Inserimento dati.
-                \end{itemize}
-                Dovrebbero essere in armonia con l'estetica del suono di un prodotto, pur rimanendo semplici e discreti. Questi suoni si verificano più frequentemente rispetto ad altri suoni nell'interfaccia
-                utente. Per questo, dovrebbero essere adatti per essere riprodotti spesso, evitando che vengano percepiti come fastidiosi o ridondanti.
-
-
-                I \textbf{suoni UX secondari} vengono riprodotti meno frequentemente in un'interfaccia utente. Dovrebbero riflettere la personalità di un prodotto, ma sono utilizzati principalmente per scopi
-                funzionali, per informare gli utenti di cambiamenti di stato o per indicare azioni poco frequenti.
-
-
-                 \subsubsection{Suoni ambientali}
-                   Il suono ambientale è uno strato decorativo del suono che esprime emozioni comunicando contemporaneamente la personalità o il marchio di un prodotto. Può essere
-                   posizionato ovunque ci si aspetti un forte elemento sonoro, come ad esempio:
-                   \begin{itemize}
-                       \item Un flusso di start-up, per accogliere l'ascoltatore nell'esperienza;
-                       \item Un accompagnamento a una schermata iniziale, per esprimere un tono emotivo e la posizione dell'utente nell'interfaccia.
-                   \end{itemize}
-                   Il suono ambientale dovrebbe creare atmosfera e non distogliere l'utente dall'esecuzione di un'attività. Può anche fornire spunti, cambiando il tono della musica per indicare un cambiamento di stato.
-                   I suoni ambientali possono essere basati su musica,  suoni ambientali o altri suoni che generano atmosfera.
-
-
-              \subsection{Sound attributes}
-                 Le caratteristiche del suono possono essere regolate in modi diversi per creare un effetto specifico. Queste sono misurabili e, quindi, si può capire quanto sarà efficace l'effetto che si vuole attribuire ad un suono. La tecnica che raffigura
-                 queste caratteristiche è chiamata \textit{visualizzazione del suono}. In un grafico, l'asse x rappresenta una caratteristica (come il tempo) e l'asse y rappresenta un'altra caratteristica  (come l'ampiezza). In alcuni casi, una caratteristica
-                 viene rappresentata graficamente utilizzando un solo asse. In questo modo, si può visualizzare il suono in funzione del \textbf{tempo}, della \textbf{frequenza} (quanto è acuto o basso un suono) o del \textbf{timbro} (la qualità di un suono).
-
-                 	Per rappresentare il suono in funzione del \textbf{tempo},  si può visualizzare il tempo sull'asse x e l'ampiezza sull'asse y. Ciò rende  evidente la nitidezza	(o morbidezza) dei suoi picchi.
-
-                 	\subsubsection{Timbro}
-                 	Per rappresentare il suono in funzione del \textbf{timbro}, si può visualizzare l'ampiezza sull'asse y e il timbro sull'asse x. Molti aspetti del timbro possono essere rappresentati visivamente ed è necessario scegliere quali aspetti sono
-                 	importanti da visualizzare. Il timbro di un suono ne descrive la qualità e il carattere (indipendentemente dall'altezza o dal volume). Ci sono molte caratteristiche da considerare quando si studiano timbri diversi. Un aspetto
-                 	del timbro che può essere adattato all’interfaccia è la luminosità (la quantità di suono ad alta frequenza):
-                 	\begin{itemize}
-                 		\item Un suono brillante ha più contenuti ad alta frequenza, dandogli una presenza più forte;
-                 		\item Un suono silenziato ha meno contenuti ad alta frequenza, rendendo il suo suono sottile e più silenzioso, specialmente in ambienti rumorosi;
-                 	\end{itemize}
-                 	Ogni tipo di suono è appropriato a contesti diversi. I timbri più luminosi si sentono più ricchi e giocosi. I timbri smorzati appaiono più pesanti e seri.
-                 	Quando si sceglie il timbro di un prodotto, è necessario conoscere la tipologia di utente e il contesto in cui ogni suono viene riprodotto.
-
-                  \subsubsection{Tonalità}
-                    La tonalità si riferisce a due tipi di suoni:
-                    \begin{itemize}
-                        \item Suoni \textbf{tonali}, di natura più musicale, tra cui melodia, motivo e armonia;
-                        \item Suoni \textbf{atonali} (chiamati anche suono non armonici), che assomigliano a suoni o rumori quotidiani, non conformi alle composizioni musicali tradizionali.
-                    \end{itemize}
-                    I suoni possono essere progettati utilizzando elementi tonali, atonali o entrambi. I suoni \textbf{tonali} sono l’ideale per comunicare personalità, emozioni e cambiamenti
-                    di stato, mentre i suoni \textbf{atonali} supportano meglio le transizioni di movimento ed esprimono un senso di feedback tattile, di movimento o di skeuomorfismo.
-
-                    Una \textit{melodia} è un suono tonale che ha una breve successione ritmica di singole altezze. Melodie semplici e brevi possono essere ripetute in un'interfaccia utente che non richiede distrazioni.
-
-                    Un \textit{motivo} è una melodia che si ripete, rendendola uno schema riconoscibile. I motivi comuni possono comunicare in modo rapido ed efficace semplici segnali emotivi e informativi.
-
-                    Il suono atonale \textit{skeuomorphic} dovrebbe essere utilizzato quando un'interazione ha una forte associazione con il mondo reale, come un clic dell'otturatore della fotocamera.
-
-
-                    \subsubsection{Dinamica}
-                    Nel sound design, la \textbf{dinamica} si riferisce a variazioni di volume su una scala micro (il volume cambia in un singolo suono) o una scala macro (il volume cambia in un insieme
-                    di suoni). La variazione dinamica consente ai suoni di sembrare naturali e realistici. I cambiamenti dinamici possono evidenziare momenti sonori di interesse, creare un senso
-                    di progressione attraverso una narrazione musicale e conferire al suono una qualità naturale.
-
-
-                    \subsubsection{Inviluppo}
-                    L'\textbf{inviluppo} di un suono si riferisce all'andamento dell'ampiezza di un suono dal momento in cui viene generato a quando si estingue. Un inviluppo è composto da molte componenti
-                    tecniche, ma le due fasi basilari sono l'ascesa (\textit{attacck}) 	e la caduta (\textit{decay}) di un suono.L'\textit{attacck} si riferisce alla velocità iniziale di un suono, prima che
-                    raggiunga l'ampiezza massima. Il \textit{decay} si riferisce alla quantità e alla velocità 	con cui l'ampiezza di un suono diminuisce dopo il suo \textit{attacck} (fino a quando la sua
-                    ampiezza è zero). Maggiore è il valore di \textit{decay}, più lungo e lento sarà il suono.
-
-
-                    \subsubsection{Riverbero e ritardo}
-                    	Riverbero e ritardo sono effetti che possono aggiungere un senso di spazio e profondità. Per evitare che gli effetti sonori diventino una parte troppo prominente del suono di un earcon, dovrebbero essere usati con parsimonia.
-
-                    	Il \textbf{riverbero}, o effetto di riverbero, è un effetto applicato al suono che gli conferisce più presenza. Se applicato in modo lieve, si ha l'effetto di sentire un suono in un ambiente reale.
-
-
-                    	Simile al riverbero, il \textbf{ritardo} utilizza gli echi del suono originale mescolati con il suono stesso per creare un effetto decorativo. Il ritardo dovrebbe essere usato in modo mirato e con parsimonia.
-
-
-                \subsection{Sound choreography}
-                Il suono può essere coreografato per ottimizzare l'esperienza del prodotto  e far capire all'utente le relazioni  di gerarchia. Nella coreografia, infatti, ogni suono dovrebbe riflettere il suo livello di
-                importanza nella gerarchia dell'interfaccia utente. I suoni dello stesso tipo (come gli hero sounds) dovrebbero condividere lo stesso livello di gerarchia. Inoltre, i suoni che sono più in alto nella
-                gerarchia sono le rappresentazioni importanti di un marchio o di un prodotto. In un esperienza utente, i suoni che si susseguono o precedono l'un l'altro dovrebbero avere caratteristiche correlate
-                (come timbro, melodia o inviluppo). I suoni che condividono delle caratteristiche vengono unificati come \textit{gruppo}.
-
-                Le tonalità aiutano a costruire relazioni armoniche tra le interazioni. I suoni che vengono riprodotti in stretta vicinanza l'uno all'altro dovrebbero utilizzare le stesse tonalità o complementari, a meno di  casi specifici.
-
-                Per mostrare come gli stati sono correlati tra loro si possono usare i motivi. Ad esempio, il suono per uno stato "on" può essere correlato al suono per uno stato "off".
-
-                I suoni di interazione che si verificano regolarmente, come i suoni associati alla digitazione, allo scorrimento o alla navigazione, possono essere resi con piccole modifiche a un suono di base, come variazioni nel timbro del
-                suono, per imitare la variazione dei suoni nel mondo reale.
-
-                \subsubsection{Missaggio}
-                Il missaggio è l'arte di combinare diverse sorgenti sonore in un unico flusso audio. Implica la regolazione del volume, della frequenza, del posizionamento spaziale di ogni suono e altre caratteristiche per creare un suono ricco e coeso.
-                Diverse sorgenti sonore possono essere mescolate per variare l'emozione, lo scopo o il carattere del suono finale. I suoni UX dovrebbero essere bilanciati per accogliere altri suoni nell'interfaccia utente. Trattamenti che isolano, abbassano,
-                mescolano e bilanciano alcuni suoni in momenti specifici possono aiutare a focalizzare correttamente l'attenzione dell'utente, in modo che l'intento dietro un suono si manifesti.
-
-
-                \subsection{Ottimizzazione del suono}
-                Per ottimizzare il suono, il sound designer può ascoltare un suono utilizzando dispositivi del mondo reale in diversi ambienti. Ascoltando i suoni in condizioni reali (usando il software, l'hardware, il rumore ambientale, l'acustica e altri
-                fattori di un ambiente), il suono può essere regolato meglio per essere riprodotto in una gamma più ampia di condizioni. È anche possibile apportare modifiche alle caratteristiche di un suono (come il timbro) utilizzando i seguenti processi:
-                riscritture della composizione, riorchestrazione, variazioni melodiche, equalizzazione e altre modifiche.
-
-                \subsubsection{Equalizzazione}
-                L'equalizzazione (EQ) è un effetto che migliora o riduce frequenze specifiche. L'equalizzazione deve essere regolata in base ai dispositivi per cui è progettata l'applicazione.
-
-                \subsubsection{Rumorosità}
-                I suoni dovrebbero essere riprodotti ad un livello di volume coerente a seconda della loro posizione nella gerarchia del suono (determinata dal livello di priorità e dalla categoria di un suono). Ad esempio, il suono di una suoneria
-                può essere più forte del suono del feedback dell'interfaccia utente, poiché ha una priorità maggiore nel momento in cui si verifica.
-
-                Quando si misura il volume tramite hardware specifico, bisogna tenere in considerazione il "volume percepito" (misurato in decibel ponderati A o dB(A)), piuttosto che basarsi esclusivamente sul livello del misuratore di picco diretto.
-                Inoltre, gli aumenti del livello del volume dovrebbero utilizzare una scala logaritmica, piuttosto che lineare, per riflettere il modo in cui le persone sentono il suono.
-
-
-                \subsection{Formato dei file e ottimizzazione della memoria}
-                La riproduzione del file audio finale può variare a seconda delle limitazioni hardware e software di un dispositivo. Per ridurre le dimensioni del file (con un peggioramento minimo della qualità):
-                \begin{itemize}
-                    \item Applicare la compressione con perdita (come mp3 o ogg) fino a quando non si sentono gli artefatti;
-                    \item Ridurre il numero di bit e la frequenza di campionamento finché non si sentono degli artefatti;
-                    \item Eliminare qualsiasi silenzio non necessario all'inizio o alla fine del file.
-                \end{itemize}
-                Il formato finale dell'audio dipende dall'implementazione e dalle restrizioni a livello di sistema. E' consigliabile provare a scegliere il formato migliore (più lossless) consentito dal sistema, specialmente per i suoni chiave dell'esperienza utente.
-
-
+				Il formato finale dell'audio dipende dall'implementazione e dalle restrizioni a livello di sistema. Quindi, di solito si sceglie il formato più lossless consentito dal sistema.
 
 
 
 % --------------------------------------------------------------------------------------
 	\section{Tipografia}
 		Il material design fornisce molti strumenti per poter scegliere il font adatto con le misure giuste per ogni tipo di testo, forniscono pure un \href{https://material.io/design/typography/the-type-system.html#type-scale}{Type scale generator} che permette di creare il proprio type scale.
-		Vengono fornite misure e conversioni per Android, iOS e Web; e misure per titoli, sottotitoli e corpi di testo
-		\subsection{Titoli}
-			Per i titoli ci sono 6 scale e sono il testo più grande a schermo in quanto importanti.
-			Per i titoli si possono usare font meno convenzionali in quanto possono avere dettagli che catturano l'occhio dell'utente.
-		\subsubsection{Sottotitoli}
-			Sottotitoli sono generalmente più piccoli dei titoli in quanto hanno meno importanza, ma rappresentano comunque blocchi di testo di piccola lunghezza. Bisogna stare attenti a non usare font troppo espressivi dato che maggior parte delle volte typefaces come Serif o sans funzionano bene.
-			Hanno 2 scale disponibili.
-		\subsubsection{Corpo di testo}
-			Per la parte del corpo di testo sono disponibili 2 scale e sono usate per blocchi di testo lunghi, non bisogna usare font particolari tenendo il tutto più semplice possibile per facilitare la lettura
-		\subsubsection{Didascalie e overline}
-			Didascalie e overline sono i type scale più piccoli. Didascalie spesso servono per annotare degli elementi mentre overlines a introdurre dei titoli. Come il corpo di testo devono avere dei font molto semplici
-		\subsubsection{Testo per pulsanti}
-			Il testo per pulsanti viene usato per indicare azioni, è consigliato avere tutto in maiuscolo e con font sans serif
+		Vengono fornite misure e conversioni per Android, iOS e Web; e misure per titoli, sottotitoli e corpi di testo.
+
+		\subsection{Dimensioni}
+		Le categorie di testo individuate dal Material Design sono
+		\begin{itemize}
+			\item \textit{headline}: con 6 dimensioni disponibili, headline vien utilizzata per i titoli
+			\item \textit{sottotitoli}: più piccoli dei titoli, sono sempre di breve lunghezza
+			\item \textit{corpo}: viene utilizzato per il contenuto testuale dell'app, che può essere anche molto lungo
+			\item \textit{testo per i pulsanti}: in genere con sole lettere maiuscole, è dedicato ai pulsanti
+			\item \textit{didascalie e overline}: sono i type scale più piccoli. Didascalie spesso servono per annotare degli elementi mentre overlines a introdurre dei titoli.
+		\end{itemize}
+
 	\subsection{Proprietà di un typeface}
-		Questa sezione comprende le proprietà che caratterizzano un typeface o permettono di modificarne le misure
-		\subsubsection{Baseline}
-			La baseline è la linea invisibile su cui stanno le lettere e nel material design si allinea sulla griglia da 4dp.
-			E' importante per misure come:
-			\begin{itemize}
-				\item Cap Height, la misura in altezza delle lettere piatte maiuscole (come la M)
-    			\item X Height, la misura in altezza della lettera x minuscola, fornisce un'indicazione di leggibilità di un determinato typeface
-       			\item Ascenders e Descenders, sono linee appartenenti a lettere come y e d che in caso di distanza tra linee troppo piccola rischiano di interferire con altre righe          		
-			\end{itemize}
-		\subsubsection{Peso}
-			Il peso rappresenta lo spessore del tratto di un typeface, ogni typeface ne ha un determinato numero che spesso sta tra 1 (Light) e 4 (Bold)
+		Le proprietà che caratterizzano un typeface o permettono di modificarne le misure sono
+		\begin{itemize}
+			\item \textit{baseline}: è una linea invisibile che definisce come i songoli caratteri si allineano sulla griglia (ad esempio definisce quanto sono grandi le lettere maiuscole rispetto alle minuscole)
+			\item \textit{peso}: rappresenta lo spessore del tratto dei caratteri. Assume valori da 1 (\textit{light}) a 4 (\textit{bold})
+		\end{itemize}
+
 	\subsection{Leggibilità}
-		\subsubsection{Letter spacing}
-			Letter spacing (detto anche tracking) si riferisce allo spazio tra le lettere che compongono una parola, a seconda della funzione del testo si posson usare spazi più piccoli o grandi.
-			Per esempio un titolo avrà degli spazi più piccoli in quanto il testo è già grande. Per misure più piccole, è consigliato tenere uno spazio abbastanza grande in quanto migliora la leggibilità.
-		\subsubsection{Tabular figures}
-			Le Tabular figures sono cifre che occupano sempre lo stesso spazio (monospaced), ciò aiuta a leggere cifre lunghe quando sono vicine ad altre, come per esempio in colonna in una tabella.
-		\subsubsection{Line length e height}
-			Ci sono delle misure consigliate sia per la lunghezza in caratteri di una riga che della sua altezza (distanza dalla baseline).
-			La line length consigliata dipende dal linguaggio utilizzato: in inglese è tra 40 e 60 caratteri, ma altri linguaggi hanno in media parole più lunghe o più corte.
-			La line height è proporzionale al type size e controlla l'altezza della riga dalla baseline
-	\subsection{Linguaggi}
-			Il material design supporta diversi linguaggi compresi i linguaggi classificati come \textit{dense} (per esempio il cinese), oppure linguaggi \textit{tall} come l'arabo. A seconda del linguaggio cambiano tutte le caratteristiche descritte precedentemente.
-
-
-
-
-
-
+	La leggibilità di un testo è determinata da molteplici fattori quali
+	\begin{itemize}
+		\item \textit{letter spcing}: si riferisce allo spazio tra le lettere che compongono una parola, a seconda della funzione del testo si posson usare spazi più piccoli o grandi
+		\item \textit{tabulazione}: aiuta a leggere cifre lunghe quando sono vicine ad altre, come per esempio in colonna in una tabella
+		\item \textit{lunghezza e altezza delle righe}
+	\end{itemize}
 
 
 
 
 % --------------------------------------------------------------------------------------
 	\section{Iconografia}
-		Il material design fornisce strumenti, griglie e specifiche per creare l'icona per il proprio brand o app. Sono presenti templates e molti esempi, il tema comune è lo stesso: semplicità e complicare  il design solo in certi casi.
-		\subsection{Icone di sistema}
-			Le icone di sistema sono create per essere semplici e moderne, sono ridotte alla forma minima, esprimendo solo le caratteristiche più importanti;
-			le forme sono geometriche e consistenti, e consistenti. Questa semplicità permette alle icone di rimanere leggibili e distinguibili anche a dimensioni piccole.
-			Le icone di sistema sono 24dp x 24dp, nel caso di layout più densi come su un desktop possono essere scalate a 20dp x 20dp
-			Per ogni icona vi è un perimetro di padding di 2dp, questo è una misura per prevenire sovrapposizioni o oscuramenti in layout densi o nel caso appaiano altri elementi a schermo.
+		Il material design fornisce strumenti, griglie e specifiche per utilizzare e creare le proprie icone, con l'obbiettivo di mantenere un certo livello di semplicità.
+		\subsection{Design delle icone}
+			Nel Material Design, le icone sono realizzate per essere semplici e moderne, ridotte alla forma minima, esprimendo solo concetti essenziali, con forme geometriche semplici e consistenti. Questa semplicità permette alle icone di rimanere leggibili e distinguibili anche a dimensioni piccole.
 
-			\subsubsection{Linee guida per icone di sistema}
-			Vengono fornite delle keylines e griglie per il design di icone, principalmente vengono usati quadrati, cerchi e rettangoli.
+			\subsubsection{Dimensioni}
+			Le icone sono normalmente 24dp x 24dp, nel caso di layout più densi come su un desktop possono essere scalate a 20dp x 20dp.
+			Per ogni icona vi è un perimetro di padding di 2dp,per prevenire sovrapposizioni o oscuramenti in layout densi o nel caso appaiano altri elementi a schermo.
+
+			Vengono fornite delle keylines e griglie per il design di icone: principalmente vengono usati quadrati, cerchi e rettangoli.
 			Il tratto che si usa quando si crea la propria icona deve essere sempre spesso 2dp, questo mantiene consistenti le icone, i tratti finali di un'icona, per esempio la punta di una freccia, sono sempre dritti e non tondi.
+
+			\subsubsection{Orientamento}
 			Le icone devono sempre guardare avanti, non vanno girate o piegate, e devono sempre apparire piatte e non tridimensionali.
-			L'opacità di un'icona dipende dallo sfondo e dal suo stato: attiva o inattiva. Nel caso l'icona non sia attiva è consigliato ridurre la sua opacità
-		\subsection{Icone animate}
-			Le animazioni delle icone rappresentano l'azione che devono compiere aggiungendo dettagli alla propria interfaccia utente
+			L'opacità di un'icona dipende dallo sfondo e dal suo stato: attiva o inattiva.
+
 			\subsubsection{Transizioni}
 				Le transizioni sono effetti tra due icone, quando si preme un'icona viene eseguita l'animazione e l'altra icona diventa visibile o attiva, per esempio cliccando l'icona \textit{pausa} in un lettore di musica, la musica si ferma e l'icona diventa \textit{riprendi}.
 				Le animazioni possono essere semplici (una semplice rotazione), o complesse (trasformazioni e altri effetti), spesso se la funzionalità è più importante dell'aspetto visivo si scelgono animazioni semplici.
@@ -593,130 +450,61 @@ tabsize=1
 
 	Le componenti hanno una forma rettangolare per impostazione predefinita, con angoli arrotondati di 4 dp (density pixel). La loro forma può essere personalizzata regolando dimensione e forma degli angoli.
 
-	Si può decidere di modificare la forma dei componenti di un’applicazione per vari motivi. Le forme con un design unico (\textit{forme uniche}) differiscono dalle forme che le circondano, facendole risaltare. Infatti, si
-	distinguono dagli altri componenti, dal contenuto che li circonda e dall'interfaccia utente nel suo insieme. Questa caratteristica aiuta a dirigere l'attenzione dell'utente.
+	La forma di alcuni componenti di un’applicazione viene modificata per vari motivi: le forme con un design unico (\textit{forme uniche}) differiscono dalle forme che le circondano e dall'interfaccia utente nel suo insieme, aiutando a dirigere l'attenzione dell'utente.
+	Inoltre, una forma diversa rispetto alle altre componenti di quel gruppo può comunicare il cambiamento di stato di una componente utilizzando .
 
-	Inoltre, si può comunicare il cambiamento di stato di una componente utilizzando una forma diversa rispetto alle altre componenti di quel gruppo.
+	Ancora, per esprimere il linguaggio visivo di un \textbf{marchio} in un'app, si usano le forme insieme ad altre personalizzazioni, come colore e tipografia, in modo coerente.
+	Queste piccole modifiche alla forma, applicate strategicamente, contribuiscono all'impressione generale che un brand da all’utente.
 
-	Ancora, per esprimere il linguaggio visivo di un \textbf{marchio} in un'app, si usa la forma insieme ad altre personalizzazioni, come colore e tipografia, in modo coerente. Lo stile di una famiglia di forme, come le forme organiche o geometriche, dovrebbe corrispondere
-	al marchio. Queste piccole modifiche alla forma, applicate strategicamente, contribuiscono all'impressione generale che un brand da all’utente.
-
-	In breve, la forma dà modo agli utenti di riconoscere gli elementi e identificare parti diverse delle superfici. Le forme sono utilizzate per riflettere uno scopo o un significato specifico. Il testo o le icone possono aiutare a rafforzare questo significato quando la forma di una sola superficie potrebbe essere ambigua.
 
 	\subsection{Gruppi di forme}
 	I componenti sono raggruppati in gruppi di forme in base alle loro dimensioni. In questo modo, si possono modificare contemporaneamente più valori di un gruppo di componenti. I gruppi di forme includono:
 	\begin{itemize}
-		\item Componenti piccoli;
-		\item Componenti medi;
-		\item Componenti grandi.
+		\item \textit{Componenti piccoli}, come pulsanti, chip, campi di testo, snackbar;
+		\item \textit{Componenti medi}, come menu, card, dialog;
+		\item \textit{Componenti grandi}, come sfondi, tabelle, drawer
 	\end{itemize}
 
-	I seguenti componenti permettono di personalizzare i loro angoli:
-	\begin{itemize}
-		\item Componenti piccoli: Button, Chip, Foglio inferiore espandibile (compresso), Floating action button esteso, Floating action button, campo di testo, Snackbar, tooltip;
-		\item Componenti medi: Card, Dialog, Image list Item, menu;
-		\item Componenti di grandi dimensioni: Sfondo, Tabella dati, Foglio inferiore espandibile, Nav Drawer, Foglio laterale, Foglio inferiore standard.
-	\end{itemize}
+
 	I gruppi di forme utilizzano degli attributi per definire la forma da assegnare agli angoli dei componenti. È possibile personalizzare i seguenti attributi:
 	\begin{itemize}
-		\item Forma di un’intera famiglia;
-		\item Dimensioni della forma;
-		\item Simmetria.
+		\item \textit{tipo di angolo}: appuntito, arrotondato, tagliato;
+		\item \textit{dimensioni}: il raggio dell'angolo. Può essere assoluto (in dp) oppure in funzione delle dimensioni della forma stessa;
+		\item \textit{simmetria}: è possibile applicare modifiche solo ad angoli specifici.
 	\end{itemize}
-	I componenti possono avere uno tra questi due stili per gli angoli:
-	\begin{itemize}
-		\item Angolo arrotondato;
-		\item Angolo tagliato.
-	\end{itemize}
+
 	Per applicare una famiglia di forme e una dimensione a tutti i componenti di un gruppo, bisogna impostare i valori per il gruppo di forme. Quando vengono apportate modifiche a un gruppo, le modifiche influiscono su tutti i componenti in quel gruppo di forme, ad eccezione di quelli con una sostituzione.
-
-	La \textit{dimensione della forma} degli angoli può essere determinata utilizzando un valore \textbf{assoluto} o \textbf{percentuale}.
-
-	La dimensione \textit{assoluta} consiste in un valore specifico (ad esempio 2dp). Quando un raggio di un angolo o una lunghezza di taglio ha una dimensione assoluta, questa rimane la stessa indipendentemente dall'altezza del componente.
-	Ad esempio, se un componente cambia dinamicamente la sua altezza, la forma dell'angolo mantiene lo stesso raggio dell'angolo o la stessa dimensione della lunghezza di taglio.
-
-	I piccoli componenti possono impostare la dimensione della forma dell’angolo utilizzando una \textit{percentuale} (valutata rispetto all’altezza totale del componente). Ciò significa che la forma dell'angolo cambierà al variare dell'altezza del componente.
-
-	Ai componenti si possono applicare forme angolari in modo \textbf{simmetrico} o \textbf{asimmetrico}.
-	I componenti simmetrici applicano gli stessi valori a tutti gli angoli, mentre i componenti asimmetrici possono avere angoli con valori diversi l'uno dall'altro.
-
-	Per un componente dalla forma \textit{simmetrica}, bisogna specificare una singola famiglia di forme e un unico valore di dimensione che verrà utilizzato da tutti gli angoli.
-
-	Per un componente dalla forma \textit{asimmetrica}, bisogna specificare la famiglia di forme e i valori di dimensione di ogni angolo. I valori della famiglia e della dimensione della forma vengono applicati in senso orario, a partire dall'angolo in alto a sinistra.
 
 	\subsection{Uso efficace delle forme}
 	Le forme sono visibili quando i bordi della superficie hanno un contrasto sufficiente rispetto allo sfondo. Per impostazione predefinita, il Material Design rende visibili le forme utilizzando le ombre per visualizzare i bordi delle superfici.
 	Tuttavia, esistono altri metodi per rendere visibili le forme, come riempimenti di colore e opacità, che possono essere utilizzati in combinazione con le ombre o da soli.
 
-	Le forme aiutano gli utenti a identificare i componenti e influiscono sulla loro usabilità. Il grado con cui i componenti possono cambiare forma dipende da:
-	\begin{itemize}
-		\item facilità di identificazione di un componente, da parte dell’utente, in basse alla forma;
-		\item requisiti ergonomici (come una dimensione minima del componente cliccabile).
-	\end{itemize}
-
-	Lo \textit{strumento di personalizzazione della forma} può essere utilizzato per generare forme diverse per vari singoli componenti. Una tabella indica gli intervalli di valori consigliati per ciascun componente.
+	Le forme aiutano gli utenti a identificare i componenti e influiscono sulla loro usabilità.
 
 	La forma può comunicare molte informazioni su un elemento, incluso il suo stato corrente, il risultato di un'interazione dell'utente o altre modifiche in un'app. Se utilizzata in questi modi, la forma dovrebbe essere presentata in modo coerente
 	nello stesso stato e nelle stesse interazioni, in modo che una forma specifica abbia lo stesso significato ogni volta che viene incontrata.
 
-	Se una forma non è interattiva, è necessario evitare l'utilizzo di forme con dimensioni sufficientemente grandi da apparire interattive. Ad esempio, una piccola forma triangolare su una card non dovrebbe essere abbastanza grande da essere scambiata per un punto da toccare, se non lo è.
+	Se una forma non è interattiva, è necessario evitare l'utilizzo di forme con dimensioni sufficientemente grandi da apparire interattive. Ad esempio, una piccola forma triangolare su una card non dovrebbe essere abbastanza grande da essere scambiata per un elemento da toccare, se non lo è.
 
-	\subsubsection{Angoli}
-	Bisogna evitare di utilizzare valori percentuali per i componenti che modificano dinamicamente la propria altezza, altrimenti la forma potrebbe modificarsi in modi inaspettati.
-
-	Gli angoli ancorati ai bordi dello schermo non possono essere personalizzati, altrimenti si creerebbero spazi vuoti che mostrano il contenuto dietro un componente.
-
-	\subsubsection{Marchio}
-	Quando si esprime il marchio con la forma, si evitano forme che:
-	\begin{itemize}
-		\item Implicano interattività;
-		\item Esprimono stati con ppoca accuratezza;
-		\item Interferiscono con l'usabilità.
-	\end{itemize}
-	La combinazione di stili diversi e forme completamente diverse può rendere difficile l'associazione di forme particolari a un marchio. Quando si applica la forma in un'interfaccia utente, si identifica la forma distintiva del marchio, ad esempio una forma organica o geometrica che riflette
-	gli attributi del marchio. Sulla base di questa forma,  viene poi sviluppata una serie di forme simili e correlate da applicare al prodotto che contribuiscono a unificare l'espressione del marchio in tutta l'applicazione. Tuttavia, l'uso eccessivo della forma per esprimere il marchio può portare
+	\subsubsection{Branding}
+	La combinazione di stili e forme diverse può rendere difficile l'associazione di forme particolari a un marchio. Per esprimere l'identità di un brand, si identifica la forma distintiva del marchio, ad esempio una forma organica o geometrica che riflette
+	gli attributi del logo. Sulla base di questa forma,  viene poi sviluppata una serie di forme simili da applicare al prodotto che contribuiscono a unificare l'espressione del marchio in tutta l'applicazione. Tuttavia, l'uso eccessivo della forma per esprimere il marchio può portare
 	alla diluizione dello stesso: la forma perde la sua connessione con il marchio e diventa un luogo comune. Inoltre, troppe forme uniche possono portare a nessuna forma particolarmente prominente, nonché a una mancanza di coesione visiva tra i componenti.
 
-	\subsubsection{Override delle forme}
-	Un componente può richiedere una forma diversa da quella definita da un gruppo. In questo caso, si può utilizzare una sostituzione della sua famiglia di forme, dimensioni o entrambe. Le sostituzioni si usano per branding, usabilità, layout, gerarchia o altri fattori.
-	Quando a un componente specifico viene assegnato un valore, questo sovrascrive il valore ereditato dal gruppo di forme.
-
-	\subsubsection{Componenti a schermo intero}
-	Non utilizzare forme sugli angoli dei componenti a schermo intero o espansi. Le forme rettangolari offrono più spazio per il contenuto scorrevole. Inoltre, impediscono che il contenuto dietro i componenti a schermo intero venga visualizzato attraverso gli spazi tra la forma e il bordo dello schermo.
+	\subsubsection{Angoli}
+	E' necessario evitare di utilizzare valori percentuali per i componenti che modificano dinamicamente la propria altezza, altrimenti la forma potrebbe modificarsi in modi inaspettati.
+	Inoltre, gli angoli ancorati ai bordi dello schermo non possono essere personalizzati, altrimenti si creerebbero spazi vuoti che lasciano trasparire il contenuto dietro ad un componente.
 
 	\subsubsection{Modifiche ad altri sistemi}
-	Le personalizzazioni del sistema possono influire sull'uso della forma da parte di un componente. Ad esempio, l'aumento della dimensione del carattere potrebbe causare:
-	\begin{itemize}
-		\item Testo nel componente tagliato a causa della sua forma;
-		\item Modifica di altezza e forma del componente, se le dimensioni sono definite come percentuali;
-		\item Modifiche al contenuto.
-	\end{itemize}
+	Le personalizzazioni del sistema possono influire sull'uso della forma da parte di un componente. Ad esempio, l'aumento della dimensione del carattere potrebbe causare il taglio di parte di un testo e la modifica di altezza e forma del componente, se le dimensioni sono definite come percentuali.
 	Le modifiche al contenuto possono anche influire sulla forma di un componente. Ad esempio, se la lunghezza del testo aumenta, il testo potrebbe andare a capo su una riga aggiuntiva, aumentando l'altezza del componente e influenzando le forme definite come percentuale.
 
 	\subsubsection{Morphing}
 	Gli elementi possono cambiare forma in risposta alle modifiche al contenuto o all'interazione dell'utente. Questa trasformazione si chiama \textit{morphing}. Le forme possono trasformarsi per vari motivi: in risposta a cambiamenti di stato o contenuto o come risultato dell'interazione dell'utente. Ad esempio, quando si ruota un
-	dispositivo mobile da verticale a orizzontale, le superfici possono rispondere modificando le dimensioni, il che può causare la trasformazione delle forme.  Inoltre, si usa il morphing per rimanere coerenti con un linguaggio visivo al variare delle dimensioni della superficie o
-	per indicare quando gli elementi vengono aggiunti a un set selezionato. Il morphing può causare modifiche a:
-	\begin{itemize}
-		\item Risalto di un elemento;
-		\item Ergonomia degli elementi;
-		\item Significato di una forma particolare;
-		\item Espressione di un marchio;
-		\item Relazioni tra elementi.
-	\end{itemize}
-	Quando una superficie cambia dimensione, la sua forma può mantenere la posizione o le dimensioni originali, può allungarsi o ridursi. Una forma può anche trasformarsi tra due forme diverse.
-	Una forma può allungarsi o restringersi in risposta ai cambiamenti nelle dimensioni della superficie.
+	dispositivo mobile da verticale a orizzontale, le superfici possono rispondere modificando le dimensioni, il che può causare la trasformazione delle forme.
 
 	Il morphing di una forma dovrebbe preservare le proporzioni delle forme distintive, per evitare la distorsione.
 	Inoltre, tutto il contenuto su una superficie dovrebbe essere visibile mentre la superficie si trasforma, senza ritagliare il contenuto.
-
-	Per impostazione predefinita, le superfici sono rettangolari. Possono trasformarsi da forme rettangolari in altre forme e viceversa. Ad esempio, un pulsante di azione mobile rotondo
-	può diventare un menu rettangolare e quindi tornare alla sua forma rotonda originale. Le forme rettangolari massimizzano lo spazio disponibile per il contenuto scorrevole e si fondono con altre superfici rettangolari. Di conseguenza, il contenuto riceve enfasi.
-
-	Quando si utilizza la forma rettangolare predefinita, è possibile aggiungere un segnale (come un'icona di compressione o espansione) per indicare come trasformare la superficie.
-
-	Per quanto riguarda i componenti che trasformano la loro forma, si dovrebbe considerare in che modo tali trasformazioni possono influenzare l'identificabilità del componente. I componenti sagomati che si espandono per riempire l'intero schermo non devono utilizzare la sagomatura quando diventano a schermo intero.
-	I componenti possono utilizzare i cambiamenti di forma per indicare i cambiamenti di stato. Ad esempio, lo stato selezionato di una card può utilizzare una forma unica che la distingue dalle card non selezionate. Le forme utilizzate per indicare lo stato devono essere distinte dalla forma tipica del componente.
 
 	\subsection{Collegare superfici attraverso le forme}
 	Le forme possono aiutare gli utenti a capire in che modo le superfici sono correlate tra loro.
@@ -726,8 +514,13 @@ tabsize=1
 
 
 	Le forme possono enfatizzare le superfici separate l'una dall'altra. Ad esempio, quando una forma unica appare a un'altezza maggiore rispetto a un'altra superficie, si sottolinea che le due superfici sono separate.
+
+	\subsection{Forme nel material design 3}
+	Il material design tre intoduce un cambiamento ai gruppi di forme, sempre basati sulle dimensioni, ma con con sette stili degli angoli, assegnati in base alla quantità di arrotondamento desiderata. Le forme con angoli squadrati sono chiamate "none", le forme leggermente arrotondate sono "extra-small", mentre le forme completamente arrotondate sono "full".
+	Ciò consente di conferrire maggior espressività all'interfaccia utente. Viene, inoltre, mantenuta la possibilità avere forme degli angoli simmetriche o asimmetriche, con angoli tagliati o arrotondati. Inoltre, è sempre modificare lo stile di un' intera categoria di forme
+
 % --------------------------------------------------------------------------------------
-	\section{Interaction}
+	\section{Interazione}
 
 		\subsection{Gesture}	
 		Le \textit{gestures} permettono all'utente di interagire con gli elementi dello schermo in maniera rapida e intuitiva.
@@ -841,105 +634,31 @@ tabsize=1
 % --------------------------------------------------------------------------------------
 	\section{Comunicazione}
 	\subsection{Confirmation and acknowledgement}
-	Le comunicazioni di \textbf{conferma} e \textbf{acknowledgement} chiedono l’autorizzazione all’utente prima di intraprendere un'azione e gli confermano la riuscita delle stesse. Così, si può ridurre l'incertezza su un'azione che un utente ha intrapreso o sta per intraprendere e si evita di commettere errori.
+	Le comunicazioni di \textbf{conferma} e \textbf{acknowledgement} chiedono l’autorizzazione all’utente prima di intraprendere un'azione e gli confermano la riuscita delle stesse.
 
-	Le azioni di \textit{conferma}  chiedono all'utente se desidera procedere con l'azione appena eseguita. Possono essere associate a un avviso o ad informazioni critiche relative a tale azione. La conferma non è necessaria quando le conseguenze di un'azione sono reversibili o trascurabili. Ad esempio, se un segno
-	di spunta indica che un'immagine è stata selezionata, non sono necessarie ulteriori conferme. La richiesta di conferma viene rese al meglio utilizzando una finestra di avviso (alert dialog).
+	Le azioni di \textit{conferma}  chiedono all'utente se desidera procedere con l'azione appena eseguita. Possono essere associate a un avviso o ad informazioni critiche relative a tale azione. La conferma non è necessaria quando le conseguenze di un'azione sono reversibili o trascurabili.
+	La richiesta viene rese al meglio utilizzando una finestra di avviso (alert dialog).
 
-	Le azioni di \textit{acknowledgement} forniscono un testo per far sapere all'utente se un'azione che ha scelto è stata completata. Un acknowledgement notifica all'utente le azioni di sistema che si verificano in background. Viene visualizzato per un breve lasso di tempo e può includere un'opzione per annullare l'azione. Gli acknowledgement possono essere resi da una varietà di componenti. I criteri per la scelta del giusto componente includono:
-	\begin{itemize}
-		\item Livello di urgenza;
-		\item Inclusione di un'azione per correggere un problema;
-		\item Durata sullo schermo (transitoria, ignorabile o entrambi).
-	\end{itemize}
-	Gli acknowledgement temporanei indicano che il componente sparirà da solo entro pochi secondi dalla sua comparsa. Gli acknowledgement ignorabili possono essere eliminabili istantaneamente dall’utente.
-	Tipi di componenti che si possono usare:
+	Le azioni di \textit{acknowledgement} forniscono un testo per far sapere all'utente se un'azione che ha scelto è stata completata. Viene visualizzato per un breve lasso di tempo e può includere un'opzione per annullare l'azione. Gli acknowledgement possono essere resi da una varietà di componenti:
 	\begin{itemize}
 		\item \textit{Alert}. Utilizzare gli avvisi per inviare un messaggio in-app persistente che informa gli utenti di un particolare stato di modifica;
 		\item \textit{Snackbar}. Utilizzare uno snack bar per fornire un breve feedback su un'operazione;
-		\item \textit{Empty state}. Quando un'interfaccia utente è disponibile solo online e il contenuto non è stato caricato o sincronizzato, utilizzare uno stato vuoto. L'utente dovrebbe essere in grado di interagire con la maggior parte possibile del resto dell'app. È possibile presentare un collegamento per ricaricare il contenuto.
+		\item \textit{Stati vuoti}. Quando un'interfaccia utente è disponibile solo online e il contenuto non è stato caricato o sincronizzato, utilizzare uno stato vuoto.
 	\end{itemize}
 
 	\subsection{Visualizzazione dei dati}
-	La visualizzazione dei dati rappresenta le informazioni in forma grafica. E’ una forma di comunicazione che ritrae informazioni dense e complesse attraverso elementi visivi, per semplificare il confronto dei dati. La visualizzazione dei dati può esprimere dati di diversi tipi e dimensioni: da pochi data point a grandi set di dati. Principi della visualizzazione grafica:
+	La visualizzazione dei dati rappresenta le informazioni in forma grafica. E’ una forma di comunicazione che ritrae informazioni dense e complesse attraverso elementi visivi, per semplificare il confronto dei dati. Principi della visualizzazione grafica:
 	\begin{itemize}
 		\item \textit{Accuratezza}: priorità all'accuratezza, alla chiarezza e all'integrità dei dati, presentando le informazioni in modo da non distorcerle;
 		\item \textit{Utilità}: aiuta gli utenti a navigare tra i dati con contesto e convenienza che enfatizzano l'esplorazione e il confronto;
 		\item \textit{Scalabilità}: adatta le visualizzazioni per dispositivi di dimensioni diverse, anticipando le esigenze degli utenti in termini di profondità, complessità e modalità dei dati.
 	\end{itemize}
 	La visualizzazione dei dati può essere espressa in diverse forme. I grafici sono un modo comune di esprimere i dati, in quanto ne rappresentano diversi tipi e consentono il confronto tra essi. Il tipo di grafico che si usa dipende principalmente da due cose: i dati che si vogliono comunicare e ciò che si vuole trasmettere attraverso quei dati.
-	\subsubsection{Stile}
-	La visualizzazione dei dati utilizza stili e forme personalizzate per semplificare la comprensione dei dati a colpo d'occhio, in modi che si adattano alle esigenze e al contesto dell'utente. I grafici possono trarre vantaggio dalla personalizzazione di quanto segue:
-	\begin{itemize}
-		\item Elementi grafici;
-		\item Tipografia;
-		\item Iconografia;
-		\item Assi ed etichette;
-		\item Leggende e annotazioni.
-	\end{itemize}
-
-	\textit{Elementi e grafici.}
-
-	La codifica visiva è il processo di traduzione dei dati in forma visiva. È possibile applicare attributi grafici univoci sia a dati quantitativi (come temperatura, prezzo o velocità) sia a dati qualitativi (come categorie, aromi o espressioni). Questi attributi includono una grande varietà di elementi, tra cui forma, colore, volume, lunghezza, angolo, posizione, direzione e densità.
-
-	È possibile applicare più trattamenti visivi a più di un aspetto di un elemento dei dati. Ad esempio, il colore di una barra può rappresentare una categoria, mentre la lunghezza di una barra può esprimere un valore (come la dimensione della popolazione).
-
-	I grafici possono utilizzare le forme per visualizzare i dati in diversi modi. Una forma può essere disegnata come giocosa e curvilinea o precisa e ad alta fedeltà, o in modi ibridi tra questi due estremi. I dati destinati all'esplorazione ravvicinata dovrebbero essere rappresentati da forme adatte all'interazione (in termini di dimensioni del target touch
-	e relative affordances). Mentre i dati che hanno lo scopo di esprimere un'idea o una tendenza generale possono utilizzare forme con meno dettagli.
-
-	Le \textbf{linee} del grafico possono esprimere delle qualità dei dati, come gerarchia, evidenziazioni e confronti. Gli stili di linea possono essere stilizzati in diversi modi, ad esempio utilizzando trattini o opacità diverse
-
-	Il \textbf{colore} può essere utilizzato per differenziare i dati del grafico in quattro modi principali:
-	\begin{itemize}
-		\item Distinguere le categorie l'una dall'altra;
-		\item Rappresentare la quantità;
-		\item Evidenziare dati specifici;
-		\item Esprimere significato.
-	\end{itemize}
-	Per soddisfare gli utenti che non vedono differenze di colore, si possono utilizzare altri metodi per accentuare i dati, come l'ombreggiatura, la forma o la trama ad alto contrasto. L'applicazione di etichette di testo ai dati aiuta anche a chiarirne il significato, eliminando la necessità di una legenda.
-
-	\textit{Tipografia}
-
-	Il testo può essere utilizzato per etichettare diversi elementi del grafico, tra cui:
-	\begin{itemize}
-		\item Titoli dei grafici;
-		\item Etichette dei dati;
-		\item Etichette dell'asse;
-		\item Legenda.
-	\end{itemize}
-	Il testo con il livello di gerarchia più alto è solitamente il titolo del grafico. Le intestazioni e i diversi pesi dei caratteri possono comunicare quale contenuto è più (o meno) importante di altri contenuti nella gerarchia. Tuttavia, questi trattamenti dovrebbero essere usati con parsimonia, con un numero limitato di stili tipografici.
-
-	\textit{Iconografia}
-
-	L'iconografia può rappresentare diversi tipi di dati in un grafico e migliorarne l'usabilità complessiva. L'iconografia può essere utilizzata per:
-	\begin{itemize}
-		\item Dati categoriali per differenziare gruppi o categorie;
-		\item Controlli e azioni dell'interfaccia utente, come filtro, zoom, salvataggio e download;
-		\item Stati, come errori, assenza di dati, stati completati e pericolo.
-	\end{itemize}
-	Quando si posizionano le icone in un grafico, si consiglia di utilizzare simboli universalmente riconoscibili, in particolare quando si rappresentano azioni o stati, come: salvataggio, download, completamento, errore e pericolo.
-
-	\subsubsection{Comportamento}
-	I grafici forniscono modelli di interazione che danno agli utenti il controllo sui dati visualizzati. Questi modelli consentono agli utenti di concentrarsi su valori o intervalli specifici di un grafico. I seguenti modelli di interazione, stili ed effetti consigliati (come il feedback tattile) possono migliorare la comprensione da parte dell'utente dei dati del grafico:
-	\begin{itemize}
-		\item La \textit{divulgazione progressiva} fornisce un percorso chiaro per svelare i dettagli, accessibile su richiesta;
-		\item La \textit{manipolazione diretta} consente agli utenti di agire direttamente sugli elementi dell'interfaccia utente, riducendo al minimo il numero di azioni necessarie su uno schermo, tra cui: zoom e panoramica, impaginazione e controlli dei dati;
-		\item La \textit{modifica della prospettiva} consente a un progetto di funzionare per utenti e tipi di dati diversi, come controlli dati e movimento.
-	\end{itemize}
-
-	Lo \textbf{zoom} e la \textbf{panoramica} sono interazioni popolari tra i grafici che influiscono sulla precisione con cui gli utenti possono studiare i dati ed esplorare l'interfaccia utente del grafico.
-	Lo \textit{zoom} cambia se l'interfaccia utente viene mostrata da più vicino o da più lontano. Il tipo di dispositivo determina come viene eseguito lo zoom e, quando non è l'azione principale, può essere implementato facendo clic e trascinando (sul desktop) o toccando due volte (sul dispositivo mobile).
-	La \textit{panoramica} consente all'utente di esplorare l'interfaccia utente che si espande oltre lo schermo. Dovrebbe essere vincolata in modi che abbiano senso per i dati visualizzati. Ad esempio, se una dimensione di un grafico è più importante di un'altra, la direzione della panoramica può essere
-	limitata solo a quella direzione. L'atto della panoramica è spesso associato allo zoom. Sui dispositivi mobili, la panoramica viene spesso implementata tramite gesti, come lo scorrimento con un dito.
-
-	Il \textbf{movimento} può migliorare e rafforzare la relazione tra i dati e il modo in cui gli utenti interagiscono con essi. Il movimento dovrebbe essere usato intenzionalmente (non in modo decorativo), esprimendo la connessione tra stati e spazi diversi, dovrebbe risultare logico, fluido e reattivo, senza ostacolare il percorso dell'utente.
-
-	Nei \textbf{grafici vuoti} si possono visualizzare contenuti che suggeriscono cosa aspettarsi quando i dati sono disponibili. Ove applicabile, le animazioni possono essere mostrate per fornire gioia e intrattenimento.
 
 	\subsubsection{Dashboards}
-	La visualizzazione dei dati può essere visualizzata su una serie di più grafici, in interfacce utente denominate dashboard . Grafici multipli e separati a volte possono comunicare meglio una storia, rispetto ad un grafico complesso.
+	La visualizzazione dei dati può essere visualizzata su una serie di più grafici, in interfacce utente denominate dashboard.
 
-	Lo scopo di una dashboard dovrebbe riflettersi nel layout, nello stile e nei modelli di interazione. Il suo design dovrebbe adattarsi al modo in cui verrà utilizzato, sia che si tratti di uno strumento per fare una presentazione o di esplorare a fondo i dati. Una dashboard dovrebbe:
+	Il design di una dashboard dovrebbe adattarsi al modo in cui verrà utilizzata, sia che si tratti di uno strumento per fare una presentazione o di esplorare a fondo i dati. Una dashboard dovrebbe:
 	\begin{itemize}
 		\item Dare la priorità alle informazioni più importanti (usando il layout);
 		\item Visualizzare un punto focale che dia priorità alle informazioni in base alla gerarchia (utilizzando colore, posizione, dimensione e peso visivo);
@@ -948,7 +667,7 @@ tabsize=1
 	\begin{itemize}
 		\item \textit{Dashboard analitiche}
 
-		Le dashboard analitiche consentono agli utenti di esplorare più set di dati e scoprire le tendenze. Di solito queste dashboard includono grafici complessi che consentono l'individuazione di informazioni dettagliate sui dati. I casi d'uso includono:
+		Consentono agli utenti di esplorare più set di dati e scoprire le tendenze. Includono grafici complessi che consentono l'individuazione di informazioni dettagliate sui dati. I casi d'uso includono:
 		\begin{itemize}
 			\item Evidenziare le tendenze nel tempo;
 			\item Rispondere alle domande "perché" e "e se";
@@ -957,14 +676,14 @@ tabsize=1
 		\end{itemize}
 		\item \textit{Operation dashboard}
 
-		Le Operations dashboard sono progettati per rispondere a una serie predefinita di domande. In genere vengono utilizzati per completare attività relative al monitoraggio. Nella maggior parte dei casi, questi tipi di dashboard presentano informazioni aggiornate disposte in una serie di semplici grafici.I casi d'uso includono:
+		Sono progettate per rispondere a una serie predefinita di domande. In genere vengono utilizzati per completare attività relative al monitoraggio. Presentano informazioni aggiornate disposte in una serie di semplici grafici.I casi d'uso includono:
 		\begin{itemize}
 			\item Monitoraggio dei progressi attuali rispetto a un obiettivo;
 			\item Monitoraggio delle prestazioni del sistema in tempo reale.
 		\end{itemize}
 		\item \textit{Presentation dashboards}
 
-		Le Presentation dashboards forniscono un'istantanea curata su un argomento di interesse. Queste dashboard in genere includono alcuni piccoli grafici o una scorecard, con titoli dinamici che spiegano le tendenze e le informazioni dettagliate fornite in ciascun grafico di supporto. I casi d'uso includono:
+		Forniscono un'istantanea curata su un argomento di interesse. Includono alcuni piccoli grafici o una scorecard, con titoli dinamici che spiegano le tendenze e le informazioni dettagliate fornite in ciascun grafico di supporto. I casi d'uso includono:
 		\begin{itemize}
 			\item Fornire una panoramica degli indicatori chiave di prestazione;
 			\item Creazione di un sommario esecutivo di alto livello.
@@ -972,46 +691,30 @@ tabsize=1
 	\end{itemize}
 
 	\subsection{Stati vuoti}
-	Gli stati vuoti si verificano quando il contenuto di un elemento non può essere mostrato. Gli stati vuoti possono visualizzare un'ampia varietà di contenuti. Ad esempio, possono includere un elenco senza voci o una ricerca che non restituisce risultati. Sebbene questi stati non siano tipici, dovrebbero essere progettati per evitare confusione.
+	Gli stati vuoti si verificano quando il contenuto di un elemento non può essere mostrato.
 
 	Lo stato vuoto più elementare consiste in un'immagine non interattiva e uno slogan di testo. Si usa un'immagine che ha un tono neutro o umoristico ed è coerente con il marchio. Lo slogan dovrebbe, invece, avere un messaggio utile, essere coerente con il  marchio e trasmettere lo scopo dedell’app, senza apparire cliccabile.
 
 	\subsubsection{Alternative}
-	Per aiutare gli utenti che non conoscono un'app o una sezione, le schermate che altrimenti sarebbero vuote possono essere popolate con contenuti \textbf{iniziali}. Ciò consente agli utenti di iniziare a utilizzare un'app immediatamente, rendendo più facile per loro conoscere cosa un'app ha da offrire. Raccomandazioni:
-	\begin{itemize}
-		\item I contenuti iniziali sono ideali per le app che archiviano contenuti (come libri o musica) o creano contenuti basati su modelli (come note o documenti);
-		\item Usa contenuti che abbiano un ampio appeal e mostrino le caratteristiche principali;
-		\item Offri agli utenti la possibilità di eliminare e sostituire il contenuto iniziale;
-		\item Se possibile, fornisci contenuti personalizzati.
-	\end{itemize}
-	Se lo scopo dello schermo non è facilmente veicolato attraverso un'immagine e uno slogan, considera invece di mostrare \textbf{contenuti didattici}. I contenuti didattici aiutano gli utenti a capire cosa sarà in grado di fare un'app una volta che avrà dei contenuti. Raccomandazioni:
-	\begin{itemize}
-		\item Consenti di ignorare o saltare questo contenuto;
-		\item Sii breve;
-		\item Mantieni il contenuto contestuale allo schermo. Questo non dovrebbe essere un luogo in cui eseguire l'onboarding dell'utente nell'intera app.
-	\end{itemize}
+	Le schermate che altrimenti sarebbero vuote possono essere popolate con \textbf{contenuti iniziali}. Ciò consente agli utenti di iniziare a utilizzare un'app immediatamente, rendendo più facile per loro conoscere cosa un'app ha da offrire.
+
+	Se lo scopo dello schermo non è facilmente veicolato attraverso un'immagine e uno slogan, si mostrano \textbf{contenuti didattici}. I contenuti didattici aiutano gli utenti a capire cosa sarà in grado di fare un'app una volta che avrà dei contenuti.
+
 
 	\subsection{Aiuto e feedback}
 	Il contenuto della guida fornisce risposte alle domande e ai dubbi degli utenti. Gli utenti possono inviare commenti, segnalare bug e porre domande a cui non è già stata data risposta. La guida dovrebbe essere facile da trovare. Può essere posizionata in vari punti della navigazione.
-	Di solito appare in un drawer di navigazione o in un menu di overflow sotto l'etichetta "Aiuto" o "Invia feedback". È più facile trovare il contenuto della Guida se è sia nel drawer di navigazione che nella barra delle app o solo nella barra delle app. È meno facile trovare il contenuto della Guida quando è solo nel drawer di navigazione o nel menu di overflow.
-
-	Se l’app è complessa e dispone di un drawer, si inserisce un link alla "Guida" sia nel drawer di navigazione che nella barra dell'app.
-
-	Se l’app è complessa e non dispone di un drawer di navigazione, si  inserisce un link alla "Guida" nella barra dell'app.
-
-	Se l’app non è complessa, inserisci "Aiuto" in un drawer di navigazione o solo nel menu di overflow.
-
-	"Aiuto" dovrebbe essere l'ultimo elemento nel drawer di navigazione, con "Invia feedback" direttamente sopra di esso. Inoltre, ogni volta che viene visualizzato "Esci" in un drawer di navigazione, questo dovrebbe essere l'ultimo elemento nell'elenco.
+	Di solito appare in un drawer di navigazione o in un menu di overflow sotto l'etichetta "Aiuto" o "Invia feedback".
 
 	Per fornire assistenza per problemi urgenti, come pagamenti e rimborsi, posizionare un'icona della Guida nella barra dell'app. Le app desktop possono anche inserire un'icona della Guida nella barra delle app, poiché c'è più spazio nell'interfaccia utente del desktop.
 
 	\subsection{Immagini}
 	Le immagini comunicano e differenziano un prodotto. Possono sia migliorare l'esperienza dell'utente che esprimere il linguaggio visivo di un marchio. Aiutano a raccontare una storia, a chiarire messaggi complessi difficili da esprimere con le parole e a mostrare
-	agli utenti come eseguire un'azione. Le immagini devono essere selezionate in base alla loro capacità di esprimere il messaggio dell’app e riflettere lo stile del prodotto. Indipendentemente dal fatto che si utilizzino delle fotografie generate dagli utenti, delle
-	fotografie professionale o diversi stili di illustrazione, ogni modalità dovre conferire un aspetto che rifletta il  prodotto. Le immagini dovrebbero essere correlate tra loro condividendo una funzione, uno stile e un'intenzione comuni. Per garantire l'accessibilità, le immagini dovrebbero includere un testo alternativo (o una didascalia) che gli screen reader leggeranno agli utenti con disabilità visive.
+	agli utenti come eseguire un'azione.
 
-	Avere un punto focale iconico nelle immagini, è importante, poiché influisce sul modo in cui poi l’immagine viene tagliata per schermi con dimensioni diverse. Un punto focale può essere qualsiasi cosa, da una singola entità a una composizione complessiva. Per visualizzare al meglio immagini di diverse dimensioni e tipi, bisogna ridimensionare le immagini
-	in modo appropriato per diversi display e piattaforme. È fondamentale testare le dimensioni di risoluzione appropriate per rapporti e dispositivi specifici, assicurandosi che le risorse non appaiano pixelate. Tuttavia, la risoluzione è anche il fattore più importante per la velocità di caricamento delle immagini. Per preservare la larghezza di banda della rete, sarà necessario mantenere bassa la risoluzione ove possibile.
+	Per garantire l'accessibilità, le immagini dovrebbero includere un testo alternativo (o una didascalia) che gli screen reader leggeranno agli utenti con disabilità visive.
+
+	Avere un punto focale iconico nelle immagini, è importante, poiché influisce sul modo in cui poi l’immagine viene tagliata per schermi con dimensioni diverse.
+
 
 	\subsubsection{Miniature}
 	Le miniature sono piccole immagini che rappresentano informazioni in spazi ristretti. In genere fungono da target di tocco che portano al contenuto principale, apparendo all'interno di componenti come schede o elenchi. Le miniature vengono utilizzate per:
@@ -1020,21 +723,17 @@ tabsize=1
 		\item Fornire un’anteprima di contenuti su altri schermi;
 		\item Assistere nella navigazione.
 	\end{itemize}
-	Le miniature possono essere ritagliate in diverse forme ed elementi, come testo o azioni, possono essere posizionati sopra di esse. Inoltre, la dimensione delle miniature riflette la loro importanza.
 
 	\subsection{Launch screen}
 	La schermata di avvio è la prima esperienza che un utente ha con l’app. Può essere visualizzata all'avvio, mentre l’app viene caricata, al posto di visualizzare una schermata vuota. Questo può ridurre
-	l’impressione di un lungo tempo di caricamento e ha il potenziale di migliorare l'esperienza dell'utente. Le schermate di avvio non dovrebbero essere visualizzate se un'app è in esecuzione. Esistono due tipi di schermate di avvio:
+	l’impressione di un lungo tempo di caricamento e ha il potenziale di migliorare l'esperienza dell'utente. Esistono due tipi di schermate di avvio:
 	\begin{itemize}
-		\item Schermate che mostrano un'anteprima non interattiva dell'interfaccia utente effettiva dell'app, chiamate interfacce segnaposto. Questa schermata di avvio è appropriata sia per l'avvio di app che per
-		le transizioni di attività all'interno di un'app. All'avvio, gli elementi strutturali principali, come la barra di stato, la barra dell'app e il foglio inferiore, vengono visualizzati senza contenuto fino
-		al caricamento dell'app. Gli elementi segnaposto, con un'animazione semplice, dovrebbero essere visualizzati nelle posizioni in cui verranno caricati i contenuti.
-		\item Schermate che forniscono un'esposizione momentanea del marchio, visualizzando un logo o altri elementi che migliorano il riconoscimento del marchio. In questa schermata, si evita di utilizzare il testo tranne quello del  logo e, se applicabile, uno slogan.
+		\item Schermate che mostrano un'anteprima non interattiva dell'interfaccia utente effettiva dell'app, chiamate interfacce segnaposto.
+		\item Schermate che forniscono un'esposizione momentanea del marchio, visualizzando un logo o altri elementi che migliorano il riconoscimento del marchio.
 	\end{itemize}
 
 	\subsection{Onboarding}
-	L'onboarding è un'esperienza di unboxing virtuale che aiuta gli utenti a iniziare con un'app. E’ un punto di un percorso più lungo che inizia nell'App Store e termina con l'esecuzione della prima vera azione da parte dell'utente sull’app.
-	Quando si progetta l’onboarding, bisogna considerare le schermate precedenti e quelle che verranno dopo. E’ fondamentale mostrare l'onboarding solo ai nuovi utenti, per evitare di peggiorare l’esperienza. Sono disponibili tre modelli di onboarding:
+	L'onboarding è un'esperienza di unboxing virtuale che aiuta gli utenti a iniziare con un'app. Sono disponibili tre modelli di onboarding:
 	\begin{itemize}
 		\item \textbf{selezione automatica}: consente agli utenti di personalizzare le proprie esperienze;
 		\item  \textbf{avvio rapido}: avvia l'utente direttamente nell'app;
@@ -1047,17 +746,13 @@ tabsize=1
 		\item Può anche fornire un modo opzionale per saperne di più o chiedere aiuto.
 	\end{itemize}
 
-	\subsubsection{Stati offline}
-	Gli stati offline consentono agli utenti di interagire con un'app senza accesso a Internet. Si adatta il comportamento dell’app quando l'utente ha una connessione lenta, intermittente o assente. Quando la connessione è limitata, si carica ugualmente il contenuto disponibile,
-	anziché non caricare nulla. Per comunicare che una funzione dell’app sta funzionando offline, si mostra l’icona pin offline con l'etichetta di testo "offline". Quando le funzionalità non sono disponibili offline, si indicano utilizzando l’icona nuvola off, possibilmente utilizzando anche l'etichetta di testo "offline" insieme all'icona.
-
 	\subsection{Scrittura}
 	Il testo dovrebbe essere comprensibile da chiunque, ovunque, indipendentemente dalla cultura o lingua. Per facilitare la navigazione e l'individuazione, si usano brevi segmenti che si focalizzano su un numero limitato di concetti alla volta. E’ fondamentale comunicare solo
 	i dettagli essenziali in modo che gli utenti possano concentrarsi sulle proprie attività. A volte l'interfaccia utente più efficace non contiene alcun testo.  Inoltre, è bene evitare la terminologia specifica del settore o i nomi inventati per le funzionalità dell'interfaccia utente.
-	Se una frase descrive un obiettivo e l'azione necessaria per raggiungerlo, è opportuno iniziare la frase con l'obiettivo. Inoltre, non è necessario scrivere subito tutte le informazioni, ma risulta meno dispersivo rivelarle progressivamente e secondo necessità, man mano che l'utente le esplora e necessita di maggiori informazioni.
+	Se una frase descrive un obiettivo e l'azione necessaria per raggiungerlo, è opportuno iniziare la frase con l'obiettivo.
 
 
-	Per descrivere il comportamento dell’app, si utilizza il tempo presente, non il futuro. Se è necessario scrivere al passato o al futuro, è raccomandato usare forme verbali semplici. Per quanto riguarda i numeri,  per facilitare la lettura, vanno scritti in cifre ( "1, 2, 3", non "uno, due, tre") a meno di casi particolari, come "Inserisci due 3".
+	Per descrivere il comportamento dell’app, si utilizza il tempo presente, non il futuro. Se è necessario scrivere al passato o al futuro, è raccomandato usare forme verbali semplici. Per quanto riguarda i numeri,  per facilitare la lettura, vanno scritti in cifre.
 	La punteggiatura va evitata dove non è necessaria, per aiutare i lettori a scansionare il testo a colpo d'occhio. Si evita di usare punti su frasi singole in questi elementi dell'interfaccia utente:
 	\begin{itemize}
 		\item Etichette;
@@ -1065,13 +760,19 @@ tabsize=1
 		\item Elenchi puntati;
 		\item Testo del corpo della finestra di dialogo.
 	\end{itemize}
-	Frasi più lunghe o complesse possono usare i punti se farlo si adatta meglio al contesto. Ad esempio, se il resto del flusso dell'app non usa i periodi, introdurli in alcuni punti potrebbe sembrare incoerente.
-	Inoltre, ci si rivolge agli utenti in seconda persona (tu o tuo) o in prima persona (io, io o mio), a seconda di quale sia adatto e più chiaro per la situazione:
+	Frasi più lunghe o complesse possono usare i punti se farlo si adatta meglio al contesto.
+
+	Per rivolgersi agli utenti si usa la prima o seconda persona (io, io o mio; tu o tuo), a seconda di quale sia adatta e più chiara per la situazione:
 	\begin{itemize}
 		\item Seconda persona, "tu" o "tuo": questo stile di conversazione è appropriato nella maggior parte delle situazioni; come se l'interfaccia utente parlasse direttamente all'utente;
 		\item Prima persona, "io"  o "mio": in alcuni casi, questa forma di indirizzo sottolinea la proprietà dell'utente di contenuti o azioni;
 	\end{itemize}
 	Per evitare di confondere l'utente, si evita di usare "io" o "mio" e "tu" o "tuo" nella stessa frase.
+
+
+
+
+% ========================================================================================================================
 \chapter{Novità del material design 3}
 	\section{Accessibilità}
 		Al giorno d'oggi la tecnologia aiuta incredibilmente le vite di persone con disabilità, rendendole più indipendendi grazie a certi strumenti tra cui tastiere o lettori di schermo
@@ -1118,7 +819,13 @@ tabsize=1
 		Al momento sono disponibili solo i design per colore e tipografia, con il supporto di tokens per componenti e misure in sviluppo. Si può scaricare il dsp del material design da \href{https://github.com/material-foundation/material-tokens}{qua}, modificarlo con dei tools, e poi esportarli per android.
 		
 		Nella nostra applicazione non ne abbiamo fatto uso in quanto sono ancora in sviluppo, e i loro utilizzi non ci sono utili, come creare nuovi prodotti che usano lo stesso stile.
-	
+
+	\section{Interaction states}
+	Gli interaction states sono indicatori visivi utilizzati per comunicare lo stato di un componente o di un elemento interattivo. Si dividono in livelli che si presentano come una  copertura semitrasparente su un elemento che rende quest'ultimo più o meno opaco, mantenendo lo stesso colore del contenuto.
+	Ciò non accade ai componenti che utilizzano gli stati "attivo" o "selezionato" che, invece, cambiano il contenitore e il colore del contenuto .
+	Per impostazione predefinita, il colore del livello di stato di un componente deriva dal suo contenuto, dal colore di un'icona o dal testo dell'etichetta se non è presente alcuna icona.
+	Un livello può essere applicato a un intero elemento o in una forma circolare e può essere applicato solo un livello alla volta.
+
 	\section{Iconografia material 3}
 		Nel material design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
 		Nel catalogo molte icone vecche sono state ridisegnate, dando ora un'impressione più moderna
