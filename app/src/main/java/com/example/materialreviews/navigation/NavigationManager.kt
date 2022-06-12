@@ -5,7 +5,6 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -13,7 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,6 +28,8 @@ import androidx.navigation.navArgument
 import com.example.materialreviews.*
 import com.example.materialreviews.R
 import com.example.materialreviews.db.*
+import com.example.materialreviews.screen.profile.SettingsScreen
+import com.example.materialreviews.screen.reviews.ListOfReviews
 import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
 
@@ -73,18 +73,6 @@ fun NavigationManager() {
                     navController = navController,
                     startDestination = MaterialReviewsScreen.Explore.name,
                 ) {
-                    //Le mie recensioni
-                    composable(MaterialReviewsScreen.MyReviews.name) {
-                       ListOfReviews2(
-                           model = restaurantViewModel,
-                           modelReview = userViewModel,
-                           { restId
-                               ->
-                               navigateToSingleRestaurant(navController, restId)
-                           },
-                           login_id = MyPreferences(context).getId()
-                       )
-                    }
                     //Esplora
                     composable(MaterialReviewsScreen.Explore.name) {
                         ListOfRestaurants(
@@ -95,31 +83,21 @@ fun NavigationManager() {
                             onlyFavorites = onlyFavorites
                         )
                     }
-                    /*
-                    composable(MaterialReviewsScreen.Favourites.name) {
-                        ProfileScreen(userViewModel, restaurantViewModel)
-                    }
-                     */
-                    //Profilo
-                    composable(MaterialReviewsScreen.Profile.name) {
-                        /*ProfileScreen(
-                            userViewModel,
-                            restaurantViewModel,
-                            onClickSeeRestaurant = { restId
+                    //Le mie recensioni
+                    composable(MaterialReviewsScreen.MyReviews.name) {
+                        ListOfReviews(
+                            model = restaurantViewModel,
+                            modelReview = userViewModel,
+                            { restId
                                 ->
                                 navigateToSingleRestaurant(navController, restId)
                             },
-                            onClickEdit = { navController.navigate(MaterialReviewsScreen.EditProfile.name) }
-                        )*/
+                            login_id = MyPreferences(context).getId()
+                        )
+                    }
+                    //Profilo
+                    composable(MaterialReviewsScreen.Profile.name) {
                         ProfileScreen()
-                    }
-                    //TODO Impostazioni da eliminare
-                    composable(MaterialReviewsScreen.Settings.name) {
-                        SettingsScreen()
-                    }
-                    //Modifica profilo
-                    composable(MaterialReviewsScreen.EditProfile.name){
-                        EditProfile(userViewModel)
                     }
 
                     //Dettagli del ristorante e recensioni

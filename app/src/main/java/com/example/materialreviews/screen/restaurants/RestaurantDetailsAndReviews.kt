@@ -24,9 +24,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.currentColorScheme
+import com.example.materialreviews.util.RowOfStars
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -211,10 +213,6 @@ fun RestaurantDetailsAndReviews(
                                 getAverageRating = {
                                     restaurantModel.getAverageRatingOfRestaurant(restaurantWithReviews!!.restaurant.rid)
                                 },
-                                // Passo la lambda per mostrare il dialog per aggiungere le recensioni
-                                addReviewButtonOnClick = {
-                                    showAddReviewDialog = true
-                                }
                             )
                         }
 
@@ -246,7 +244,9 @@ fun RestaurantDetailsAndReviews(
     )
 }
 
-//Placeholder nel caso non ci sia nessuna recensione
+/**
+ * Placeholder nel caso non ci sia nessuna recensione
+ */
 @Composable
 fun NoReviews(){
     Surface( ) {
@@ -268,4 +268,65 @@ fun NoReviews(){
                 style = MaterialTheme.typography.bodyMedium)
         }
     }
+}
+
+/**
+ * Apre il dialog per inserire una nuova recensione. Ritorna un int e una stringa
+ */
+@ExperimentalComposeUiApi
+@ExperimentalMaterial3Api
+@Composable
+fun AddReviewDialog(
+    closeDialog: ()->Unit,
+    onConfirmClick: (Int, String)->Unit,
+    existingRating: Int = 3,
+    existingComment: String = "",
+) {
+    // Variabili della recensione
+    var rating by remember{mutableStateOf(existingRating)}
+    var comment by remember{mutableStateOf(existingComment)}
+
+    AlertDialog(
+        onDismissRequest = closeDialog,
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+        modifier = Modifier.fillMaxWidth(0.9f),
+        title = { Text("Scrivi una recensione") },
+        text = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // Seleziona quante stelle mettere nella recensione
+                RowOfStars(
+                    rating = rating,
+                    onClick = { selectedRating ->
+                        rating = selectedRating
+                    }
+                )
+
+                // Inserisce il testo della recensione
+                OutlinedTextField(
+                    value = comment,
+                    onValueChange = {comment = it},
+                    label = { Text("Inserisci un commento") }
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirmClick(rating, comment)
+                }
+            ) {
+                Text("Pubblica")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = closeDialog
+            ) {
+                Text("Annulla")
+            }
+        },
+    )
 }

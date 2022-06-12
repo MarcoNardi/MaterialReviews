@@ -47,47 +47,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun M3App() {
     MaterialReviewsTheme() {
-        /*
-        val context= LocalContext.current
-        val imageModel: ImageViewModel=viewModel(factory = ImageViewModelFactory(
-            AppDatabase.getDatabase(context).imageDao()
-            )
-        )
-        imageModel.addImage(restaurantImageUri+"6", rid =6)
-        imageModel.addImage(restaurantImageUri+"7", rid =7)
-        imageModel.addImage(restaurantImageUri+"8", rid =7)
-        imageModel.addImage(restaurantImageUri+"2", rid =2)
-        imageModel.addImage(restaurantImageUri+"3", rid =3)
-        imageModel.addImage(restaurantImageUri+"4", rid =4)
-        imageModel.addImage(restaurantImageUri+"5", rid =5)
-
-
-
-        val userModel: UserViewModel=viewModel(factory = UserViewModelFactory(
-            AppDatabase.getDatabase(context).userDao()
-            )
-        )
-
-        val restaurantModel: RestaurantViewModel=viewModel(factory = RestaurantViewModelFactory(
-            AppDatabase.getDatabase(context).restaurantDao()
-            )
-        )
-        val reviewModel: ReviewViewModel=viewModel(factory = ReviewViewModelFactory(
-            AppDatabase.getDatabase(context).reviewDao()
-            )
-        )
-
-        for(i in getInitialUsersData()){
-            userModel.addUser(i)
-        }
-        for(i in getInitialRestaurantsData()){
-            restaurantModel.addRestaurant(i)
-        }
-        for(i in getInitialReviewsData()){
-            reviewModel.addReview(i)
-        }*/
-
-
         NavigationManager()
     }
 }

@@ -1,22 +1,14 @@
 package com.example.materialreviews
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.LiveData
@@ -24,6 +16,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
+import com.example.materialreviews.util.ProfilePicture
+import com.example.materialreviews.util.RowOfStars
 
 @OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterial3Api
@@ -155,34 +149,3 @@ fun DeleteReviewButton(
     }
 }
 
-@Composable
-fun ProfilePicture(size: Dp, pictureUri: String = "", borderWidth: Dp = 1.dp) {
-    Box(
-        modifier = Modifier
-            .size(size)
-            .clip(shape = CircleShape)
-            .border(
-                width = borderWidth,
-                color = currentColorScheme.onBackground,
-                shape = CircleShape
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        if (pictureUri == "") {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = "Default image",
-                contentScale = ContentScale.Crop,
-            )
-        }
-        else {
-            // Immagine del profilo
-            val profilePicture = getImageBitmap(pictureUri, LocalContext.current).asImageBitmap()
-            Image(
-                bitmap = profilePicture,
-                contentDescription = "Profile picture",
-                contentScale = ContentScale.Crop,
-            )
-        }
-    }
-}

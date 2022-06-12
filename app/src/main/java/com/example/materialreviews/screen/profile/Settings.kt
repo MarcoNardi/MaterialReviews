@@ -1,4 +1,4 @@
-package com.example.materialreviews
+package com.example.materialreviews.screen.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

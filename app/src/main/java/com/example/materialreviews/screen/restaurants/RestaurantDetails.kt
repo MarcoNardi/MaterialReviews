@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.example.materialreviews.db.RestaurantEntity
 import com.example.materialreviews.ui.theme.currentColorScheme
+import com.example.materialreviews.util.RowOfStars
 
 /**
  * Card riassuntiva di un ristorante
@@ -36,7 +37,6 @@ fun RestaurantDetails(
     imageUri: String,
     onCheckedChange: (Boolean) -> Unit,
     getAverageRating: () -> LiveData<Float>,
-    addReviewButtonOnClick: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -197,9 +197,6 @@ fun RestaurantDetails(
                 }
 
             }
-
-            // Pulsante per aggiungere una recensione al ristorante
-            // AddReviewButton(onClick = addReviewButtonOnClick)
         }
     }
 }

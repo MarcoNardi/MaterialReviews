@@ -34,10 +34,15 @@ import com.example.materialreviews.db.AppDatabase
 import com.example.materialreviews.db.ImageViewModel
 import com.example.materialreviews.db.UserViewModel
 import com.example.materialreviews.db.UserViewModelFactory
+import com.example.materialreviews.screen.profile.SettingsScreen
 import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
 import com.example.materialreviews.util.OpenDocumentWithPermissions
+import com.example.materialreviews.util.ProfilePicture
 
+/**
+ * Schermata per la gestione del profilo
+ */
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
 @Preview
@@ -173,6 +178,9 @@ fun ProfileScreen() {
 
 }
 
+/**
+ * Dialog che permette di selezioanre nome, cognome e foto profilo
+ */
 @Composable
 fun EditProfileDialog(
     currentName: String = "Default",
@@ -266,6 +274,9 @@ fun EditProfileDialog(
     )
 }
 
+/**
+ * Dialog che permette di selezionare il tema
+ */
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
 @Preview

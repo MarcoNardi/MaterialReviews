@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.currentColorScheme
+import com.example.materialreviews.util.RowOfStars
 import kotlinx.coroutines.delay
 
 
@@ -177,22 +178,5 @@ fun AddReviewButton(
     }
 }
 
-/*
-@ExperimentalMaterial3Api
-@Preview
-@Composable
-fun ListOfRestaurantsPreview() {
-    val restaurants = listOf(Restaurant(), Restaurant(), Restaurant())
-    //ListOfRestaurants(restaurants)
-}
-
-
-@ExperimentalMaterial3Api
-@Composable
-fun ListOfRestaurantsPreview(model: RestaurantViewModel) {
-    //val restaurants = listOf(Restaurant(), Restaurant(), Restaurant())
-    //ListOfRestaurants(model.getAllRestaurants())
-}
-*/
 
 

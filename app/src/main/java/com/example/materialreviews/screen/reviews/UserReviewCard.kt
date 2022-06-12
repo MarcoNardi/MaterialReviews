@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
+import com.example.materialreviews.util.ProfilePicture
+import com.example.materialreviews.util.RowOfStars
 
 
 @OptIn(ExperimentalComposeUiApi::class)
