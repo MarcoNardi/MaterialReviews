@@ -39,7 +39,7 @@ fun ProfilePicture(size: Dp = 50.dp, pictureUri: String = "", borderWidth: Dp = 
     ) {
         if (pictureUri == "") {
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
+                painter = painterResource(id = R.drawable.ic_baseline_no_favourites_24),
                 contentDescription = "Default image",
                 contentScale = ContentScale.Crop,
             )
