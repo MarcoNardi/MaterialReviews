@@ -1,6 +1,8 @@
 package com.example.materialreviews.navigation
 
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -28,40 +30,59 @@ import androidx.navigation.navArgument
 import com.example.materialreviews.*
 import com.example.materialreviews.R
 import com.example.materialreviews.db.*
-import com.example.materialreviews.screen.profile.SettingsScreen
+import com.example.materialreviews.screen.profile.OnBoarding
 import com.example.materialreviews.screen.reviews.ListOfReviews
 import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
 
-@ExperimentalComposeUiApi
-@ExperimentalAnimationApi
-@ExperimentalMaterial3Api
+
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class,
+    ExperimentalMaterial3Api::class
+)
 @Preview
 @Composable
 fun NavigationManager() {
     // Definisco il navController
     val navController = rememberNavController()
+
     val context = LocalContext.current
-    var topBarTitle by rememberSaveable() { mutableStateOf("")    }
+    var topBarTitle by rememberSaveable() { mutableStateOf("") }
 
     var onlyFavorites by rememberSaveable() {
         mutableStateOf(false)
     }
 
-    val restaurantViewModel: RestaurantViewModel = viewModel(factory = RestaurantViewModelFactory(
-        AppDatabase.getDatabase(context ).restaurantDao()
-    ))
+    val restaurantViewModel: RestaurantViewModel = viewModel(
+        factory = RestaurantViewModelFactory(
+            AppDatabase.getDatabase(context).restaurantDao()
+        )
+    )
 
-    val userViewModel: UserViewModel = viewModel(factory = UserViewModelFactory(
-        AppDatabase.getDatabase(context ).userDao()
-    ))
+    val userViewModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(
+            AppDatabase.getDatabase(context).userDao()
+        )
+    )
+    val myPreferences = MyPreferences(context)
+    val firstAccess = myPreferences.isFirstAcces()
+    var barState = rememberSaveable { (mutableStateOf(true)) }
+    if (firstAccess == 1) {
+        barState.value = false
+    }
+    var startdestination = MaterialReviewsScreen.Explore.name
+    if (firstAccess == 1) {
+        startdestination = MaterialReviewsScreen.Onboarding.name
+    }
 
 
     // Scaffold = topBar + bottomBar + content
     Scaffold(
-        topBar = { TopBar(navController, topBarTitle, onlyFavorites,
-        onCheckedChange={ onlyFavorites=it }) },
-        bottomBar = { BottomBar(navController) },
+        topBar = {
+            TopBar(navController, topBarTitle, onlyFavorites,
+                onCheckedChange = { onlyFavorites = it }, barState
+            )
+        },
+        bottomBar = { BottomBar(navController, barState) },
         content = { paddingValues ->
             Box(
                 modifier = Modifier
@@ -71,8 +92,16 @@ fun NavigationManager() {
                 // Associazioni stringa-composable
                 NavHost(
                     navController = navController,
-                    startDestination = MaterialReviewsScreen.Explore.name,
+                    startDestination = startdestination
                 ) {
+
+                    //Onboarding
+                    composable(MaterialReviewsScreen.Onboarding.name) {
+                        OnBoarding(model = userViewModel, onClickStart = {
+                            navController.navigate(MaterialReviewsScreen.Explore.name)
+                            barState.value = true
+                        })
+                    }
                     //Esplora
                     composable(MaterialReviewsScreen.Explore.name) {
                         ListOfRestaurants(
@@ -115,7 +144,7 @@ fun NavigationManager() {
                     }
                 }
             }
-        },
+        }
     )
 
     LaunchedEffect(navController) {
@@ -125,6 +154,7 @@ fun NavigationManager() {
         }
     }
 }
+
 
 //Titoli delle schermate
 fun getTitleByRoute(context: Context, route:String?): String {
@@ -151,106 +181,119 @@ private fun currentRoute(navController: NavHostController): String? {
 
 @ExperimentalMaterial3Api
 @Composable
-fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorites:Boolean, onCheckedChange:(Boolean)->Unit) {
+fun TopBar(navController: NavHostController, topBarTitle: String, selectFavorites:Boolean, onCheckedChange:(Boolean)->Unit, barState: MutableState<Boolean>) {
 
     val currentRoute = currentRoute(navController = navController)
 
-    SmallTopAppBar(
-        // Titolo che appare nella barra in alto
-        title = { Text(topBarTitle) },
+    AnimatedVisibility(
+        visible = barState.value,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+        content = {
+            SmallTopAppBar(
+                // Titolo che appare nella barra in alto
+                title = { Text(topBarTitle) },
 
-        // Button per tornare indietro
-        navigationIcon = {
-            // Controllo che ci sia almeno un altro elemento nella backStack
-            if (
-                navController.previousBackStackEntry != null &&
-                currentRoute != MaterialReviewsScreen.Explore.name &&
-                currentRoute != MaterialReviewsScreen.MyReviews.name &&
-                currentRoute != MaterialReviewsScreen.Profile.name
-            ) {
-                IconButton(
-                    onClick = {
-                        navController.popBackStack()
+                // Button per tornare indietro
+                navigationIcon = {
+                    // Controllo che ci sia almeno un altro elemento nella backStack
+                    if (
+                        navController.previousBackStackEntry != null &&
+                        currentRoute != MaterialReviewsScreen.Explore.name &&
+                        currentRoute != MaterialReviewsScreen.MyReviews.name &&
+                        currentRoute != MaterialReviewsScreen.Profile.name
+                    ) {
+                        IconButton(
+                            onClick = {
+                                navController.popBackStack()
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
                     }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-            }
-        },
+                },
 
-        // Altre azioni in alto a destra
-        actions = {
-            if(currentRoute=="Explore"){
-                Switch(
-                    checked = selectFavorites,
-                    onCheckedChange = onCheckedChange,
-                    thumbContent = {
-                        Icon(
-                            imageVector = Icons.Filled.Favorite,
-                            contentDescription = "filtra per preferiti",
-                            modifier = Modifier.size(SwitchDefaults.IconSize)
+                // Altre azioni in alto a destra
+                actions = {
+                    if (currentRoute == "Explore") {
+                        Switch(
+                            checked = selectFavorites,
+                            onCheckedChange = onCheckedChange,
+                            thumbContent = {
+                                Icon(
+                                    imageVector = Icons.Filled.Favorite,
+                                    contentDescription = "filtra per preferiti",
+                                    modifier = Modifier.size(SwitchDefaults.IconSize)
+                                )
+                            },
+                            modifier = Modifier.padding(end = 16.dp),
+                            colors = SwitchDefaults.colors(
+                                uncheckedTrackColor = currentColorScheme.secondaryContainer,
+                                uncheckedIconColor = currentColorScheme.secondaryContainer,
+                                uncheckedBorderColor = currentColorScheme.secondaryContainer,
+                                uncheckedThumbColor = currentColorScheme.onSecondaryContainer,
+                                checkedTrackColor = currentColorScheme.secondary,
+                                checkedIconColor = currentColorScheme.secondary,
+                                checkedBorderColor = currentColorScheme.secondary,
+                                checkedThumbColor = currentColorScheme.onSecondary,
+                            )
                         )
-                    },
-                    modifier = Modifier.padding(end = 16.dp),
-                    colors = SwitchDefaults.colors(
-                        uncheckedTrackColor = currentColorScheme.secondaryContainer,
-                        uncheckedIconColor = currentColorScheme.secondaryContainer,
-                        uncheckedBorderColor = currentColorScheme.secondaryContainer,
-                        uncheckedThumbColor = currentColorScheme.onSecondaryContainer,
-                        checkedTrackColor = currentColorScheme.secondary,
-                        checkedIconColor = currentColorScheme.secondary,
-                        checkedBorderColor = currentColorScheme.secondary,
-                        checkedThumbColor = currentColorScheme.onSecondary,
-                    )
-                )
-            }
+                    }
 
-        },
+                }
+            )
+        }
     )
 }
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(navController: NavHostController, barState: MutableState<Boolean>) {
 
     val currentRoute = currentRoute(navController)
+    AnimatedVisibility(
+        visible = barState.value,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+        content = {
+            NavigationBar() {
 
-    NavigationBar() {
+                NavigationBarItem(
+                    selected = (currentRoute == MaterialReviewsScreen.Explore.name),
+                    icon = { Icon(painterResource(R.drawable.ic_baseline_restaurant_24), contentDescription = "Ristoranti") },
+                    label = { Text(text = stringResource(id = R.string.explore)) },
+                    onClick = {
+                        navController.navigate(MaterialReviewsScreen.Explore.name)
+                    },
+                    //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
+                )
 
-        NavigationBarItem(
-            selected = (currentRoute == MaterialReviewsScreen.Explore.name),
-            icon = { Icon(painterResource(R.drawable.ic_baseline_restaurant_24), contentDescription = "Ristoranti") },
-            label = { Text(text = stringResource(id = R.string.explore)) },
-            onClick = {
-                navController.navigate(MaterialReviewsScreen.Explore.name)
-            },
-            //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
-        )
+                NavigationBarItem(
+                    selected = (currentRoute == MaterialReviewsScreen.MyReviews.name),
+                    icon = { Icon(Icons.Filled.RateReview, contentDescription = "Recensioni") },
+                    //Nome della pagina
+                    label = { Text(text = stringResource(R.string.myreviews)) },
+                    onClick = {
+                        navController.navigate(MaterialReviewsScreen.MyReviews.name)
+                    },
+                    //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
+                )
 
-        NavigationBarItem(
-            selected = (currentRoute == MaterialReviewsScreen.MyReviews.name),
-            icon = { Icon(Icons.Filled.RateReview, contentDescription = "Recensioni") },
-            //Nome della pagina
-            label = { Text(text = stringResource(R.string.myreviews)) },
-            onClick = {
-                navController.navigate(MaterialReviewsScreen.MyReviews.name)
-            },
-            //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
-        )
-
-        NavigationBarItem(
-            selected = (currentRoute == MaterialReviewsScreen.Profile.name),
-            icon = { Icon(Icons.Filled.Person, contentDescription = "Profilo") },
-            //Nome della pagina
-            label = { Text(text = stringResource(R.string.profile)) },
-            onClick = {
-                navController.navigate(MaterialReviewsScreen.Profile.name)
-            },
-            //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
-        )
-    }
+                NavigationBarItem(
+                    selected = (currentRoute == MaterialReviewsScreen.Profile.name),
+                    icon = { Icon(Icons.Filled.Person, contentDescription = "Profilo") },
+                    //Nome della pagina
+                    label = { Text(text = stringResource(R.string.profile)) },
+                    onClick = {
+                        navController.navigate(MaterialReviewsScreen.Profile.name)
+                    },
+                    //colors = NavigationBarItemDefaults.colors(indicatorColor = currentColorScheme.inversePrimary)
+                )
+            }
+        }
+    )
 }
 
 private fun navigateToSingleRestaurant(navController: NavHostController, restId: Int) {
