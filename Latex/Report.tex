@@ -903,6 +903,86 @@ tabsize=1
 		Sono stati introdotti i tokens per il testo per permettere facile modifica di valori come type scale o weight.
 		Il resto delle linee guida invece rimane simile a quelle del material design 2
 	
+\chapter{Material Reviews}
+	La nostra applicazione si chiama Material reviews, e come suggerisce il nome si occupa di recensioni per ristoranti.
+	L'idea è nata dalla necessità di creare un'applicazione complessa per poter mettere in pratica più linee guida possibili.
+	Abbiamo usato Jetpack Compose \cite{compose} e Room\cite{room} per l'implementazione, anche se alcune features utilizzate sono ancora in via di sviluppo.
+	\section{Funzionamento e struttura}
+	L'applicazione è divisa in 3 parti principali: i ristoranti, le proprie recensioni, il proprio profilo:
+
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\textwidth]{screenHome.jpg} 
+	  \caption{Home dell'applicazione}
+		
+	\end{figure}
+
+
+	\subsection{Dettagli ristoranti}
+	Nella parte Ristoranti si può scorrere la lista di ristoranti già presente nell'app, aggiungerne ai preferiti cliccando l'icona a forma di cuore, e accedere ai dettagli cliccando sulla card del ristorante. E' anche possibile filtrare per solo i ristoranti preferiti premendo lo switch in alto a destra.
+	Tappando un ristorante apre la seguente schermata dei dettagli e recensioni:
+
+
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.25\textwidth]{screenDetails.jpg} 
+	  \caption{Dettagli di un ristorante}
+		
+	\end{figure}
+
+
+	Tappando il fab per aggiungere la recensione fa comparire un dialog per l'aggiunta, dove si possono premere il numero di stelle da dare e scrivere una recensione come mostrate in Figura 4.3
+	\pagebreak
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{addReviewDialog.jpg} 
+	  \caption{Dialog per l'aggiunta di una recensione}
+		
+	\end{figure}
+	\newpage
+
+	\subsection{Le mie recensioni}
+	Nella parte recensioni è possibile vedere le proprie recensioni, cliccare sulla recensione porta alla schermata di dettagli del ristorante stesso.
+	Si può anche rimuovere recensioni con il pulsante dedicato, che fa apparire un dialog di conferma.
+	
+
+
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.4\textwidth]{screenReviews.jpg} 
+	  \caption{Schermata con le recensioni dell'utente}
+		
+	\end{figure}
+
+
+	\newpage
+	\subsection{Profilo}
+		Nella parte del profilo l'utente può modificare le proprie informazioni e le impostazioni, anche se al momento l'unica impostazione disponibile è la scelta del tema.
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.4\textwidth]{profileScreen.jpg} 
+		  \caption{Schermata con il profilo dell'utente}
+			
+		\end{figure}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.3\textwidth]{editProfile.jpg} 
+		  \caption{Dialog per modificare il profilo}
+			
+		\end{figure}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.3\textwidth]{themeSelector.jpg} 
+		  \caption{Dialog per modificare il tema}
+			
+		\end{figure}
+
+
+
 
 
 % ==================================== Bibliografia ======================================
