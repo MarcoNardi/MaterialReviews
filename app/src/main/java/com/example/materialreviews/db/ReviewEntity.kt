@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-
+//entità che si occupa di salvare reviews
 @Entity(tableName = "reviews", foreignKeys = [
     ForeignKey(entity=UserEntity::class, parentColumns = ["uid"], childColumns = ["userId"]),
     ForeignKey(entity=RestaurantEntity::class, parentColumns = ["rid"], childColumns = ["restaurantId"])

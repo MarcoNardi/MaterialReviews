@@ -11,14 +11,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel() {
-
+    //helper per inserire un ristorante
     private fun insertRestaurant(restaurant: RestaurantEntity) {
         viewModelScope.launch{
             restaurantDao.insert(restaurant)
         }
     }
 
-
+    //helper per creare un entry
     private fun createRestaurantEntry(id: Int, name: String, sito: String, citta:String, via: String, num_civico: Int, orario:String, preferito: Boolean, categoria: String, nTelefono:String): RestaurantEntity{
         return RestaurantEntity(id, name, sito, orario,categoria,preferito,nTelefono, Address(citta, via, num_civico ) )
     }
@@ -92,7 +92,7 @@ class RestaurantViewModel(private val restaurantDao: RestaurantDao) : ViewModel(
         return imageUri
     }
 
-    //serve per ottenere dati dell'immagine con coroutine ma trovato un metodo "migliore"
+    //serve per ottenere dati dell'immagine con coroutine ma non è usata perchè trovato un metodo "migliore"
     fun getImageData(imageUri:String, context: Context): MutableLiveData<Bitmap> {
         val imageBitmap: MutableLiveData<Bitmap> by lazy {
             MutableLiveData<Bitmap>()

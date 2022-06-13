@@ -5,7 +5,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
+//salva le info di un ristorante
 @Entity(tableName = "restaurants")
 data class RestaurantEntity(
     @PrimaryKey(autoGenerate = true)
