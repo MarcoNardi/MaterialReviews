@@ -426,7 +426,11 @@ tabsize=1
 		Il material design fornisce strumenti, griglie e specifiche per utilizzare e creare le proprie icone, con l'obbiettivo di mantenere un certo livello di semplicità.
 		\subsection{Design delle icone}
 			Nel Material Design, le icone sono realizzate per essere semplici e moderne, ridotte alla forma minima, esprimendo solo concetti essenziali, con forme geometriche semplici e consistenti. Questa semplicità permette alle icone di rimanere leggibili e distinguibili anche a dimensioni piccole.
-
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.1\textwidth]{ic_launcher_round} %nome del file
+			\caption{Icona di MaterialReviews.}
+		\end{figure}
 			\subsubsection{Dimensioni}
 			Le icone sono normalmente 24dp x 24dp, nel caso di layout più densi come su un desktop possono essere scalate a 20dp x 20dp.
 			Per ogni icona vi è un perimetro di padding di 2dp,per prevenire sovrapposizioni o oscuramenti in layout densi o nel caso appaiano altri elementi a schermo.
@@ -473,8 +477,19 @@ tabsize=1
 		\item \textit{simmetria}: è possibile applicare modifiche solo ad angoli specifici.
 	\end{itemize}
 
-	Per applicare una famiglia di forme e una dimensione a tutti i componenti di un gruppo, bisogna impostare i valori per il gruppo di forme. Quando vengono apportate modifiche a un gruppo, le modifiche influiscono su tutti i componenti in quel gruppo di forme, ad eccezione di quelli con una sostituzione.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{Angoli} %nome del file
+		\caption{A sinistra angolo tagliato. A destra angolo arrotondato. }
+	\end{figure}
 
+
+	Per applicare una famiglia di forme e una dimensione a tutti i componenti di un gruppo, bisogna impostare i valori per il gruppo di forme. Quando vengono apportate modifiche a un gruppo, le modifiche influiscono su tutti i componenti in quel gruppo di forme, ad eccezione di quelli con una sostituzione.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\textwidth]{asimmetry} %nome del file
+		\caption{Forma asimmetrica.}
+	\end{figure}
 	\subsection{Uso efficace delle forme}
 	Le forme sono visibili quando i bordi della superficie hanno un contrasto sufficiente rispetto allo sfondo. Per impostazione predefinita, il Material Design rende visibili le forme utilizzando le ombre per visualizzare i bordi delle superfici.
 	Tuttavia, esistono altri metodi per rendere visibili le forme, come riempimenti di colore e opacità, che possono essere utilizzati in combinazione con le ombre o da soli.
@@ -494,15 +509,22 @@ tabsize=1
 	\subsubsection{Angoli}
 	E' necessario evitare di utilizzare valori percentuali per i componenti che modificano dinamicamente la propria altezza, altrimenti la forma potrebbe modificarsi in modi inaspettati.
 	Inoltre, gli angoli ancorati ai bordi dello schermo non possono essere personalizzati, altrimenti si creerebbero spazi vuoti che lasciano trasparire il contenuto dietro ad un componente.
-
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\textwidth]{erroreshape} %nome del file
+		\caption{Forma inappropriata arrotondata a bordo schermo.}
+	\end{figure}
 	\subsubsection{Modifiche ad altri sistemi}
 	Le personalizzazioni del sistema possono influire sull'uso della forma da parte di un componente. Ad esempio, l'aumento della dimensione del carattere potrebbe causare il taglio di parte di un testo e la modifica di altezza e forma del componente, se le dimensioni sono definite come percentuali.
 	Le modifiche al contenuto possono anche influire sulla forma di un componente. Ad esempio, se la lunghezza del testo aumenta, il testo potrebbe andare a capo su una riga aggiuntiva, aumentando l'altezza del componente e influenzando le forme definite come percentuale.
-
 	\subsubsection{Morphing}
 	Gli elementi possono cambiare forma in risposta alle modifiche al contenuto o all'interazione dell'utente. Questa trasformazione si chiama \textit{morphing}. Le forme possono trasformarsi per vari motivi: in risposta a cambiamenti di stato o contenuto o come risultato dell'interazione dell'utente. Ad esempio, quando si ruota un
 	dispositivo mobile da verticale a orizzontale, le superfici possono rispondere modificando le dimensioni, il che può causare la trasformazione delle forme.
-
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{erroreForme} %nome del file
+		\caption{Forma che assume un comportamento inaspettato.}
+	\end{figure}
 	Il morphing di una forma dovrebbe preservare le proporzioni delle forme distintive, per evitare la distorsione.
 	Inoltre, tutto il contenuto su una superficie dovrebbe essere visibile mentre la superficie si trasforma, senza ritagliare il contenuto.
 
@@ -515,9 +537,6 @@ tabsize=1
 
 	Le forme possono enfatizzare le superfici separate l'una dall'altra. Ad esempio, quando una forma unica appare a un'altezza maggiore rispetto a un'altra superficie, si sottolinea che le due superfici sono separate.
 
-	\subsection{Forme nel material design 3}
-	Il material design tre intoduce un cambiamento ai gruppi di forme, sempre basati sulle dimensioni, ma con con sette stili degli angoli, assegnati in base alla quantità di arrotondamento desiderata. Le forme con angoli squadrati sono chiamate "none", le forme leggermente arrotondate sono "extra-small", mentre le forme completamente arrotondate sono "full".
-	Ciò consente di conferrire maggior espressività all'interfaccia utente. Viene, inoltre, mantenuta la possibilità avere forme degli angoli simmetriche o asimmetriche, con angoli tagliati o arrotondati. Inoltre, è sempre modificare lo stile di un' intera categoria di forme
 
 % --------------------------------------------------------------------------------------
 	\section{Interazione}
@@ -646,6 +665,12 @@ tabsize=1
 		\item \textit{Stati vuoti}. Quando un'interfaccia utente è disponibile solo online e il contenuto non è stato caricato o sincronizzato, utilizzare uno stato vuoto.
 	\end{itemize}
 
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.3\textwidth]{AlertDialog}
+		\caption{Alert dialog.}
+	\end{figure}
+
 	\subsection{Visualizzazione dei dati}
 	La visualizzazione dei dati rappresenta le informazioni in forma grafica. E’ una forma di comunicazione che ritrae informazioni dense e complesse attraverso elementi visivi, per semplificare il confronto dei dati. Principi della visualizzazione grafica:
 	\begin{itemize}
@@ -657,6 +682,11 @@ tabsize=1
 
 	\subsubsection{Dashboards}
 	La visualizzazione dei dati può essere visualizzata su una serie di più grafici, in interfacce utente denominate dashboard.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.3\textwidth]{dashboard} %nome del file
+		\caption{Operation dashboard.}
+	\end{figure}
 
 	Il design di una dashboard dovrebbe adattarsi al modo in cui verrà utilizzata, sia che si tratti di uno strumento per fare una presentazione o di esplorare a fondo i dati. Una dashboard dovrebbe:
 	\begin{itemize}
@@ -694,7 +724,11 @@ tabsize=1
 	Gli stati vuoti si verificano quando il contenuto di un elemento non può essere mostrato.
 
 	Lo stato vuoto più elementare consiste in un'immagine non interattiva e uno slogan di testo. Si usa un'immagine che ha un tono neutro o umoristico ed è coerente con il marchio. Lo slogan dovrebbe, invece, avere un messaggio utile, essere coerente con il  marchio e trasmettere lo scopo dedell’app, senza apparire cliccabile.
-
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.3\textwidth]{statoVuoto}
+		\caption{Stato vuoto.}
+	\end{figure}
 	\subsubsection{Alternative}
 	Le schermate che altrimenti sarebbero vuote possono essere popolate con \textbf{contenuti iniziali}. Ciò consente agli utenti di iniziare a utilizzare un'app immediatamente, rendendo più facile per loro conoscere cosa un'app ha da offrire.
 
@@ -711,9 +745,18 @@ tabsize=1
 	Le immagini comunicano e differenziano un prodotto. Possono sia migliorare l'esperienza dell'utente che esprimere il linguaggio visivo di un marchio. Aiutano a raccontare una storia, a chiarire messaggi complessi difficili da esprimere con le parole e a mostrare
 	agli utenti come eseguire un'azione.
 
-	Per garantire l'accessibilità, le immagini dovrebbero includere un testo alternativo (o una didascalia) che gli screen reader leggeranno agli utenti con disabilità visive.
+	Per garantire l'accessibilità, le immagini dovrebbero includere un testo alternativo (o una didascalia) che gli screen reader leggeranno agli utenti con disabilità visive. In compose, per descrivere l'immagine si usa l'attributo content description:
 
-	Avere un punto focale iconico nelle immagini, è importante, poiché influisce sul modo in cui poi l’immagine viene tagliata per schermi con dimensioni diverse.
+\begin{lstlisting}[language=Kotlin]
+	Image(
+			bitmap = imageData!!.asImageBitmap(),
+            contentDescription = "Immagine del ristorante",
+            contentScale = ContentScale.Crop
+            )
+\end{lstlisting}
+
+
+Avere un punto focale iconico nelle immagini, è importante, poiché influisce sul modo in cui poi l’immagine viene tagliata per schermi con dimensioni diverse.
 
 
 	\subsubsection{Miniature}
@@ -761,8 +804,12 @@ tabsize=1
 		\item Testo del corpo della finestra di dialogo.
 	\end{itemize}
 	Frasi più lunghe o complesse possono usare i punti se farlo si adatta meglio al contesto.
-
-	Per rivolgersi agli utenti si usa la prima o seconda persona (io, io o mio; tu o tuo), a seconda di quale sia adatta e più chiara per la situazione:
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{scrittura}
+		\caption{Testi al tempo presente e futuro.}
+	\end{figure}
+	Per rivolgersi agli utenti si usa la prima o seconda persona, in base a quale sia adatta e più chiara per la situazione:
 	\begin{itemize}
 		\item Seconda persona, "tu" o "tuo": questo stile di conversazione è appropriato nella maggior parte delle situazioni; come se l'interfaccia utente parlasse direttamente all'utente;
 		\item Prima persona, "io"  o "mio": in alcuni casi, questa forma di indirizzo sottolinea la proprietà dell'utente di contenuti o azioni;
@@ -881,6 +928,17 @@ tabsize=1
  			\caption{Colori di default e colori dinamici}
  			\label{gerarchia_colori}
 		\end{figure}
+
+
+
+	\section{Forme}
+	Il Material Design 3 intoduce un cambiamento ai gruppi di forme, sempre basati sulle dimensioni, ma con con sette stili degli angoli, assegnati in base alla quantità di arrotondamento desiderata. Le forme con angoli squadrati sono chiamate "none", le forme leggermente arrotondate sono "extra-small", mentre le forme completamente arrotondate sono "full".
+	Ciò consente di conferrire maggior espressività all'interfaccia utente. Viene, inoltre, mantenuta la possibilità avere forme degli angoli simmetriche o asimmetriche, con angoli tagliati o arrotondati. Inoltre, è sempre modificare lo stile di un'intera categoria di forme.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.6\textwidth]{FormeM3} %nome del file
+		\caption{Gruppi di forme in M3.}
+	\end{figure}
 
 	\section{Iconografia material 3}
 		Nel material design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
