@@ -1,10 +1,6 @@
 package com.example.materialreviews.util
 
 import android.content.Context
-import androidx.compose.material3.ColorScheme
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 
 class MyPreferences(context: Context) {
 

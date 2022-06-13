@@ -2,6 +2,7 @@ package com.example.materialreviews.util
 
 import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -35,9 +36,10 @@ fun ProfilePicture(size: Dp = 50.dp, pictureUri: String = "", borderWidth: Dp = 
             .clip(shape = CircleShape)
             .border(
                 width = borderWidth,
-                color = currentColorScheme.onBackground,
+                color = currentColorScheme.onBackground.copy(alpha = 1f),
                 shape = CircleShape
-            ),
+            )
+            .background(currentColorScheme.surfaceVariant),
         contentAlignment = Alignment.Center
     ) {
         if (pictureUri == "") {
