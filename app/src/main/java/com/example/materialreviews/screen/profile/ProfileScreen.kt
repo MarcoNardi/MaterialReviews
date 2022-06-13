@@ -226,6 +226,7 @@ fun EditProfileDialog(
                     Box(
                         modifier = Modifier
                             .clip(CircleShape)
+                            .align(Alignment.BottomEnd)
                             .background(currentColorScheme.background.copy(alpha = 0.9f))
                     ) {
                         Icon(
