@@ -260,7 +260,7 @@ fun NoReviews(){
             Icon(
                 painter = painterResource(id = R.drawable.ic_baseline_no_reviews_24),
                 contentDescription = "Nessuna recensione",
-                modifier = Modifier.size(35.dp),
+                modifier = Modifier.size(40.dp),
                 tint = Color.Gray
             )
             Text(text = "Ancora nessuna recensione",
