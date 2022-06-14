@@ -293,27 +293,7 @@ tabsize=1
 
     		A differenza della navigazione laterale, quella in avanti non prevede elementi dell'interfaccia utente dedicati.
 
-    		Associata alla navigazione in avanti è la navigazione all'indietro, che permette all'utente di ritornare alla schermata cronologicamente precedente oppure ad un livello gerarchico superiore.
-
-
-    		\subsection{Navigation transitions - da tenere se implementiamo nell'app}
-    		Le transizioni di navigazione si verificano quando gli utenti si spostano tra le schermate e utilizzano il movimento per guidare gli utenti tra due schermate nell'app. Aiutano gli utenti
-    		a orientarsi esprimendo la gerarchia dell'app, usando il movimento per indicare in che modo gli elementi sono correlati tra loro. Il material design definisce 2 macro tipi di transizioni:
-    		\begin{itemize}
-    			\item \textit{Hierarchical transitions}. Si usano quando gli utenti salgono o scendono di un livello in un'app. Gli schermi a livelli adiacenti tra loro hanno una relazione genitore e
-    			figlio l'uno con l'altro, in cui il genitore si trova a un livello gerarchico più alto rispetto al figlio. Nelle transizioni padre-figlio, un elemento figlio presente nello schermo padre
-    			si solleva al tocco e si espande sul posto, utilizzando un modello di transizione di trasformazione del contenitore. Il movimento attira l'attenzione sullo schermo figlio (che è la destinazione
-    			dell'interazione), mentre rafforza la relazione tra gli schermi genitore e figlio.
-    			\item \textit{Peer transitions}. Si verificano tra le schermate allo stesso livello di gerarchia. Le transizioni tra pari si verificano tra schermate che condividono un genitore, mentre le transizioni tra pari
-    			di livello superiore vengono utilizzate solo per passare da una destinazione primaria all'altra. Si distinguono 2 tipi di peer transition:
-    			\begin{itemize}
-    				\item \textit{Sibling transitions}. Gli schermi che condividono lo stesso genitore (come le foto in un album, sezioni di un profilo o passaggi in un flusso) si muovono all'unisono per
-    				rafforzare la loro relazione reciproca. Lo schermo del peer scorre da un lato, mentre il suo fratello si sposta fuori dallo schermo nella direzione opposta.
-    				\item \textit{Top-level transitions}. Al livello superiore di un'app, le destinazioni sono spesso raggruppate in attività principali (e le attività potrebbero non essere correlate tra loro).
-    				Queste schermate si aprono utilizzando uno schema di transizione di dissolvenza.
-    			\end{itemize}
-    		\end{itemize}
-	
+    		Associata alla navigazione in avanti è la navigazione all'indietro, che permette all'utente di ritornare alla schermata cronologicamente precedente oppure ad un livello gerarchico superiore.	
 	
 % --------------------------------------------------------------------------------------
 	\section{Colori}
