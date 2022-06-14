@@ -228,7 +228,9 @@ fun RestaurantDetailsAndReviews(
                                 }
                             }
 
-                            items(restaurantWithReviews!!.reviews) { review ->
+                            items(restaurantWithReviews!!.reviews, key={
+                                it.uid
+                            }) { review ->
                                 ReviewCard(review= review, getUserInfo = {
                                     userModel.getUser(it)
                                 }, modifier =  Modifier.animateItemPlacement())

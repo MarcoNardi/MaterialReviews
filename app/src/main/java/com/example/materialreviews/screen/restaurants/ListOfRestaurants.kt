@@ -2,6 +2,11 @@ package com.example.materialreviews
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -39,52 +44,58 @@ fun ListOfRestaurants(
     val data by model.getRestaurantsWithImage().observeAsState()
     // Creo una colonna di RestaurantCard
     if(data!=null){
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
+                //.verticalScroll(rememberScrollState())
                 .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-
-
+            verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
             //HeartToggleButton checked
             if (onlyFavorites) {
                 val favorites= data!!.filter { it.restaurant.preferito }
                 //PlaceHolder in caso non ci siano preferiti
                 if(favorites.isEmpty()) {
-                    NoFavourites()
-                }else{
-                    data!!.forEach { restaurantWithImages ->
-                        // Se sto considerando solo i preferiti, quelli non preferiti appaiono invisibili, mentre i preferiti appaiono e hanno una exit animation
-                        AnimatedVisibility(
-                            restaurantWithImages.restaurant.preferito,
-                            exit = shrinkVertically() + fadeOut()
-                        ) {
-                            RestaurantCard(
-                                restaurantWithImages.restaurant,
-                                onClickSeeAll = onClickSeeAll,
-                                onCheckedChange = { it ->
-                                    model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
-                                },
-                                imageUri = restaurantWithImages.images[0].uri,
-                                getAverageRating = { model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid) }
-                            )
-                        }
-                    }
-                }
-            }else{
-                // Estraggo la lista dei ristoranti
+                    item{
+                        NoFavourites()
 
-                data!!.forEach { restaurantWithImages ->
-                    RestaurantCard(
-                        restaurantWithImages.restaurant,
-                        onClickSeeAll = onClickSeeAll,
-                        onCheckedChange = { it ->
-                            model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
-                        },
-                        imageUri = restaurantWithImages.images[0].uri,
-                        getAverageRating = { model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid) }
-                    )
+                    }
+                }else{
+                    items(data!!,key = {it.restaurant.rid}){
+                            restaurantWithImages ->
+                            // Se sto considerando solo i preferiti, quelli non preferiti appaiono invisibili, mentre i preferiti appaiono e hanno una exit animation
+                            AnimatedVisibility(
+                                restaurantWithImages.restaurant.preferito,
+                                exit = shrinkVertically() + fadeOut()
+                            ) {
+                                RestaurantCard(
+                                    restaurantWithImages.restaurant,
+                                    onClickSeeAll = onClickSeeAll,
+                                    onCheckedChange = { it ->
+                                        model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
+                                    },
+                                    imageUri = restaurantWithImages.images[0].uri,
+                                    getAverageRating = { model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid) }
+                                )
+                            }
+                    }
+
+                }
+            }
+            else{
+                items(data!!,key = {it.restaurant.rid}){
+                        restaurantWithImages ->
+                    // Se sto considerando solo i preferiti, quelli non preferiti appaiono invisibili, mentre i preferiti appaiono e hanno una exit animation
+
+                        RestaurantCard(
+                            restaurantWithImages.restaurant,
+                            onClickSeeAll = onClickSeeAll,
+                            onCheckedChange = { it ->
+                                model.changeFavoriteState(restaurantWithImages.restaurant.rid, it)
+                            },
+                            imageUri = restaurantWithImages.images[0].uri,
+                            getAverageRating = { model.getAverageRatingOfRestaurant(restaurantWithImages.restaurant.rid) }
+                        )
+
                 }
 
 

@@ -23,6 +23,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.materialreviews.db.RestaurantEntity
 import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.RowOfStars
@@ -60,12 +62,15 @@ fun RestaurantDetails(
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.medium)
             ) {
-                Image(
-                    bitmap = imageData!!.asImageBitmap(),
-                    contentDescription = "Restaurant image",
+
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(imageUri)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription="test",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .requiredSize(dpWidth.dp, (dpWidth/4*3).dp)
+                    modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
                 )
             }
 
