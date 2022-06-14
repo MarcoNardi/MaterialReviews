@@ -176,9 +176,8 @@ fun OnBoarding(model: UserViewModel,
 
                 //Inserimento dati nel db
                 if( nameEmpty == false && surnameEmpty == false) {
-                    model.updateFirstNameOfUser(login_id, name)
-                    model.updateLastNameOfUser(login_id, surname)
-                    model.updateImageOfUser(login_id, imageURI)
+                    model.addUser(4, name, surname, imageURI)
+                    myPreferences.setId(4)
                     myPreferences.setAccess(0)
                     openDialog = true
                 }else{
