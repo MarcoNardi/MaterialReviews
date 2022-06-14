@@ -89,73 +89,6 @@ tabsize=1
 
 
 
-% ===================================================================================
-\chapter{Esempi e template}
-
-	\section{Citazioni}
-	Ho seguito delle guide per riuscire a far andare la bibliografia, e in sostanza bisogna:
-	\begin{itemize}
-	\item avere installato il package biblatex
-	\item quando si compila, eseguire:
-		\begin{itemize}
-		\item PdfLatex
-		\item bibtex
-		\item PdfLatex
-		\item PdfLatex
-		\item ViewPdf
-		\end{itemize}
-	\end{itemize}
-
-	Per fare una citazione bisogna:
-	\begin{itemize}
-	\item aggiungere la risorsa nel file \texttt{resources.bib}
-	\item usare il comando \texttt{cite\textbraceleft id\_citazione\textbraceright}
-	\end{itemize}
-
-	Le citazioni vengono mostrate automaticamente alla fine del documento con il comando \texttt{printbibliography}
-
-	Qui faremo una citazione di esempio: citazione \cite{example}, \cite{example}
-
-	\section{Blocco di codice}
-	Creo un blocco di codice con il syntax highlighting \cite{kotlin_highlight}:
-	\begin{lstlisting}[language=Kotlin]
-	// this is a simple code listing:
-	println("hello kotlin from latex")
-	\end{lstlisting}
-
-	Se invece voglio semplicemente una parola in monospace: \texttt{monospace}
-
-	\section{Immagini}
-	Per inserire immagini usare il template qui definito
-
-		\begin{figure}[h]
-   			\centering
-   			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
- 			\caption{Floating Action Button}
-    			\label{fig:mesh1} % Se occorre fare un riferimento
-		\end{figure}
-
-	Nel Material Design, gli elementi dell'interfaccia utente sono costituiti da \textit{superfici}, ossia delle forme geometriche piatte e dai contorni ben definiti.
-
-		\begin{wrapfigure}{r}{0.3\textwidth}
-   			\centering
-   			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
-		\end{wrapfigure}
-
-		Una superficie può mostrare un contenuto (testo, immagini, icone, ...), che deve essere anch'esso piatto come la superficie su cui si appoggia. Il contenuto può essere indipendente dalla superficie e può cambiare, ma deve sempre rimanere entro i limiti geometrici imposti dalla superficie.
-
-		\begin{wrapfigure}{l}{0.3\textwidth}
-   			\centering
-   			\includegraphics[width=0.3\textwidth]{elevation} %nome del file
-		\end{wrapfigure}
-
-
-		Le superfici si comportano come dei solidi, che possono cambiare forma e opacità, possono unirsi e dividersi, spostarsi e ruotare. Tutti gli elementi della UI del Material Design sono il risutato delle modifiche degli attributi di una superficie di base, che è bianca opaca, di spessore \texttt{1dp}, con un'ombra.
-
-
-
-
-
 % ======================================================================================
 \chapter{Principi del Material Design}
 
@@ -763,6 +696,12 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		\item  \textbf{avvio rapido}: avvia l'utente direttamente nell'app;
 		\item  \textbf{illustrazione dei principali vantaggi per l'utente}: mostra un carosello o una breve animazione che evidenzia i vantaggi dell'utilizzo dell'app.
 	\end{itemize}
+\clearpage
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\textwidth]{onboarding}
+		\caption{Onboarding.}
+	\end{figure}
 	Nel modello \textbf{Quickstart}, gli utenti atterrano direttamente nell'interfaccia utente senza alcun modello di onboarding mostrato (a parte l'accesso e la configurazione). Il modello Quickstart:
 	\begin{itemize}
 		\item Consente agli utenti di iniziare rapidamente con le funzionalità principali dell'app;
