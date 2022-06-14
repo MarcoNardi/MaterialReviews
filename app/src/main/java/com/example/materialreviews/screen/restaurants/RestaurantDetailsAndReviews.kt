@@ -28,6 +28,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import com.example.materialreviews.ui.theme.currentColorScheme
+import com.example.materialreviews.util.MyPreferences
 import com.example.materialreviews.util.RowOfStars
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,7 +64,7 @@ fun RestaurantDetailsAndReviews(
     //val restaurantWithImages by restaurantModel.getImageOfRestaurant(restId).observeAsState()
     // Ottengo l'ID del ristorante e dell'utente
     val restaurantId = if (restaurantWithReviews != null) restaurantWithReviews!!.restaurant.rid else 1
-    val userId = 1 //TODO shared preferences
+    val userId = MyPreferences(LocalContext.current).getId()
 
     //ottengo uri con questa funzione (attenzione che ritorna un LiveData)
     val imageUri by restaurantModel.getImageUriOfRestaurant(restId).observeAsState()
