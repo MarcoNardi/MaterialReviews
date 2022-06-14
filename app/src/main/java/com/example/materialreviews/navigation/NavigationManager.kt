@@ -98,7 +98,10 @@ fun NavigationManager() {
                     //Onboarding
                     composable(MaterialReviewsScreen.Onboarding.name) {
                         OnBoarding(model = userViewModel, onClickStart = {
-                            navController.navigate(MaterialReviewsScreen.Explore.name)
+                            navController.navigate(MaterialReviewsScreen.Explore.name) {
+                                popUpTo(MaterialReviewsScreen.Explore.name)
+                                navController.popBackStack()
+                            }
                             barState.value = true
                         })
                     }

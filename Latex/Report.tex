@@ -238,7 +238,7 @@ tabsize=1
 
 		L'unità di misura più utilizzata è il \textit{density-independent pixel} (\textit{dp}), che permette di mantenere le stesse dimensioni in schermi anche molto diversi tra loro.
 
-		Nel material design in genere si usano multipli di 8 dp per la maggior parte degli elementi della UI. Per elementi molto piccoli si può usare anche 4 dp come unità di base.
+		Nel Material Design in genere si usano multipli di 8 dp per la maggior parte degli elementi della UI. Per elementi molto piccoli si può usare anche 4 dp come unità di base.
 
 		\subsection{Responsive layout grid}
 			Il responsive layout grid è un layout in grado di adattarsi a diverse grandezze schermo e orientamenti per garantire consistenza e armonia \cite{layout_grid}
@@ -295,27 +295,7 @@ tabsize=1
 
     		A differenza della navigazione laterale, quella in avanti non prevede elementi dell'interfaccia utente dedicati.
 
-    		Associata alla navigazione in avanti è la navigazione all'indietro, che permette all'utente di ritornare alla schermata cronologicamente precedente oppure ad un livello gerarchico superiore.
-
-
-    		\subsection{Navigation transitions - da tenere se implementiamo nell'app}
-    		Le transizioni di navigazione si verificano quando gli utenti si spostano tra le schermate e utilizzano il movimento per guidare gli utenti tra due schermate nell'app. Aiutano gli utenti
-    		a orientarsi esprimendo la gerarchia dell'app, usando il movimento per indicare in che modo gli elementi sono correlati tra loro. Il material design definisce 2 macro tipi di transizioni:
-    		\begin{itemize}
-    			\item \textit{Hierarchical transitions}. Si usano quando gli utenti salgono o scendono di un livello in un'app. Gli schermi a livelli adiacenti tra loro hanno una relazione genitore e
-    			figlio l'uno con l'altro, in cui il genitore si trova a un livello gerarchico più alto rispetto al figlio. Nelle transizioni padre-figlio, un elemento figlio presente nello schermo padre
-    			si solleva al tocco e si espande sul posto, utilizzando un modello di transizione di trasformazione del contenitore. Il movimento attira l'attenzione sullo schermo figlio (che è la destinazione
-    			dell'interazione), mentre rafforza la relazione tra gli schermi genitore e figlio.
-    			\item \textit{Peer transitions}. Si verificano tra le schermate allo stesso livello di gerarchia. Le transizioni tra pari si verificano tra schermate che condividono un genitore, mentre le transizioni tra pari
-    			di livello superiore vengono utilizzate solo per passare da una destinazione primaria all'altra. Si distinguono 2 tipi di peer transition:
-    			\begin{itemize}
-    				\item \textit{Sibling transitions}. Gli schermi che condividono lo stesso genitore (come le foto in un album, sezioni di un profilo o passaggi in un flusso) si muovono all'unisono per
-    				rafforzare la loro relazione reciproca. Lo schermo del peer scorre da un lato, mentre il suo fratello si sposta fuori dallo schermo nella direzione opposta.
-    				\item \textit{Top-level transitions}. Al livello superiore di un'app, le destinazioni sono spesso raggruppate in attività principali (e le attività potrebbero non essere correlate tra loro).
-    				Queste schermate si aprono utilizzando uno schema di transizione di dissolvenza.
-    			\end{itemize}
-    		\end{itemize}
-	
+    		Associata alla navigazione in avanti è la navigazione all'indietro, che permette all'utente di ritornare alla schermata cronologicamente precedente oppure ad un livello gerarchico superiore.	
 	
 % --------------------------------------------------------------------------------------
 	\section{Colori}
@@ -392,7 +372,7 @@ tabsize=1
 
 % --------------------------------------------------------------------------------------
 	\section{Tipografia}
-		Il material design fornisce molti strumenti per poter scegliere il font adatto con le misure giuste per ogni tipo di testo, forniscono pure un \href{https://material.io/design/typography/the-type-system.html#type-scale}{Type scale generator} che permette di creare il proprio type scale.
+		Il Material Design fornisce molti strumenti per poter scegliere il font adatto con le misure giuste per ogni tipo di testo, forniscono pure un \href{https://material.io/design/typography/the-type-system.html#type-scale}{Type scale generator} che permette di creare il proprio type scale.
 		Vengono fornite misure e conversioni per Android, iOS e Web; e misure per titoli, sottotitoli e corpi di testo.
 
 		\subsection{Dimensioni}
@@ -425,7 +405,7 @@ tabsize=1
 
 % --------------------------------------------------------------------------------------
 	\section{Iconografia}
-		Il material design fornisce strumenti, griglie e specifiche per utilizzare e creare le proprie icone, con l'obbiettivo di mantenere un certo livello di semplicità.
+		Il Material Design fornisce strumenti, griglie e specifiche per utilizzare e creare le proprie icone, con l'obbiettivo di mantenere un certo livello di semplicità.
 		\subsection{Design delle icone}
 			Nel Material Design, le icone sono realizzate per essere semplici e moderne, ridotte alla forma minima, esprimendo solo concetti essenziali, con forme geometriche semplici e consistenti. Questa semplicità permette alle icone di rimanere leggibili e distinguibili anche a dimensioni piccole.
 		\begin{figure}[h]
@@ -662,7 +642,7 @@ tabsize=1
 
 	Le azioni di \textit{acknowledgement} forniscono un testo per far sapere all'utente se un'azione che ha scelto è stata completata. Viene visualizzato per un breve lasso di tempo e può includere un'opzione per annullare l'azione. Gli acknowledgement possono essere resi da una varietà di componenti:
 	\begin{itemize}
-		\item \textit{Alert}. Utilizzare gli avvisi per inviare un messaggio in-app persistente che informa gli utenti di un particolare stato di modifica;
+		\item \textit{Alert}. Utilizzare gli avvisi per inviare un messaggio in-app persistente che informa gli utenti di un particolare stato di modifica, figura \ref{figAlert};
 		\item \textit{Snackbar}. Utilizzare uno snack bar per fornire un breve feedback su un'operazione;
 		\item \textit{Stati vuoti}. Quando un'interfaccia utente è disponibile solo online e il contenuto non è stato caricato o sincronizzato, utilizzare uno stato vuoto.
 	\end{itemize}
@@ -671,6 +651,7 @@ tabsize=1
 		\centering
 		\includegraphics[width=0.3\textwidth]{AlertDialog}
 		\caption{Alert dialog.}
+		\label{figAlert}
 	\end{figure}
 
 	\subsection{Visualizzazione dei dati}
@@ -784,6 +765,12 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		\item  \textbf{avvio rapido}: avvia l'utente direttamente nell'app;
 		\item  \textbf{illustrazione dei principali vantaggi per l'utente}: mostra un carosello o una breve animazione che evidenzia i vantaggi dell'utilizzo dell'app.
 	\end{itemize}
+\clearpage
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\textwidth]{onboarding}
+		\caption{Onboarding.}
+	\end{figure}
 	Nel modello \textbf{Quickstart}, gli utenti atterrano direttamente nell'interfaccia utente senza alcun modello di onboarding mostrato (a parte l'accesso e la configurazione). Il modello Quickstart:
 	\begin{itemize}
 		\item Consente agli utenti di iniziare rapidamente con le funzionalità principali dell'app;
@@ -822,7 +809,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 
 
 % ========================================================================================================================
-\chapter{Novità del material design 3}
+\chapter{Novità del Material Design 3}
 	\section{Accessibilità}
 		Al giorno d'oggi la tecnologia aiuta incredibilmente le vite di persone con disabilità, rendendole più indipendendi grazie a certi strumenti tra cui tastiere o lettori di schermo
 		Si può rendere l'interfaccia utente più semplice e accessibile grazie a:
@@ -849,7 +836,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		\subsection{Best practice}
 			La pratica migliore consiste però nell'utilizzo di elementi nativi, in quanto sono garantiti ad avere un certo livello di accessibilità, mentre elementi custom possono richiedere del testing per verificarne l'accessibilità
 	\section{Personalizzazione}
-		Nel material design 3 sono stati aggiunti i colori dinamici, i quali permetto ad un app di mantere un suo stile e accessibilità ma allo stesso tempo permettere all'applicazione di adattarsi al tema dell'utente.
+		Nel Material Design 3 sono stati aggiunti i colori dinamici, i quali permetto ad un app di mantere un suo stile e accessibilità ma allo stesso tempo permettere all'applicazione di adattarsi al tema dell'utente.
 		Questo è possibile grazie alla definizione di 5 ruoli principali per i colori:
 		\begin{itemize}
 			\item Primary
@@ -865,7 +852,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		Un token salva delle informazioni: un colore, un certo stile o un certo componente, per permetterne l'utilizzo in più prodotti.
 		Oltre ad essere molto utili per il design, i tokens permettono di condividere i design attraverso un formato chiamato \href{https://github.com/AdobeXD/design-system-package-dsp}{Design System Package},
 		che permette di salvare assets e json che descrivono un determinato design.
-		Al momento sono disponibili solo i design per colore e tipografia, con il supporto di tokens per componenti e misure in sviluppo. Si può scaricare il dsp del material design da \href{https://github.com/material-foundation/material-tokens}{qua}, modificarlo con dei tools, e poi esportarli per android.
+		Al momento sono disponibili solo i design per colore e tipografia, con il supporto di tokens per componenti e misure in sviluppo. Si può scaricare il dsp del Material Design da \href{https://github.com/material-foundation/material-tokens}{qua}, modificarlo con dei tools, e poi esportarli per android.
 		
 		Nella nostra applicazione non ne abbiamo fatto uso in quanto sono ancora in sviluppo, e i loro utilizzi non ci sono utili, come creare nuovi prodotti che usano lo stesso stile.
 
@@ -947,7 +934,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 	\end{figure}
 
 	\section{Iconografia material 3}
-		Nel material design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
+		Nel Material Design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
 		Nel catalogo molte icone vecche sono state ridisegnate, dando ora un'impressione più moderna
 		Le linee guida nel design di icone nuove rimangono molto simili a quelle del material design 2.
 		Sono state aggiunte delle linee guida nell'utilizzo delle icone, e nelle caratteristiche da usare nella personalizzazione: per esempio nella decisione del weight (spessore dell'icona) è bene che non sia troppo fino (sconsigliati valori sotto al 200), e che non sia troppo grosso; soprattutto bisogna stare attenti ad usare lo stesso weight in modo consistente e non mischiare icone di weight diversi
@@ -955,7 +942,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		Una caratteristica molto importante è la grandezza ottica, ci permette di cambiare la grandezza di un'icona da 24dp fino a 48dp aggiustando però il weight, infatti scalando un'icona scalerebbe anche il suo spessore il che può non essere desiderato a seconda del proprio stile.
 		Per quanto riguarda l'accessibilità è importante che icone che eseguono delle azioni abbiano un etichetta che descriva cosa facciano, nella nostra applicazione le icone che eseguono azioni come scrivere una recensione, oppure cambiare tab, hanno tutte un testo che indica il loro ruolo.
 	\section{Tipografia material 3}
-		Nel material design 3 sonos stati rinnovati i ruoli che avevano blocchi di testo, ora sono 5 e sono:
+		Nel Material Design 3 sonos stati rinnovati i ruoli che avevano blocchi di testo, ora sono 5 e sono:
 		\begin{itemize}
 			\item display per le parti corti e importanti
 			\item headline per le parti corti e importanti in schermi piccoli
@@ -965,7 +952,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		\end{itemize}
 		Ciò è stato fatto per rendere più semplice applicare le linee guida e rendere i ruoli più facili da capire.
 		Sono stati introdotti i tokens per il testo per permettere facile modifica di valori come type scale o weight.
-		Il resto delle linee guida invece rimane simile a quelle del material design 2
+		Il resto delle linee guida invece rimane simile a quelle del Material Design 2
 	
 \chapter{Material Reviews}
 	La nostra applicazione si chiama Material reviews, e come suggerisce il nome si occupa di recensioni per ristoranti.
