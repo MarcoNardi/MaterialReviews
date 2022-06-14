@@ -24,7 +24,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -71,7 +71,8 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
 
-
+//coil
+    implementation "io.coil-kt:coil-compose:2.1.0"
 
     //navigation
     def nav_version = "2.4.2"

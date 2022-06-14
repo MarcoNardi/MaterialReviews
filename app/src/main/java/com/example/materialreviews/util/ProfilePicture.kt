@@ -20,6 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.materialreviews.R
 import com.example.materialreviews.getImageBitmap
 import com.example.materialreviews.ui.theme.currentColorScheme
@@ -51,10 +53,14 @@ fun ProfilePicture(size: Dp = 50.dp, pictureUri: String = "", borderWidth: Dp = 
         else {
             // Immagine del profilo
             val profilePicture = getImageBitmap(pictureUri, LocalContext.current).asImageBitmap()
-            Image(
-                bitmap = profilePicture,
-                contentDescription = "Profile picture",
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(pictureUri)
+                    .crossfade(true)
+                    .build(),
+                contentDescription="test",
                 contentScale = ContentScale.Crop,
+                modifier = Modifier.clip(CircleShape)
             )
         }
     }

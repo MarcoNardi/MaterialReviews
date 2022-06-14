@@ -1,7 +1,6 @@
 package com.example.materialreviews.screen.profile
 
 
-import android.graphics.Color.alpha
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -27,12 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import androidx.navigation.NavController
 import com.example.materialreviews.db.UserViewModel
-import com.example.materialreviews.navigation.MaterialReviewsScreen
 import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
 import com.example.materialreviews.util.OpenDocumentWithPermissions
@@ -176,9 +172,8 @@ fun OnBoarding(model: UserViewModel,
 
                 //Inserimento dati nel db
                 if( nameEmpty == false && surnameEmpty == false) {
-                    model.updateFirstNameOfUser(login_id, name)
-                    model.updateLastNameOfUser(login_id, surname)
-                    model.updateImageOfUser(login_id, imageURI)
+                    model.addUser(4, name, surname, imageURI)
+                    myPreferences.setId(4)
                     myPreferences.setAccess(0)
                     openDialog = true
                 }else{
@@ -187,9 +182,6 @@ fun OnBoarding(model: UserViewModel,
             }else{
                 toast.show()
             }
-
-            name = ""
-            surname = ""
         }) {
             Text(text = "Vai")
         }
