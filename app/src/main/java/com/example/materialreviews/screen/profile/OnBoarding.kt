@@ -178,6 +178,7 @@ fun OnBoarding(model: UserViewModel,
                 if( nameEmpty == false && surnameEmpty == false) {
                     model.updateFirstNameOfUser(login_id, name)
                     model.updateLastNameOfUser(login_id, surname)
+                    model.updateImageOfUser(login_id, imageURI)
                     myPreferences.setAccess(0)
                     openDialog = true
                 }else{
