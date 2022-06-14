@@ -78,8 +78,9 @@ fun  RestaurantCard(
                     .crossfade(true)
                     .build(),
                 contentDescription="test",
-                contentScale = ContentScale.FillWidth
-                
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.requiredSize(dpWidth.dp, (dpWidth/16*9).dp)
+
             )
             /*
             // "Foto profilo" del ristorante
