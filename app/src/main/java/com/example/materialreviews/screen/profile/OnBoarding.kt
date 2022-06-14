@@ -186,9 +186,6 @@ fun OnBoarding(model: UserViewModel,
             }else{
                 toast.show()
             }
-
-            name = ""
-            surname = ""
         }) {
             Text(text = "Vai")
         }
