@@ -1,9 +1,11 @@
 package com.example.materialreviews.navigation
 
+import android.provider.ContactsContract
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 
 enum class MaterialReviewsScreen ( ) {
+    Onboarding(),
     Explore(  ),
     MyReviews( ),
     RestaurantDetails(),
@@ -14,6 +16,7 @@ enum class MaterialReviewsScreen ( ) {
     companion object {
         fun fromRoute(route: String?): MaterialReviewsScreen =
             when (route?.substringBefore("/")) {
+                Onboarding.name -> Onboarding
                 Explore.name -> Explore
                 MyReviews.name -> MyReviews
                 RestaurantDetails.name -> RestaurantDetails
