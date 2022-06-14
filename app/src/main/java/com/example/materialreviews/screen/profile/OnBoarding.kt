@@ -108,12 +108,13 @@ fun OnBoarding(model: UserViewModel,
                 modifier = Modifier
                     .clip(CircleShape)
                     .align(Alignment.BottomEnd)
-                    .background(currentColorScheme.background.copy(alpha = 0.9f))
+                    .background(currentColorScheme.primary)
             ) {
-                androidx.compose.material3.Icon(
+                Icon(
                     imageVector = Icons.Filled.Edit,
                     contentDescription = "Modifica immagine del profilo",
-                    modifier = Modifier.padding(10.dp)
+                    modifier = Modifier.padding(8.dp),
+                    tint = currentColorScheme.onPrimary
                 )
             }
         }
