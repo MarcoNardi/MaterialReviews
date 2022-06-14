@@ -277,13 +277,13 @@ tabsize=1
         design e la musica non sono abbastanza.
 
         \subsubsection{Quando non usare il suono}
-                	Il silenzio nel design dell'interfaccia utente è importante tanto quanto il suono. In molti casi, l’audio non è necessario e può,
+                	Il silenzio nel design dell'interfaccia utente è importante tanto quanto il suono. In molti casi, l’audio non è necessario e può
                     ridurre il comfort dell'utente. Il suono, di solito, non è adatto per UI che richiedono privacy e per azioni eseguite di frequente.
 
 
               \subsubsection{Tipi di suono}
 				\begin{itemize}
-					\item \textbf{Hero sound}: si verificano in interazioni fondamentali, evocando uno stato emotivo o celebrando un certo tipo di eventi;
+					\item \textbf{Hero sound}: si verifica in interazioni fondamentali, evocando uno stato emotivo o celebrando un certo tipo di eventi;
 					\item \textbf{Notifiche}: aiutano a dirigere l'attenzione dell'utente, più brevi degli hero sound e realizzate affinché possano essere riprodotte più volte;
 					\item \textbf{Suoni di sistema}: divisi in:
 					\begin{itemize}
@@ -365,7 +365,7 @@ tabsize=1
 	Gli elementi di un’applicazione possono essere visualizzati attraverso diverse forme. Le forme dirigono l'attenzione, identificano i componenti, mostrano come le superfici si relazionano tra loro ed esprimono il brand.
 
 
-	Le componenti hanno una forma rettangolare per impostazione predefinita, con angoli arrotondati di 4 dp (density pixel). La loro forma può essere personalizzata regolando dimensione e forma degli angoli.
+	Le componenti hanno una forma rettangolare per impostazione predefinita, con angoli arrotondati di 4 dp. La loro forma può essere personalizzata regolando dimensione e forma degli angoli.
 
 	La forma di alcuni componenti di un’applicazione viene modificata per vari motivi: le forme con un design unico (\textit{forme uniche}) differiscono dalle forme che le circondano e dall'interfaccia utente nel suo insieme, aiutando a dirigere l'attenzione dell'utente.
 	Inoltre, una forma diversa rispetto alle altre componenti di quel gruppo può comunicare il cambiamento di stato di una componente utilizzando .
@@ -412,12 +412,7 @@ tabsize=1
 	La forma può comunicare molte informazioni su un elemento, incluso il suo stato corrente, il risultato di un'interazione dell'utente o altre modifiche in un'app. Se utilizzata in questi modi, la forma dovrebbe essere presentata in modo coerente
 	nello stesso stato e nelle stesse interazioni, in modo che una forma specifica abbia lo stesso significato ogni volta che viene incontrata.
 
-	Se una forma non è interattiva, è necessario evitare l'utilizzo di forme con dimensioni sufficientemente grandi da apparire interattive. Ad esempio, una piccola forma triangolare su una card non dovrebbe essere abbastanza grande da essere scambiata per un elemento da toccare, se non lo è.
-
-	\subsubsection{Branding}
-	La combinazione di stili e forme diverse può rendere difficile l'associazione di forme particolari a un marchio. Per esprimere l'identità di un brand, si identifica la forma distintiva del marchio, ad esempio una forma organica o geometrica che riflette
-	gli attributi del logo. Sulla base di questa forma,  viene poi sviluppata una serie di forme simili da applicare al prodotto che contribuiscono a unificare l'espressione del marchio in tutta l'applicazione. Tuttavia, l'uso eccessivo della forma per esprimere il marchio può portare
-	alla diluizione dello stesso: la forma perde la sua connessione con il marchio e diventa un luogo comune. Inoltre, troppe forme uniche possono portare a nessuna forma particolarmente prominente, nonché a una mancanza di coesione visiva tra i componenti.
+	Se una forma non è interattiva, è necessario evitare l'utilizzo di forme con dimensioni sufficientemente grandi da apparire interattive.
 
 	\subsubsection{Angoli}
 	E' necessario evitare di utilizzare valori percentuali per i componenti che modificano dinamicamente la propria altezza, altrimenti la forma potrebbe modificarsi in modi inaspettati.
@@ -438,6 +433,7 @@ tabsize=1
 		\includegraphics[width=0.4\textwidth]{erroreForme} %nome del file
 		\caption{Forma che assume un comportamento inaspettato.}
 	\end{figure}
+	
 	Il morphing di una forma dovrebbe preservare le proporzioni delle forme distintive, per evitare la distorsione.
 	Inoltre, tutto il contenuto su una superficie dovrebbe essere visibile mentre la superficie si trasforma, senza ritagliare il contenuto.
 
@@ -729,6 +725,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		\includegraphics[width=0.5\textwidth]{scrittura}
 		\caption{Testi al tempo presente e futuro.}
 	\end{figure}
+	
 	Per rivolgersi agli utenti si usa la prima o seconda persona, in base a quale sia adatta e più chiara per la situazione:
 	\begin{itemize}
 		\item Seconda persona, "tu" o "tuo": questo stile di conversazione è appropriato nella maggior parte delle situazioni; come se l'interfaccia utente parlasse direttamente all'utente;
@@ -753,31 +750,21 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 			Azioni, informazioni e pulsanti importanti dovrebbero stare nel lato superiore o inferiore dello schermo.
 			Elementi di importanza simile invece devono stare vicini. E' importante seguire convenzioni o regole logiche come l'ordine di lettura (da sinistra a destra e dall'alto al basso nel nostro caso) per stabilire e capire l'ordine di gerarchia che si sta formando
 		\subsection{Touch targets}
-			I touch targets sono parti dello schermo che rispondono ad eventi di tocco, vengono consigliate delle misure adatte a renderli facili da premere. Nella nostra applicazione i touch targets automaticamente implementati da compose, come switches o IconButtons, sono già creati con una grandezza minima,
-			mentre i touch targets custom gli rendiamo conformi allo standard con il Modifier
+			I touch targets sono parti dello schermo che rispondono ad eventi di tocco, vengono consigliate delle misure adatte a renderli facili da premere. Nella nostra applicazione i touch targets automaticamente implementati da Jetpack Compose, come switches o IconButtons, sono già creati con una dimensione adeguata,
+			mentre i touch targets custom li rendiamo conformi allo standard invocando le funzioni della classe \texttt{Modifier}
 		\subsection{Pointer Targets}
 			I pointer targets sono l'equivalente dei touch targets ma che rispondono a puntatori che tracciano il movimento come mouse o penne
 		\subsection{Testo}
-			Uno dei modi migliori per aumentare l'accessibilità è l'aggiunta di didascalie, etichette e testo alternativo, in quanto sono facilmente leggibili da lettori di schermo, i quali possono avere delle difficoltà a "leggere" un'immagine.
+			Uno dei modi migliori per aumentare l'accessibilità è l'aggiunta di didascalie, etichette e testo alternativo, in quanto sono facilmente leggibili dai programmi di lettura dello schermo, i quali possono avere delle difficoltà a "leggere" un'immagine.
 			
-			Il testo alternativo aiuta a tradurre un elementov visivo, come un'immagine, in un elemento testuale.
+			Il testo alternativo aiuta a tradurre e descrivere all'utente un elemento visivo, come un'immagine, in un elemento testuale.
 		\subsection{Contrasto}
-			Per rendere gli elementi più accessibili nel proprio tema è consigliato di avere un rapporto 3:1 per testo grande rispetto al background, e di 4.5:1 per il testo piccolo.
+			Per rendere gli elementi più leggibilii all'interno dell'applicazione è necessario che i caratteri e le icone abbiano un contrasto sufficientemente elevato rispetto allo sofndo. Per il testo grande (titoli, sottotitoli, ...) è consigliato di avere un rapporto minimo di 3:1, mentre deve essere almeno 4.5:1 per il testo piccolo.
 
 		\subsection{Best practice}
-			La pratica migliore consiste però nell'utilizzo di elementi nativi, in quanto sono garantiti ad avere un certo livello di accessibilità, mentre elementi custom possono richiedere del testing per verificarne l'accessibilità
-	\section{Personalizzazione}
-		Nel Material Design 3 sono stati aggiunti i colori dinamici, i quali permetto ad un app di mantere un suo stile e accessibilità ma allo stesso tempo permettere all'applicazione di adattarsi al tema dell'utente.
-		Questo è possibile grazie alla definizione di 5 ruoli principali per i colori:
-		\begin{itemize}
-			\item Primary
-			\item Secondary
-			\item Tertiary
-			\item Neutral
-			\item Neutral Variant
-		\end{itemize}
-		Inoltre, google ha creato dei tools che permettono di generare tutti i colori di un tema dando un input uno o più colori
-		Il tema dell'app è stato appunto generato grazie al tool di google
+			La pratica migliore consiste nell'utilizzo di elementi nativi (nel nostro caso di Jetpack Compose), in quanto è garantito dagli autori della libreria/framework un adeguato livello di accessibilità.
+			
+			In ogni caso è possibile definire o modificare i valori di colore, dimensione, forma degli elementi di UI, ma questi devono essere testati adeguatamente per assicurarsi che rispettino le linee guida di accesibilità.
 		
 	\section{Design tokens}
 		Un token salva delle informazioni: un colore, un certo stile o un certo componente, per permetterne l'utilizzo in più prodotti.
@@ -791,7 +778,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 	Gli interaction states sono indicatori visivi utilizzati per comunicare lo stato di un componente o di un elemento interattivo. Si dividono in livelli che si presentano come una  copertura semitrasparente su un elemento che rende quest'ultimo più o meno opaco, mantenendo lo stesso colore del contenuto.
 	Ciò non accade ai componenti che utilizzano gli stati "attivo" o "selezionato" che, invece, cambiano il contenitore e il colore del contenuto .
 	Per impostazione predefinita, il colore del livello di stato di un componente deriva dal suo contenuto, dal colore di un'icona o dal testo dell'etichetta se non è presente alcuna icona.
-	Un livello può essere applicato a un intero elemento o in una forma circolare e può essere applicato solo un livello alla volta.
+	Un livello può essere applicato a un intero elemento o in una forma circolare e può essere applicato solo ad un livello alla volta.
 	
 	\section{Colori}
 	Una delle principali novità introdotte dal Material Design 3 è il nuovo sistema dei colori, in particolare il sistema di colori \textit{dinamici} (disponibile solo in Android 12).
@@ -804,7 +791,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 			\item \textit{background} e \textit{surface}: colori neutri, generalmente bianco o nero, da utilizzare per lo sfondo dell'app
 			\item \textit{colori neutrali}: ulteriori colori per elementi di contorno o di scarsa importanza
 			\item \textit{colori per gli errori}: vengono usati per i messaggi d'errore
-			\item \textit{colori on[...]}: garantiscono un contrasto adeguato tra il testo e il colore della superficie
+			\item \textit{colori on[...]}: garantiscono un contrasto adeguato tra il testo e il colore della superficie a cui si riferiscono
 		\end{itemize}
 		
 		\begin{figure}[h]
@@ -823,9 +810,9 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		\subsection{Gerarchia}
 		All'interno dello schema di colori esiste una gerarchia, con lo scopo di guidare l'utente nell'interfaccia grafica dell'applicazione. 
 		
-		Il colore primario deve essere utilizzato per gli elementi più importanti, come pulsanti, o per indiacare che un certo elementi di UI è selezionato. In altre parole, il colore primario viene utilizzato per attirare l'attenzione dell'utente e suggerirgli le azioni da compiere.
+		Il colore primario deve essere utilizzato per gli elementi più importanti, come pulsanti, o per indiacare che un certo elemento è selezionato. In altre parole, il colore primario viene utilizzato per attirare l'attenzione dell'utente e suggerirgli le azioni da compiere.
 		
-		Il colore secondario viene utilizzato sulle componenti di priorità minore, come la barra di navigazione e altri elementi per svolgere azioni di bassa priorità.
+		Il colore secondario viene utilizzato sulle componenti di importanza minore, come la barra di navigazione e altri elementi per svolgere azioni di bassa priorità.
 		
 		Il colore terziario viene utilizzato per bilanciare i primi due in tutte le componenti che non rientrano nelle categorie descritte precedentemente
 		
@@ -843,8 +830,8 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		
 		\begin{figure}[h]
    			\centering
-   			\includegraphics[width=0.3\textwidth]{colori_default} %nome del file
-   			\includegraphics[width=0.3\textwidth]{colori_dinamici} %nome del file
+   			\includegraphics[width=0.4\textwidth]{colori_default} %nome del file
+   			\includegraphics[width=0.4\textwidth]{colori_dinamici} %nome del file
  			\caption{Colori di default e colori dinamici}
  			\label{gerarchia_colori}
 		\end{figure}
@@ -855,7 +842,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 
 	\section{Forme}
 	Il Material Design 3 intoduce un cambiamento ai gruppi di forme, sempre basati sulle dimensioni, ma con con sette stili degli angoli, assegnati in base alla quantità di arrotondamento desiderata. Le forme con angoli squadrati sono chiamate "none", le forme leggermente arrotondate sono "extra-small", mentre le forme completamente arrotondate sono "full".
-	Ciò consente di conferrire maggior espressività all'interfaccia utente. Viene, inoltre, mantenuta la possibilità avere forme degli angoli simmetriche o asimmetriche, con angoli tagliati o arrotondati. Inoltre, è sempre modificare lo stile di un'intera categoria di forme.
+	Ciò consente di conferrire maggior espressività all'interfaccia utente. Viene, inoltre, mantenuta la possibilità avere forme degli angoli simmetriche o asimmetriche, con angoli tagliati o arrotondati.
 
 
 	\begin{figure}[h]
@@ -864,67 +851,70 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 		\caption{Gruppi di forme in M3.}
 	\end{figure}
 
-	\section{Iconografia material 3}
+	\section{Iconografia}
 		Nel Material Design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
 		Nel catalogo molte icone vecche sono state ridisegnate, dando ora un'impressione più moderna.
 		Le linee guida nel design di icone nuove rimangono molto simili a quelle del material design 2.
-		Sono state aggiunte delle linee guida nell'utilizzo delle icone, e nelle caratteristiche da usare nella personalizzazione: per esempio nella decisione del weight (spessore dell'icona) è bene che non sia troppo fino (sconsigliati valori sotto al 200), e che non sia troppo grosso; soprattutto bisogna stare attenti ad usare lo stesso weight in modo consistente e non mischiare icone di weight diversi
+		Sono state aggiunte delle linee guida nell'utilizzo delle icone, e nelle caratteristiche da usare nella personalizzazione: per esempio nella decisione del weight (spessore dell'icona) è bene che non sia troppo fino (sconsigliati valori sotto al 200), e che non sia troppo grosso; soprattutto bisogna stare attenti ad usare lo stesso spessore in modo consistente e non mischiare icone di weight diversi
 
-		Una caratteristica molto importante è la grandezza ottica, ci permette di cambiare la grandezza di un'icona da 24dp fino a 48dp aggiustando però il weight; infatti, scalando un'icona scalerebbe anche il suo spessore il che può non essere desiderato a seconda del proprio stile.
-		Per quanto riguarda l'accessibilità è importante che icone che eseguono delle azioni abbiano un'etichetta che descriva cosa facciano, nella nostra applicazione le icone che eseguono azioni come scrivere una recensione, oppure cambiare tab, hanno tutte un testo che indica il loro ruolo.
-	\section{Tipografia material 3}
-		Nel Material Design 3 sonos stati rinnovati i ruoli che avevano blocchi di testo, ora sono 5 e sono:
+		Una caratteristica molto importante è la grandezza ottica, che ci permette di cambiare la grandezza di un'icona da 24dp fino a 48dp aggiustando però il weight; infatti, scalando un'icona scalerebbe anche il suo spessore il che può non essere desiderato a seconda del proprio stile.
+		Per quanto riguarda l'accessibilità è importante che icone che eseguono delle azioni abbiano un'etichetta che descriva cosa facciano, nella nostra applicazione le icone che eseguono azioni come scrivere una recensione, oppure cambiare tab, hanno tutte un testo che descrive il loro ruolo.
+	\section{Tipografia}
+		Nel Material Design 3 sono state modificate radicalmente le possibili dimensioni del testo. Sono state definite 5 nuove categorie:
 		\begin{itemize}
-			\item display per le parti corti e importanti
-			\item headline per le parti corti e importanti in schermi piccoli
-			\item title	per parti che sono mediamente importanti ma comunque corte
-			\item body per le parti più lunghe
-			\item label per il testo che accompagna componenti come pulsanti o didascalie
+			\item \textit{display}: per testi brevi e importanti, di dimensioni molto grandi
+			\item \textit{headline}: per testi brevi e importanti in schermi piccoli
+			\item \textit{title}:	per testi che sono mediamente importanti ma comunque brevi
+			\item \textit{body}: per i testi più lunghi
+			\item \textit{label}: per il testo che accompagna componenti come pulsanti o didascalie
 		\end{itemize}
+		
 		Ciò è stato fatto per rendere più semplice applicare le linee guida e rendere i ruoli più facili da capire.
-		Sono stati introdotti i tokens per il testo per permettere facile modifica di valori come type scale o weight.
-		Il resto delle linee guida invece rimane simile a quelle del Material Design 2
+		A questo scopo sono stati inoltre definiti dei \textit{tokens} per il testo, per permettere una facile modifica di valori come dimensione e peso.
+		Sono comunque validi tutti i principi illustrati nel Material Design 2.
 	
 \chapter{Material Reviews}
-	La nostra applicazione si chiama Material reviews, e come suggerisce il nome si occupa di recensioni per ristoranti.
-	L'idea è nata dalla necessità di creare un'applicazione complessa per poter mettere in pratica più linee guida possibili.
-	Abbiamo usato Jetpack Compose \cite{compose} e Room\cite{room} per l'implementazione, anche se alcune features utilizzate sono ancora in via di sviluppo.
+	La nostra applicazione si chiama Material Reviews, e come suggerisce il nome si occupa di recensioni per ristoranti.
+	
+	L'idea è nata dalla necessità di creare un'applicazione sufficientemente complessa da poter mettere in pratica più principi del Material Design possibili.
+	
+	Abbiamo deciso di utilizzare le libreire Jetpack Compose \cite{compose} e Room\cite{room} per l'implementazione della nostra app, rispettivamente per l'aspetto grafico e per la realizzazione del database.
 	\section{Funzionamento e struttura}
 
-	Al primo accesso, si apre la scheramta di \textit{onboarding} dove è possibile inserire i dati dell'utente.
+	Al primo accesso, si apre la scheramta di \textit{onboarding}, dove è possibile inserire i dati dell'utente.
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.2\textwidth]{onboarding}
 		\caption{Onboarding (tema chiaro).}
 	\end{figure}
+	
 	Dopo aver effettuato questo passaggio, inizia l'esperienza.
 
-	L'applicazione è divisa in 3 parti principali: i ristoranti, le proprie recensioni, il proprio profilo:
+	L'applicazione è divisa in 3 parti principali: i ristoranti, le proprie recensioni e il proprio profilo.
 
 
+
+
+	\subsection{Ristoranti}
+	Nella parte Ristoranti si può scorrere la lista di ristoranti già presente nell'app, aggiungerne ai preferiti cliccando l'icona a forma di cuore, e accedere ai dettagli cliccando sulla card del ristorante. E' anche possibile filtrare per solo i ristoranti preferiti premendo lo switch in alto a destra.
+	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.2\textwidth]{screenHome.jpg} 
-	  \caption{Home dell'applicazione}
+		\includegraphics[width=0.3\textwidth]{screenHome.jpg} 
+	  \caption{Lista dei ristoranti}
 		
 	\end{figure}
-
-
-	\subsection{Dettagli ristoranti}
-	Nella parte Ristoranti si può scorrere la lista di ristoranti già presente nell'app, aggiungerne ai preferiti cliccando l'icona a forma di cuore, e accedere ai dettagli cliccando sulla card del ristorante. E' anche possibile filtrare per solo i ristoranti preferiti premendo lo switch in alto a destra.
-	Tappando un ristorante apre la seguente schermata dei dettagli e recensioni:
-
-
-
+	
+	Cliccando sulla card di un ristorante si apre la seguente schermata, che contiene dettagli e recensioni:
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.25\textwidth]{screenDetails.jpg} 
+		\includegraphics[width=0.3\textwidth]{screenDetails.jpg} 
 	  \caption{Dettagli di un ristorante}
 		
 	\end{figure}
 
 
-	Tappando il fab per aggiungere la recensione fa comparire un dialog per l'aggiunta, dove si possono premere il numero di stelle da dare e scrivere una recensione come mostrate in Figura 4.3
+	Cliccando sul Floating Action Button per aggiungere la recensione si apre comparire un dialog dove si può scegliere una valutazione da dare e scrivere una recensione, come mostrato in Figura 4.3
 	\pagebreak
 
 	\begin{figure}[h]
@@ -936,8 +926,10 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 	\newpage
 
 	\subsection{Le mie recensioni}
-	Nella parte recensioni è possibile vedere le proprie recensioni, cliccare sulla recensione porta alla schermata di dettagli del ristorante stesso.
-	Si può anche rimuovere recensioni con il pulsante dedicato, che fa apparire un dialog di conferma.
+	Nella parte recensioni è possibile vedere le proprie recensioni. 
+	
+	Cliccare sulla recensione porta alla schermata di dettagli del ristorante stesso a cui si riferisce.
+	Si possono anche rimuovere le recensioni con il pulsante dedicato, che fa apparire un dialog di conferma.
 	
 
 
@@ -951,7 +943,7 @@ Avere un punto focale iconico nelle immagini, è importante, poiché influisce s
 
 	\newpage
 	\subsection{Profilo}
-		Nella parte del profilo l'utente può modificare le proprie informazioni e le impostazioni, anche se al momento l'unica impostazione disponibile è la scelta del tema.
+		Nella sezione dedicata al profilo l'utente può modificare le proprie informazioni e le impostazioni del tema.
 
 		\begin{figure}[h]
 			\centering
