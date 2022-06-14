@@ -382,8 +382,8 @@ fun MaterialReviewsTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            (view.context as Activity).window.statusBarColor = currentColorScheme.primary.toArgb()
-            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = isInDarkTheme
+            (view.context as Activity).window.statusBarColor = currentColorScheme.secondaryContainer.toArgb()
+            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = !isInDarkTheme
         }
     }
 
