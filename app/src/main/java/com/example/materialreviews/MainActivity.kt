@@ -31,11 +31,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         /*
         PRIORITA DA ALTO A BASSO
-        TODO RELAZIONE: RIDURRE PARTE INIZIALE, PARTE MATERIAL 3 CON RIFERIMENTI ALLA NOSTRA APP
+        TODO RELAZIONE: RIFERIMENTI ALLA NOSTRA APP
         TODO lag mie recensioni
         TODO Pulizia
-        TODO CARD PER QUANDO NON CI SONO PREFERITI
-        TODO schermo orizzontale
         */
         super.onCreate(savedInstanceState)
         setContent {

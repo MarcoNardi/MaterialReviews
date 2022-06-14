@@ -37,7 +37,6 @@ import com.example.materialreviews.ui.theme.currentColorScheme
 import com.example.materialreviews.util.MyPreferences
 import com.example.materialreviews.util.OpenDocumentWithPermissions
 import com.example.materialreviews.util.ProfilePicture
-import com.example.materialreviews.util.userList
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
 @Composable
