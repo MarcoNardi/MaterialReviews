@@ -1,10 +1,14 @@
 package com.example.materialreviews.util
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.People
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,16 +36,16 @@ fun ProfilePicture(size: Dp = 50.dp, pictureUri: String = "", borderWidth: Dp = 
             .clip(shape = CircleShape)
             .border(
                 width = borderWidth,
-                color = currentColorScheme.onBackground,
+                color = currentColorScheme.onBackground.copy(alpha = 1f),
                 shape = CircleShape
-            ),
+            )
+            .background(currentColorScheme.surfaceVariant),
         contentAlignment = Alignment.Center
     ) {
         if (pictureUri == "") {
             Image(
-                painter = painterResource(id = R.drawable.ic_baseline_no_favourites_24),
+                imageVector = Icons.Filled.People,
                 contentDescription = "Default image",
-                contentScale = ContentScale.Crop,
             )
         }
         else {

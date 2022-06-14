@@ -11,6 +11,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -18,7 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.materialreviews.db.*
 import com.example.materialreviews.navigation.NavigationManager
+import com.example.materialreviews.screen.profile.OnBoarding
 import com.example.materialreviews.ui.theme.MaterialReviewsTheme
+import com.example.materialreviews.util.MyPreferences
 
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
@@ -27,11 +31,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         /*
         PRIORITA DA ALTO A BASSO
-        TODO RELAZIONE: RIDURRE PARTE INIZIALE, PARTE MATERIAL 3 CON RIFERIMENTI ALLA NOSTRA APP
+        TODO RELAZIONE: RIFERIMENTI ALLA NOSTRA APP
         TODO lag mie recensioni
         TODO Pulizia
-        TODO CARD PER QUANDO NON CI SONO PREFERITI
-        TODO schermo orizzontale
         */
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,6 +49,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun M3App() {
     MaterialReviewsTheme() {
-        NavigationManager()
+            NavigationManager()
+
     }
 }

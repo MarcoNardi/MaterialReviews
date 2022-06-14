@@ -57,7 +57,7 @@ fun UserReviewCard(
                 onDismissRequest = { openDialog = false },
                 modifier = Modifier.fillMaxWidth(0.9f),
                 title = {
-                    Text(text = "Sicuro di voler eliminare la tua recensione?")
+                    Text(text = "Eliminare la tua recensione?")
                 },
                 // Posso mettere dentro qualsiasi composable
                 text = {

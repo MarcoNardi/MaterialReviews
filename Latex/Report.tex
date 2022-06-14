@@ -236,7 +236,7 @@ tabsize=1
 
 		L'unità di misura più utilizzata è il \textit{density-independent pixel} (\textit{dp}), che permette di mantenere le stesse dimensioni in schermi anche molto diversi tra loro.
 
-		Nel material design in genere si usano multipli di 8 dp per la maggior parte degli elementi della UI. Per elementi molto piccoli si può usare anche 4 dp come unità di base.
+		Nel Material Design in genere si usano multipli di 8 dp per la maggior parte degli elementi della UI. Per elementi molto piccoli si può usare anche 4 dp come unità di base.
 
 		\subsection{Responsive layout grid}
 			Il responsive layout grid è un layout in grado di adattarsi a diverse grandezze schermo e orientamenti per garantire consistenza e armonia \cite{layout_grid}
@@ -293,27 +293,7 @@ tabsize=1
 
     		A differenza della navigazione laterale, quella in avanti non prevede elementi dell'interfaccia utente dedicati.
 
-    		Associata alla navigazione in avanti è la navigazione all'indietro, che permette all'utente di ritornare alla schermata cronologicamente precedente oppure ad un livello gerarchico superiore.
-
-
-    		\subsection{Navigation transitions - da tenere se implementiamo nell'app}
-    		Le transizioni di navigazione si verificano quando gli utenti si spostano tra le schermate e utilizzano il movimento per guidare gli utenti tra due schermate nell'app. Aiutano gli utenti
-    		a orientarsi esprimendo la gerarchia dell'app, usando il movimento per indicare in che modo gli elementi sono correlati tra loro. Il material design definisce 2 macro tipi di transizioni:
-    		\begin{itemize}
-    			\item \textit{Hierarchical transitions}. Si usano quando gli utenti salgono o scendono di un livello in un'app. Gli schermi a livelli adiacenti tra loro hanno una relazione genitore e
-    			figlio l'uno con l'altro, in cui il genitore si trova a un livello gerarchico più alto rispetto al figlio. Nelle transizioni padre-figlio, un elemento figlio presente nello schermo padre
-    			si solleva al tocco e si espande sul posto, utilizzando un modello di transizione di trasformazione del contenitore. Il movimento attira l'attenzione sullo schermo figlio (che è la destinazione
-    			dell'interazione), mentre rafforza la relazione tra gli schermi genitore e figlio.
-    			\item \textit{Peer transitions}. Si verificano tra le schermate allo stesso livello di gerarchia. Le transizioni tra pari si verificano tra schermate che condividono un genitore, mentre le transizioni tra pari
-    			di livello superiore vengono utilizzate solo per passare da una destinazione primaria all'altra. Si distinguono 2 tipi di peer transition:
-    			\begin{itemize}
-    				\item \textit{Sibling transitions}. Gli schermi che condividono lo stesso genitore (come le foto in un album, sezioni di un profilo o passaggi in un flusso) si muovono all'unisono per
-    				rafforzare la loro relazione reciproca. Lo schermo del peer scorre da un lato, mentre il suo fratello si sposta fuori dallo schermo nella direzione opposta.
-    				\item \textit{Top-level transitions}. Al livello superiore di un'app, le destinazioni sono spesso raggruppate in attività principali (e le attività potrebbero non essere correlate tra loro).
-    				Queste schermate si aprono utilizzando uno schema di transizione di dissolvenza.
-    			\end{itemize}
-    		\end{itemize}
-	
+    		Associata alla navigazione in avanti è la navigazione all'indietro, che permette all'utente di ritornare alla schermata cronologicamente precedente oppure ad un livello gerarchico superiore.	
 	
 % --------------------------------------------------------------------------------------
 	\section{Colori}
@@ -390,7 +370,7 @@ tabsize=1
 
 % --------------------------------------------------------------------------------------
 	\section{Tipografia}
-		Il material design fornisce molti strumenti per poter scegliere il font adatto con le misure giuste per ogni tipo di testo, forniscono pure un \href{https://material.io/design/typography/the-type-system.html#type-scale}{Type scale generator} che permette di creare il proprio type scale.
+		Il Material Design fornisce molti strumenti per poter scegliere il font adatto con le misure giuste per ogni tipo di testo, forniscono pure un \href{https://material.io/design/typography/the-type-system.html#type-scale}{Type scale generator} che permette di creare il proprio type scale.
 		Vengono fornite misure e conversioni per Android, iOS e Web; e misure per titoli, sottotitoli e corpi di testo.
 
 		\subsection{Dimensioni}
@@ -423,10 +403,14 @@ tabsize=1
 
 % --------------------------------------------------------------------------------------
 	\section{Iconografia}
-		Il material design fornisce strumenti, griglie e specifiche per utilizzare e creare le proprie icone, con l'obbiettivo di mantenere un certo livello di semplicità.
+		Il Material Design fornisce strumenti, griglie e specifiche per utilizzare e creare le proprie icone, con l'obbiettivo di mantenere un certo livello di semplicità.
 		\subsection{Design delle icone}
 			Nel Material Design, le icone sono realizzate per essere semplici e moderne, ridotte alla forma minima, esprimendo solo concetti essenziali, con forme geometriche semplici e consistenti. Questa semplicità permette alle icone di rimanere leggibili e distinguibili anche a dimensioni piccole.
-
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.1\textwidth]{ic_launcher_round} %nome del file
+			\caption{Icona di MaterialReviews.}
+		\end{figure}
 			\subsubsection{Dimensioni}
 			Le icone sono normalmente 24dp x 24dp, nel caso di layout più densi come su un desktop possono essere scalate a 20dp x 20dp.
 			Per ogni icona vi è un perimetro di padding di 2dp,per prevenire sovrapposizioni o oscuramenti in layout densi o nel caso appaiano altri elementi a schermo.
@@ -473,8 +457,19 @@ tabsize=1
 		\item \textit{simmetria}: è possibile applicare modifiche solo ad angoli specifici.
 	\end{itemize}
 
-	Per applicare una famiglia di forme e una dimensione a tutti i componenti di un gruppo, bisogna impostare i valori per il gruppo di forme. Quando vengono apportate modifiche a un gruppo, le modifiche influiscono su tutti i componenti in quel gruppo di forme, ad eccezione di quelli con una sostituzione.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{Angoli} %nome del file
+		\caption{A sinistra angolo tagliato. A destra angolo arrotondato. }
+	\end{figure}
 
+
+	Per applicare una famiglia di forme e una dimensione a tutti i componenti di un gruppo, bisogna impostare i valori per il gruppo di forme. Quando vengono apportate modifiche a un gruppo, le modifiche influiscono su tutti i componenti in quel gruppo di forme, ad eccezione di quelli con una sostituzione.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\textwidth]{asimmetry} %nome del file
+		\caption{Forma asimmetrica.}
+	\end{figure}
 	\subsection{Uso efficace delle forme}
 	Le forme sono visibili quando i bordi della superficie hanno un contrasto sufficiente rispetto allo sfondo. Per impostazione predefinita, il Material Design rende visibili le forme utilizzando le ombre per visualizzare i bordi delle superfici.
 	Tuttavia, esistono altri metodi per rendere visibili le forme, come riempimenti di colore e opacità, che possono essere utilizzati in combinazione con le ombre o da soli.
@@ -494,15 +489,22 @@ tabsize=1
 	\subsubsection{Angoli}
 	E' necessario evitare di utilizzare valori percentuali per i componenti che modificano dinamicamente la propria altezza, altrimenti la forma potrebbe modificarsi in modi inaspettati.
 	Inoltre, gli angoli ancorati ai bordi dello schermo non possono essere personalizzati, altrimenti si creerebbero spazi vuoti che lasciano trasparire il contenuto dietro ad un componente.
-
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\textwidth]{erroreshape} %nome del file
+		\caption{Forma inappropriata arrotondata a bordo schermo.}
+	\end{figure}
 	\subsubsection{Modifiche ad altri sistemi}
 	Le personalizzazioni del sistema possono influire sull'uso della forma da parte di un componente. Ad esempio, l'aumento della dimensione del carattere potrebbe causare il taglio di parte di un testo e la modifica di altezza e forma del componente, se le dimensioni sono definite come percentuali.
 	Le modifiche al contenuto possono anche influire sulla forma di un componente. Ad esempio, se la lunghezza del testo aumenta, il testo potrebbe andare a capo su una riga aggiuntiva, aumentando l'altezza del componente e influenzando le forme definite come percentuale.
-
 	\subsubsection{Morphing}
 	Gli elementi possono cambiare forma in risposta alle modifiche al contenuto o all'interazione dell'utente. Questa trasformazione si chiama \textit{morphing}. Le forme possono trasformarsi per vari motivi: in risposta a cambiamenti di stato o contenuto o come risultato dell'interazione dell'utente. Ad esempio, quando si ruota un
 	dispositivo mobile da verticale a orizzontale, le superfici possono rispondere modificando le dimensioni, il che può causare la trasformazione delle forme.
-
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{erroreForme} %nome del file
+		\caption{Forma che assume un comportamento inaspettato.}
+	\end{figure}
 	Il morphing di una forma dovrebbe preservare le proporzioni delle forme distintive, per evitare la distorsione.
 	Inoltre, tutto il contenuto su una superficie dovrebbe essere visibile mentre la superficie si trasforma, senza ritagliare il contenuto.
 
@@ -515,9 +517,6 @@ tabsize=1
 
 	Le forme possono enfatizzare le superfici separate l'una dall'altra. Ad esempio, quando una forma unica appare a un'altezza maggiore rispetto a un'altra superficie, si sottolinea che le due superfici sono separate.
 
-	\subsection{Forme nel material design 3}
-	Il material design tre intoduce un cambiamento ai gruppi di forme, sempre basati sulle dimensioni, ma con con sette stili degli angoli, assegnati in base alla quantità di arrotondamento desiderata. Le forme con angoli squadrati sono chiamate "none", le forme leggermente arrotondate sono "extra-small", mentre le forme completamente arrotondate sono "full".
-	Ciò consente di conferrire maggior espressività all'interfaccia utente. Viene, inoltre, mantenuta la possibilità avere forme degli angoli simmetriche o asimmetriche, con angoli tagliati o arrotondati. Inoltre, è sempre modificare lo stile di un' intera categoria di forme
 
 % --------------------------------------------------------------------------------------
 	\section{Interazione}
@@ -641,10 +640,17 @@ tabsize=1
 
 	Le azioni di \textit{acknowledgement} forniscono un testo per far sapere all'utente se un'azione che ha scelto è stata completata. Viene visualizzato per un breve lasso di tempo e può includere un'opzione per annullare l'azione. Gli acknowledgement possono essere resi da una varietà di componenti:
 	\begin{itemize}
-		\item \textit{Alert}. Utilizzare gli avvisi per inviare un messaggio in-app persistente che informa gli utenti di un particolare stato di modifica;
+		\item \textit{Alert}. Utilizzare gli avvisi per inviare un messaggio in-app persistente che informa gli utenti di un particolare stato di modifica, figura \ref{figAlert};
 		\item \textit{Snackbar}. Utilizzare uno snack bar per fornire un breve feedback su un'operazione;
 		\item \textit{Stati vuoti}. Quando un'interfaccia utente è disponibile solo online e il contenuto non è stato caricato o sincronizzato, utilizzare uno stato vuoto.
 	\end{itemize}
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.3\textwidth]{AlertDialog}
+		\caption{Alert dialog.}
+		\label{figAlert}
+	\end{figure}
 
 	\subsection{Visualizzazione dei dati}
 	La visualizzazione dei dati rappresenta le informazioni in forma grafica. E’ una forma di comunicazione che ritrae informazioni dense e complesse attraverso elementi visivi, per semplificare il confronto dei dati. Principi della visualizzazione grafica:
@@ -657,6 +663,11 @@ tabsize=1
 
 	\subsubsection{Dashboards}
 	La visualizzazione dei dati può essere visualizzata su una serie di più grafici, in interfacce utente denominate dashboard.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.3\textwidth]{dashboard} %nome del file
+		\caption{Operation dashboard.}
+	\end{figure}
 
 	Il design di una dashboard dovrebbe adattarsi al modo in cui verrà utilizzata, sia che si tratti di uno strumento per fare una presentazione o di esplorare a fondo i dati. Una dashboard dovrebbe:
 	\begin{itemize}
@@ -694,7 +705,11 @@ tabsize=1
 	Gli stati vuoti si verificano quando il contenuto di un elemento non può essere mostrato.
 
 	Lo stato vuoto più elementare consiste in un'immagine non interattiva e uno slogan di testo. Si usa un'immagine che ha un tono neutro o umoristico ed è coerente con il marchio. Lo slogan dovrebbe, invece, avere un messaggio utile, essere coerente con il  marchio e trasmettere lo scopo dedell’app, senza apparire cliccabile.
-
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.3\textwidth]{statoVuoto}
+		\caption{Stato vuoto.}
+	\end{figure}
 	\subsubsection{Alternative}
 	Le schermate che altrimenti sarebbero vuote possono essere popolate con \textbf{contenuti iniziali}. Ciò consente agli utenti di iniziare a utilizzare un'app immediatamente, rendendo più facile per loro conoscere cosa un'app ha da offrire.
 
@@ -711,9 +726,18 @@ tabsize=1
 	Le immagini comunicano e differenziano un prodotto. Possono sia migliorare l'esperienza dell'utente che esprimere il linguaggio visivo di un marchio. Aiutano a raccontare una storia, a chiarire messaggi complessi difficili da esprimere con le parole e a mostrare
 	agli utenti come eseguire un'azione.
 
-	Per garantire l'accessibilità, le immagini dovrebbero includere un testo alternativo (o una didascalia) che gli screen reader leggeranno agli utenti con disabilità visive.
+	Per garantire l'accessibilità, le immagini dovrebbero includere un testo alternativo (o una didascalia) che gli screen reader leggeranno agli utenti con disabilità visive. In compose, per descrivere l'immagine si usa l'attributo content description:
 
-	Avere un punto focale iconico nelle immagini, è importante, poiché influisce sul modo in cui poi l’immagine viene tagliata per schermi con dimensioni diverse.
+\begin{lstlisting}[language=Kotlin]
+	Image(
+			bitmap = imageData!!.asImageBitmap(),
+            contentDescription = "Immagine del ristorante",
+            contentScale = ContentScale.Crop
+            )
+\end{lstlisting}
+
+
+Avere un punto focale iconico nelle immagini, è importante, poiché influisce sul modo in cui poi l’immagine viene tagliata per schermi con dimensioni diverse.
 
 
 	\subsubsection{Miniature}
@@ -761,8 +785,12 @@ tabsize=1
 		\item Testo del corpo della finestra di dialogo.
 	\end{itemize}
 	Frasi più lunghe o complesse possono usare i punti se farlo si adatta meglio al contesto.
-
-	Per rivolgersi agli utenti si usa la prima o seconda persona (io, io o mio; tu o tuo), a seconda di quale sia adatta e più chiara per la situazione:
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{scrittura}
+		\caption{Testi al tempo presente e futuro.}
+	\end{figure}
+	Per rivolgersi agli utenti si usa la prima o seconda persona, in base a quale sia adatta e più chiara per la situazione:
 	\begin{itemize}
 		\item Seconda persona, "tu" o "tuo": questo stile di conversazione è appropriato nella maggior parte delle situazioni; come se l'interfaccia utente parlasse direttamente all'utente;
 		\item Prima persona, "io"  o "mio": in alcuni casi, questa forma di indirizzo sottolinea la proprietà dell'utente di contenuti o azioni;
@@ -773,7 +801,7 @@ tabsize=1
 
 
 % ========================================================================================================================
-\chapter{Novità del material design 3}
+\chapter{Novità del Material Design 3}
 	\section{Accessibilità}
 		Al giorno d'oggi la tecnologia aiuta incredibilmente le vite di persone con disabilità, rendendole più indipendendi grazie a certi strumenti tra cui tastiere o lettori di schermo
 		Si può rendere l'interfaccia utente più semplice e accessibile grazie a:
@@ -800,7 +828,7 @@ tabsize=1
 		\subsection{Best practice}
 			La pratica migliore consiste però nell'utilizzo di elementi nativi, in quanto sono garantiti ad avere un certo livello di accessibilità, mentre elementi custom possono richiedere del testing per verificarne l'accessibilità
 	\section{Personalizzazione}
-		Nel material design 3 sono stati aggiunti i colori dinamici, i quali permetto ad un app di mantere un suo stile e accessibilità ma allo stesso tempo permettere all'applicazione di adattarsi al tema dell'utente.
+		Nel Material Design 3 sono stati aggiunti i colori dinamici, i quali permetto ad un app di mantere un suo stile e accessibilità ma allo stesso tempo permettere all'applicazione di adattarsi al tema dell'utente.
 		Questo è possibile grazie alla definizione di 5 ruoli principali per i colori:
 		\begin{itemize}
 			\item Primary
@@ -816,7 +844,7 @@ tabsize=1
 		Un token salva delle informazioni: un colore, un certo stile o un certo componente, per permetterne l'utilizzo in più prodotti.
 		Oltre ad essere molto utili per il design, i tokens permettono di condividere i design attraverso un formato chiamato \href{https://github.com/AdobeXD/design-system-package-dsp}{Design System Package},
 		che permette di salvare assets e json che descrivono un determinato design.
-		Al momento sono disponibili solo i design per colore e tipografia, con il supporto di tokens per componenti e misure in sviluppo. Si può scaricare il dsp del material design da \href{https://github.com/material-foundation/material-tokens}{qua}, modificarlo con dei tools, e poi esportarli per android.
+		Al momento sono disponibili solo i design per colore e tipografia, con il supporto di tokens per componenti e misure in sviluppo. Si può scaricare il dsp del Material Design da \href{https://github.com/material-foundation/material-tokens}{qua}, modificarlo con dei tools, e poi esportarli per android.
 		
 		Nella nostra applicazione non ne abbiamo fatto uso in quanto sono ancora in sviluppo, e i loro utilizzi non ci sono utili, come creare nuovi prodotti che usano lo stesso stile.
 
@@ -882,8 +910,23 @@ tabsize=1
  			\label{gerarchia_colori}
 		\end{figure}
 
+
+\cleardoublepage
+
+
+	\section{Forme}
+	Il Material Design 3 intoduce un cambiamento ai gruppi di forme, sempre basati sulle dimensioni, ma con con sette stili degli angoli, assegnati in base alla quantità di arrotondamento desiderata. Le forme con angoli squadrati sono chiamate "none", le forme leggermente arrotondate sono "extra-small", mentre le forme completamente arrotondate sono "full".
+	Ciò consente di conferrire maggior espressività all'interfaccia utente. Viene, inoltre, mantenuta la possibilità avere forme degli angoli simmetriche o asimmetriche, con angoli tagliati o arrotondati. Inoltre, è sempre modificare lo stile di un'intera categoria di forme.
+
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.6\textwidth]{FormeM3} %nome del file
+		\caption{Gruppi di forme in M3.}
+	\end{figure}
+
 	\section{Iconografia material 3}
-		Nel material design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
+		Nel Material Design 3 le icone hanno ricevuto 3 nuovi stili: outlined, rounded, sharp, e sono scaricabili dal \href{https://fonts.google.com/icons}{catalogo di google fonts}. Hanno un leggero livello di personalizzazione con 4 slider che ne cambiano le caratteristiche.
 		Nel catalogo molte icone vecche sono state ridisegnate, dando ora un'impressione più moderna
 		Le linee guida nel design di icone nuove rimangono molto simili a quelle del material design 2.
 		Sono state aggiunte delle linee guida nell'utilizzo delle icone, e nelle caratteristiche da usare nella personalizzazione: per esempio nella decisione del weight (spessore dell'icona) è bene che non sia troppo fino (sconsigliati valori sotto al 200), e che non sia troppo grosso; soprattutto bisogna stare attenti ad usare lo stesso weight in modo consistente e non mischiare icone di weight diversi
@@ -891,7 +934,7 @@ tabsize=1
 		Una caratteristica molto importante è la grandezza ottica, ci permette di cambiare la grandezza di un'icona da 24dp fino a 48dp aggiustando però il weight, infatti scalando un'icona scalerebbe anche il suo spessore il che può non essere desiderato a seconda del proprio stile.
 		Per quanto riguarda l'accessibilità è importante che icone che eseguono delle azioni abbiano un etichetta che descriva cosa facciano, nella nostra applicazione le icone che eseguono azioni come scrivere una recensione, oppure cambiare tab, hanno tutte un testo che indica il loro ruolo.
 	\section{Tipografia material 3}
-		Nel material design 3 sonos stati rinnovati i ruoli che avevano blocchi di testo, ora sono 5 e sono:
+		Nel Material Design 3 sonos stati rinnovati i ruoli che avevano blocchi di testo, ora sono 5 e sono:
 		\begin{itemize}
 			\item display per le parti corti e importanti
 			\item headline per le parti corti e importanti in schermi piccoli
@@ -901,8 +944,88 @@ tabsize=1
 		\end{itemize}
 		Ciò è stato fatto per rendere più semplice applicare le linee guida e rendere i ruoli più facili da capire.
 		Sono stati introdotti i tokens per il testo per permettere facile modifica di valori come type scale o weight.
-		Il resto delle linee guida invece rimane simile a quelle del material design 2
+		Il resto delle linee guida invece rimane simile a quelle del Material Design 2
 	
+\chapter{Material Reviews}
+	La nostra applicazione si chiama Material reviews, e come suggerisce il nome si occupa di recensioni per ristoranti.
+	L'idea è nata dalla necessità di creare un'applicazione complessa per poter mettere in pratica più linee guida possibili.
+	Abbiamo usato Jetpack Compose \cite{compose} e Room\cite{room} per l'implementazione, anche se alcune features utilizzate sono ancora in via di sviluppo.
+	\section{Funzionamento e struttura}
+	L'applicazione è divisa in 3 parti principali: i ristoranti, le proprie recensioni, il proprio profilo:
+
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\textwidth]{screenHome.jpg} 
+	  \caption{Home dell'applicazione}
+		
+	\end{figure}
+
+
+	\subsection{Dettagli ristoranti}
+	Nella parte Ristoranti si può scorrere la lista di ristoranti già presente nell'app, aggiungerne ai preferiti cliccando l'icona a forma di cuore, e accedere ai dettagli cliccando sulla card del ristorante. E' anche possibile filtrare per solo i ristoranti preferiti premendo lo switch in alto a destra.
+	Tappando un ristorante apre la seguente schermata dei dettagli e recensioni:
+
+
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.25\textwidth]{screenDetails.jpg} 
+	  \caption{Dettagli di un ristorante}
+		
+	\end{figure}
+
+
+	Tappando il fab per aggiungere la recensione fa comparire un dialog per l'aggiunta, dove si possono premere il numero di stelle da dare e scrivere una recensione come mostrate in Figura 4.3
+	\pagebreak
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{addReviewDialog.jpg} 
+	  \caption{Dialog per l'aggiunta di una recensione}
+		
+	\end{figure}
+	\newpage
+
+	\subsection{Le mie recensioni}
+	Nella parte recensioni è possibile vedere le proprie recensioni, cliccare sulla recensione porta alla schermata di dettagli del ristorante stesso.
+	Si può anche rimuovere recensioni con il pulsante dedicato, che fa apparire un dialog di conferma.
+	
+
+
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.4\textwidth]{screenReviews.jpg} 
+	  \caption{Schermata con le recensioni dell'utente}
+		
+	\end{figure}
+
+
+	\newpage
+	\subsection{Profilo}
+		Nella parte del profilo l'utente può modificare le proprie informazioni e le impostazioni, anche se al momento l'unica impostazione disponibile è la scelta del tema.
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.4\textwidth]{profileScreen.jpg} 
+		  \caption{Schermata con il profilo dell'utente}
+			
+		\end{figure}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.3\textwidth]{editProfile.jpg} 
+		  \caption{Dialog per modificare il profilo}
+			
+		\end{figure}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.3\textwidth]{themeSelector.jpg} 
+		  \caption{Dialog per modificare il tema}
+			
+		\end{figure}
+
+
+
 
 
 % ==================================== Bibliografia ======================================

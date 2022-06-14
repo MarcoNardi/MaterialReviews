@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -17,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -113,14 +113,14 @@ fun NoFavourites(){
     Surface( modifier = Modifier.fillMaxSize()) {
         Column(
             Modifier.padding(top = 32.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
             Icon(
                 painter = painterResource(id = R.drawable.ic_baseline_no_favourites_24),
                 contentDescription = "Nessun preferito",
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(48.dp),
                 tint = Color.Gray
             )
             Text(text = "Ancora nessun preferito",
@@ -128,10 +128,9 @@ fun NoFavourites(){
                 style = MaterialTheme.typography.bodyLarge,
                 modifier =  Modifier.padding(bottom = 32.dp)
             )
-            //TODO: valutare che sia OK
             Text(text = "Aggiungi qui i preferiti cliccando il cuore sotto al nome dei ristoranti",
                 color = Color.Gray,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier =  Modifier.padding(bottom = 32.dp, start = 40.dp, end = 40.dp)
             )
