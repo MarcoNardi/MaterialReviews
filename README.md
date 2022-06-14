@@ -18,6 +18,6 @@ Il repository contiene la cartella del progetto di Android Studio + una cartella
 A causa dell'utilizzo di Compose è possibile che l'applicazione abbia problemi di performance, per solverli provare a buildare l'app in modalità release e con R8 attivo come indicato [qua](https://developer.android.com/jetpack/compose/performance#build-release).
 Per buildare l'app in modalià release è necessario firmarla con chiavi non di debug,( spiegazione [qua](https://developer.android.com/studio/publish/app-signing#generate-key) ) e poi selezionare release nei build type aggiungendo le informazioni per la chiave nel build.gradle.
 
-Noi testando l'app su Xiaomi mi 10T Lite, in modalità release non abbiamo riscontrato nessun problema di performance
+Noi testando l'app su Xiaomi mi 10T Lite con android 12, in modalità release non abbiamo riscontrato nessun problema di performance
 
 
